@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Alphaprime – My Courses</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: #ffffff;
+  color: #0a585b;
+}
+a {
+  color: #0a585b;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Logo area */
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.site-logo {
+  height: 52px;
+  width: auto;
+  border-radius: 16px;
+}
+.logo-text-wrap{
+  display:flex;
+  flex-direction:column;
+  line-height:1.1;
+}
+.logo-text {
+  font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(1.3rem, 3.5vw, 2rem);
+  color: #0a585b;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+.logo-subtext{
+  font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(0.6rem, 1.8vw, 0.8rem);
+  letter-spacing:1.4px;
+  text-transform:uppercase;
+  color:#0f766e;
+}
+
+/* Header */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 150;
+  padding: 12px 5%;
+  backdrop-filter: blur(14px);
+  background: linear-gradient(120deg, rgba(255,255,255,0.92), rgba(224,252,250,0.9));
+  border-bottom:1px solid rgba(10,88,91,0.08);
+  box-shadow: 0 10px 30px rgba(10,88,91,0.12);
+}
+header .header-inner{
+  max-width:1200px;
+  margin:0 auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap: nowrap;
+}
+
+/* Right side navbar container - NEW */
+.navbar-right {
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+/* Search bar - NEW */
+.navbar-search input {
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1.5px solid #0a585b;
+  min-width: 210px;
+  font-size: 0.9rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.navbar-search input:focus {
+  outline: none;
+  border-color: #0f766e;
+  box-shadow: 0 0 0 2px #0f766e33;
+}
+
+/* Simple nav links - NEW */
+.nav-link {
+  font-size: 0.92rem;
+  font-weight: 500;
+  padding: 6px 10px;
+  border-radius: 999px;
+  transition: background-color 0.2s, color 0.2s;
+}
+.nav-link:hover {
+  background-color: #0a585b;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* Generic dropdown base (used for My Learning and Menu) - UPDATED */
+.dropdown {
+  position: relative;
+}
+.dropdown .dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 42px;
+  min-width: 220px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 24px rgba(10, 88, 91, 0.2);
+  padding: 6px 0;
+  z-index: 150;
+}
+.dropdown.open .dropdown-menu {
+  display: block;
+}
+
+/* My Learning button - NEW */
+.dropdown-btn {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 2px solid #0a585b;
+  background: #ffffff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.dropdown-btn:hover {
+  background-color: #0a585b;
+  color: #ffffff;
+  box-shadow: 0 8px 18px rgba(10, 88, 91, 0.22);
+}
+
+/* Menu button style (like on main page) - UPDATED */
+.menu-button {
+  cursor: pointer;
+  background-color: #0f766e;
+  border: 2px solid #0f766e;
+  padding: 8px 16px;
+  border-radius: 999px;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.menu-button:hover {
+  background-color: #0a585b;
+  box-shadow: 0 8px 18px rgba(10, 88, 91, 0.22);
+  transform: translateY(-1px);
+}
+
+/* Menu dropdown items - NEW */
+.menu-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 8px 16px;
+  border: none;
+  background: transparent;
+  font-size: 0.9rem;
+  color: #0a585b;
+  cursor: pointer;
+}
+.menu-item:hover {
+  background-color: #0a585b;
+  color: #ffffff;
+}
+
+/* User icon in navbar - NEW */
+.user-icon-btn {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+.user-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid #0a585b;
+}
+
+/* Small screen tweaks */
+@media (max-width:650px){
+  header{
+    padding:10px 4%;
+  }
+  main{
+    padding:30px 4%;
+  }
+  .navbar-right {
+    gap: 8px;
+  }
+  .navbar-search input {
+    min-width: 150px;
+  }
+  .nav-link {
+    display: none; /* hide text links on mobile */
+  }
+  .menu-button{
+    padding:6px 12px;
+    font-size:0.85rem;
+  }
+}
+
+/* Small hero + welcome - UPDATED */
+.hero {
+  background:#ffffff;
+  border-radius:20px;
+  padding:24px 26px;
+  box-shadow:0 10px 26px rgba(10,88,91,0.16);
+  margin-bottom:40px;
+}
+.hero p {
+  margin:4px 0;
+  color:#0f766e;
+}
+.user-welcome {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.user-avatar-small {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #0a585b;
+}
+
+/* Main layout */
+main {
+  padding: 40px 5%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Section titles */
+.section-title {
+  font-size: 1.7rem;
+  color: #0a585b;
+  border-bottom: 3px solid #0a585b;
+  padding-bottom: 8px;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+/* Courses grid - UPDATED */
+.courses-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 360px));
+  gap: 24px;
+
+}
+
+/* Course card with image, progress, button - UPDATED */
+.course-card {
+  background: #ffffff;
+  padding: 18px;
+  border-radius: 18px;
+  box-shadow: 0 3px 7px rgba(10, 88, 91, 0.11);
+  border: 1.5px solid #0a585b22;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.course-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+.course-card h3 {
+  margin:4px 0;
+  font-size:1.2rem;
+  color:#0a585b;
+}
+.course-card p {
+  margin:0;
+  font-size:0.95rem;
+  color:#0f766e;
+}
+.course-meta {
+  font-size:0.8rem;
+  color:#0f766e;
+}
+
+/* Continue / Enroll buttons with hover like main page - NEW */
+.continue-btn {
+  align-self:flex-start;
+  margin-top:8px;
+  padding:8px 18px;
+  border-radius:999px;
+  border:2px solid #0a585b;
+  background:#0a585b;
+  color:#ffffff;
+  font-weight:600;
+  font-size:0.9rem;
+  cursor:pointer;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.continue-btn:hover {
+  background:#ffffff;
+  color:#0a585b;
+  box-shadow:0 8px 18px rgba(10,88,91,0.22);
+  transform: translateY(-1px);
+}
+
+/* Progress bar near Continue Learning - NEW */
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #e4ece5;
+  border-radius: 999px;
+  margin-top:4px;
+}
+.progress-fill {
+  height: 100%;
+  background: #0a585b;
+  border-radius: 999px;
+  width: 0%;
+  transition: width 0.4s;
+}
+.course-progress-text {
+  font-size:0.8rem;
+  color:#0f766e;
+}
+
+/* Footer */
+footer {
+  background-color: #0a585b;
+  color: #ffffff;
+  text-align: center;
+  padding: 30px 5%;
+  font-size: 0.9rem;
+  margin-top: 60px;
+  border-radius: 15px 15px 0 0;
+}
+footer a {
+  color: #ffffff;
+  font-weight: 600;
+  margin: 0 8px;
+}
+footer a:hover {
+  text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <!-- Left: Logo -->
+    <div class="logo-area">
+      <img src="2.png" alt="Alphaprime Logo" class="site-logo" />
+      <div class="logo-text-wrap">
+        <span class="logo-text">ALPHAPRIME</span>
+        <span class="logo-subtext">Learn · Trade · Grow</span>
+      </div>
+    </div>
+
+    <!-- Right: Search + links + My Learning + Menu + User icon - UPDATED -->
+    <nav class="navbar-right">
+      <!-- Search bar -->
+      <div class="navbar-search">
+        <input
+          type="text"
+          id="search-courses"
+          placeholder="Search courses..."
+          aria-label="Search courses"
+        />
+      </div>
+
+      <!-- Nav links -->
+      <a href="courses.html" class="nav-link">Courses</a>
+      <a href="blogs.html" class="nav-link">Blogs</a>
+
+      <!-- My Learning dropdown - NEW -->
+      <div class="dropdown learning-dropdown" id="learningDropdown">
+        <button class="dropdown-btn" id="learningDropdownBtn">
+          My Learning ▾
+        </button>
+        <div class="dropdown-menu" id="learningMenu"></div>
+      </div>
+
+      <!-- Main Menu dropdown - UPDATED -->
+      <div class="dropdown main-menu-dropdown" id="mainMenu">
+        <button
+          class="menu-button"
+          id="mainMenuButton"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Menu ▾
+        </button>
+        <div
+          class="dropdown-menu"
+          id="mainMenuContent"
+          role="menu"
+          aria-labelledby="mainMenuButton"
+        >
+          <button type="button" class="menu-item" onclick="window.location.href='index.html#home'">Home</button>
+          <button type="button" class="menu-item" onclick="window.location.href='index.html#courses'">All Courses</button>
+          <button type="button" class="menu-item" onclick="window.location.href='index.html#blog'">Blog Highlights</button>
+          <button type="button" class="menu-item" onclick="window.location.href='index.html#career'">Career Guidance</button>
+          <button type="button" class="menu-item" onclick="window.location.href='index.html#contact'">Contact</button>
+          <button type="button" class="menu-item" onclick="window.location.href='index.html'">Back to Home</button>
+        </div>
+      </div>
+
+      <!-- User profile icon - NEW -->
+      <button class="user-icon-btn" id="userProfileBtn" aria-label="Profile">
+        <img src="user-icon.png" alt="User" class="user-avatar" />
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- Hero: Welcome user with icon + email - UPDATED -->
+  <section class="hero">
+    <div class="user-welcome">
+      <img src="user-icon.png" alt="User" class="user-avatar-small" />
+      <p>Welcome, <strong id="user-name-label">Guest</strong></p>
+    </div>
+    <p class="user-email-line">
+      Logged in as: <span id="user-email-label">guest@example.com</span>
+    </p>
+    <p id="no-email-message" style="display:none;">
+      We couldn't find your login information. Please login again from the home page.
+    </p>
+  </section>
+
+  <!-- Enrolled courses - UPDATED -->
+  <section aria-label="Courses you have enrolled in">
+    <h2 class="section-title">Your Courses</h2>
+    <p id="loading-text">Loading your courses...</p>
+    <p id="no-courses-text" style="display:none;">You have not enrolled in any courses yet.</p>
+    <div id="courses-container" class="courses-list"></div>
+  </section>
+
+  <!-- Recommended courses - NEW -->
+  <section aria-label="Recommended courses">
+    <h2 class="section-title">Recommended Courses</h2>
+    <p id="no-recommended-text" style="display:none;">You're enrolled in all available courses. 🎉</p>
+    <div id="recommended-container" class="courses-list"></div>
+  </section>
+</main>
+
+<footer>
+  <p>Contact us at: <a href="mailto:info@alphaprime.com">info@alphaprime.com</a> | Phone: +1 234 567 890</p>
+  <p>
+    Follow us:
+    <a href="#" aria-label="Facebook">Facebook</a> |
+    <a href="#" aria-label="Twitter">Twitter</a> |
+    <a href="#" aria-label="LinkedIn">LinkedIn</a>
+  </p>
+  <p>&copy; 2025 alphaprime. All rights reserved.</p>
+</footer>
+
+<script>
+// =====================
+// GLOBAL COURSE CATALOG - NEW (same photos as main page)
+// =====================
+const ALL_COURSES = [
+  {
+    slug: 'fundamentals-of-stock-trading',
+    title: 'Fundamentals of Stock Trading',
+    description: 'Learn the essential strategies and technical skills required to succeed in stock trading.',
+    image: '671a94a2b066393141a1526e_AI Stock Trading App.jpg'
+  },
+  {
+    slug: 'technical-analysis-mastery',
+    title: 'Technical Analysis Mastery',
+    description: 'Deep dive into charts, indicators, and market trends to predict price movements.',
+    image: 'a4b0a8e2-bcbc-46dd-87e2-b1509a3e97d3.png'
+  },
+  {
+    slug: 'options-trading-explained',
+    title: 'Options Trading Explained',
+    description: 'Understand options terminology, strategies, and risk management techniques.',
+    image: 'https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?auto=format&fit=crop&w=400&q=80'
+  }
+];
+
+function findCourseBySlug(slug) {
+  if (!slug) return null;
+  return ALL_COURSES.find(c => c.slug === slug);
+}
+function findCourseByTitle(title) {
+  if (!title) return null;
+  const lower = title.toLowerCase();
+  return ALL_COURSES.find(c => c.title.toLowerCase() === lower);
+}
+
+// =====================
+// WELCOME TEXT: NAME + EMAIL - UPDATED
+// =====================
+const email = localStorage.getItem('alphaprimeEmail');
+const name = localStorage.getItem('alphaprimeName');
+
+const nameLabel = document.getElementById('user-name-label');
+const emailLabel = document.getElementById('user-email-label');
+const noEmailMsg = document.getElementById('no-email-message');
+
+if (name) {
+  nameLabel.textContent = name;
+} else {
+  nameLabel.textContent = 'Guest';
+}
+
+if (email) {
+  emailLabel.textContent = email;
+} else {
+  emailLabel.textContent = 'Not logged in';
+  noEmailMsg.style.display = 'block';
+}
+
+// =====================
+// PROFILE ICON → PROFILE PAGE - NEW
+// =====================
+document.getElementById('userProfileBtn').addEventListener('click', () => {
+  window.location.href = 'profile.html';
+});
+
+// =====================
+// MY LEARNING DROPDOWN BEHAVIOR - NEW
+// =====================
+const learningDropdown = document.getElementById('learningDropdown');
+const learningDropdownBtn = document.getElementById('learningDropdownBtn');
+const learningMenu = document.getElementById('learningMenu');
+
+learningDropdownBtn.addEventListener('click', () => {
+  learningDropdown.classList.toggle('open');
+});
+
+document.addEventListener('click', (e) => {
+  if (!learningDropdown.contains(e.target) && !e.target.closest('#learningDropdownBtn')) {
+    learningDropdown.classList.remove('open');
+  }
+});
+
+// =====================
+// MAIN MENU DROPDOWN - UPDATED
+// =====================
+const mainMenu = document.getElementById('mainMenu');
+const mainMenuButton = document.getElementById('mainMenuButton');
+
+mainMenuButton.addEventListener('click', () => {
+  const isOpen = mainMenu.classList.toggle('open');
+  mainMenuButton.setAttribute('aria-expanded', isOpen);
+});
+
+// close Menu when clicking outside
+document.addEventListener('click', (e) => {
+  if (!mainMenu.contains(e.target) && e.target !== mainMenuButton) {
+    mainMenu.classList.remove('open');
+    mainMenuButton.setAttribute('aria-expanded', 'false');
+  }
+});
+
+// =====================
+// LOAD ENROLLED + RECOMMENDED COURSES - UPDATED
+// =====================
+async function loadMyCourses() {
+  const loadingText = document.getElementById('loading-text');
+  const noCoursesText = document.getElementById('no-courses-text');
+  const noRecommendedText = document.getElementById('no-recommended-text');
+  const coursesContainer = document.getElementById('courses-container');
+  const recommendedContainer = document.getElementById('recommended-container');
+
+  if (!email) {
+    loadingText.textContent = 'No email found. Please login again.';
+    return;
+  }
+
+  try {
+    const res = await fetch('http://localhost:3000/api/enrollments?email=' + encodeURIComponent(email));
+    const data = await res.json();
+
+    loadingText.style.display = 'none';
+
+    const enrolledSlugs = new Set();
+
+    if (!res.ok || !data.success || !Array.isArray(data.courses) || data.courses.length === 0) {
+      noCoursesText.style.display = 'block';
+    } else {
+      data.courses.forEach(enroll => {
+        const slug =
+          enroll.slug ||
+          enroll.course_slug ||
+          enroll.courses_slug ||
+          null;
+
+        let courseInfo = findCourseBySlug(slug);
+        const titleFromApi = enroll.title || enroll.course_title || enroll.course_name || slug || 'Course';
+
+        if (!courseInfo) {
+          courseInfo = findCourseByTitle(titleFromApi);
+        }
+
+        const card = document.createElement('article');
+        card.className = 'course-card';
+
+        const img = document.createElement('img');
+        img.src = (courseInfo && courseInfo.image) || 'https://via.placeholder.com/400x200?text=Course';
+        img.alt = courseInfo ? courseInfo.title : titleFromApi;
+
+        const h3 = document.createElement('h3');
+        h3.textContent = courseInfo ? courseInfo.title : titleFromApi;
+
+        const p = document.createElement('p');
+        p.textContent = courseInfo
+          ? courseInfo.description
+          : (enroll.description || 'You are enrolled in this course.');
+
+        const meta = document.createElement('div');
+        meta.className = 'course-meta';
+        const date = enroll.enrolled_at || enroll.created_at || null;
+        if (date) {
+          const d = new Date(date);
+          meta.textContent = 'Enrolled on: ' + d.toLocaleDateString();
+        } else {
+          meta.textContent = 'Enrolled course';
+        }
+
+        // Progress bar (demo: random completion between 20-90%) - NEW
+        const progressWrapper = document.createElement('div');
+        progressWrapper.className = 'progress-bar';
+        const progressFill = document.createElement('div');
+        progressFill.className = 'progress-fill';
+        const progressPercent = Math.floor(Math.random() * 71) + 20; // 20–90%
+        progressFill.style.width = progressPercent + '%';
+        progressWrapper.appendChild(progressFill);
+
+        const progressText = document.createElement('div');
+        progressText.className = 'course-progress-text';
+        progressText.textContent = progressPercent + '% completed';
+
+        const btn = document.createElement('button');
+        btn.textContent = 'Continue Learning';
+        btn.className = 'continue-btn';
+        // You can route to a course details page here:
+        // btn.onclick = () => window.location.href = 'course.html?slug=' + encodeURIComponent(slug || '');
+
+        card.appendChild(img);
+        card.appendChild(h3);
+        card.appendChild(p);
+        card.appendChild(meta);
+        card.appendChild(progressWrapper);
+        card.appendChild(progressText);
+        card.appendChild(btn);
+
+        coursesContainer.appendChild(card);
+
+        // Add to My Learning dropdown - NEW
+        const dropdownItem = document.createElement('a');
+        dropdownItem.href = '#';
+        dropdownItem.textContent = h3.textContent;
+        dropdownItem.addEventListener('click', (e) => {
+          e.preventDefault();
+          card.scrollIntoView({behavior:'smooth', block:'center'});
+          learningDropdown.classList.remove('open');
+        });
+        learningMenu.appendChild(dropdownItem);
+
+        if (courseInfo && courseInfo.slug) {
+          enrolledSlugs.add(courseInfo.slug);
+        }
+      });
+    }
+
+    // Recommended courses: ALL_COURSES that are NOT in enrolledSlugs - NEW
+    const recommendedCourses = ALL_COURSES.filter(c => !enrolledSlugs.has(c.slug));
+    if (recommendedCourses.length === 0) {
+      noRecommendedText.style.display = 'block';
+    } else {
+      recommendedCourses.forEach(course => {
+        const card = document.createElement('article');
+        card.className = 'course-card';
+
+        const img = document.createElement('img');
+        img.src = course.image;
+        img.alt = course.title;
+
+        const h3 = document.createElement('h3');
+        h3.textContent = course.title;
+
+        const p = document.createElement('p');
+        p.textContent = course.description;
+
+        const btn = document.createElement('button');
+        btn.textContent = 'Enroll Now';
+        btn.className = 'continue-btn';
+        btn.addEventListener('click', () => {
+          // You can open your main page enrollment flow here
+          window.location.href = 'index.html#courses';
+        });
+
+        card.appendChild(img);
+        card.appendChild(h3);
+        card.appendChild(p);
+        card.appendChild(btn);
+
+        recommendedContainer.appendChild(card);
+      });
+    }
+
+  } catch (err) {
+    console.error('Error loading courses:', err);
+    loadingText.textContent = 'Error loading courses.';
+  }
+}
+loadMyCourses();
+
+// =====================
+// SEARCH BAR FILTER - NEW
+// =====================
+const searchInput = document.getElementById('search-courses');
+searchInput.addEventListener('input', () => {
+  const query = searchInput.value.toLowerCase().trim();
+  document.querySelectorAll('.course-card').forEach(card => {
+    const titleEl = card.querySelector('h3');
+    if (!titleEl) return;
+    const title = titleEl.textContent.toLowerCase();
+    card.style.display = title.includes(query) ? '' : 'none';
+  });
+});
+</script>
+</body>
+</html>

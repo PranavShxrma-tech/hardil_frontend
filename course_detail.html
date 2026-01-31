@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Alphaprime – Course Details</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #fff;
+  color: #0a585b;
+}
+a { text-decoration: none; color: inherit; }
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 12px 5%;
+  backdrop-filter: blur(14px);
+  background: linear-gradient(120deg, rgba(255,255,255,0.92), rgba(224,252,250,0.9));
+  border-bottom: 1px solid rgba(10,88,91,0.08);
+}
+.header-inner {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.site-logo {
+  height: 52px;
+  border-radius: 14px;
+}
+footer {
+  background: #0a585b;
+  color: #fff;
+  text-align: center;
+  padding: 30px 5%;
+  margin-top: 60px;
+}
+
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 40px 5%;
+}
+
+.course-header {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 30px;
+}
+.course-header img {
+  width: 100%;
+  border-radius: 18px;
+}
+.course-price {
+  font-weight: 700;
+  margin-top: 12px;
+}
+
+.enroll-button {
+  margin-top: 20px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 2px solid #0a585b;
+  background: #0a585b;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.enroll-button:hover {
+  background: #ffffff;
+  color: #0a585b;
+}
+
+.topics-section {
+  margin-top: 50px;
+}
+.learn-list ul {
+  padding-left: 20px;
+  margin-top: 10px;
+}
+.learn-list li {
+  margin-bottom: 10px;
+  line-height: 1.6;
+  font-weight: 500;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo-area">
+      <img src="2.png" class="site-logo">
+      <div>
+        <div><strong>ALPHAPRIME</strong></div>
+        <small>Learn · Trade · Grow</small>
+      </div>
+    </div>
+    <a href="courses.html">← All Courses</a>
+  </div>
+</header>
+
+<main>
+  <div id="courseContainer">Loading course…</div>
+</main>
+
+<footer>
+  <p>&copy; 2025 Alphaprime</p>
+</footer>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const slug = params.get("slug");
+const container = document.getElementById("courseContainer");
+
+if (!slug) {
+  container.innerHTML = "<p>Invalid course link.</p>";
+  throw new Error("Slug missing in URL");
+}
+
+async function loadCourse() {
+  try {
+    const courseRes = await fetch(`http://localhost:3000/api/course/${slug}`);
+    if (!courseRes.ok) throw new Error("Course API failed");
+
+    const courseData = await courseRes.json();
+    const course = courseData.course;
+
+    renderCourse(course);
+  } catch (err) {
+    console.error("LOAD ERROR:", err);
+    container.innerHTML = "<p>Error loading course details.</p>";
+  }
+}
+
+function formatLearnPoints(data) {
+  if (!data) return "<p>Details coming soon.</p>";
+
+
+  // If JSON array, show as paragraphs
+  try {
+    const points = JSON.parse(data);
+    if (Array.isArray(points)) {
+      return points.map(p => `<p>${p}</p>`).join("");
+    }
+  } catch (e) {}
+
+
+  // Otherwise show as single paragraph
+  return `<p>${data}</p>`;
+}
+function renderCourse(course) {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const isLoggedIn = user && user.id;
+
+  let imgSrc = course.image_url || 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1600&q=80';
+
+  container.innerHTML = `
+    <div class="course-header">
+      <img src="${imgSrc}" alt="${course.title}">
+      <div>
+        <h1>${course.title}</h1>
+        <p>${course.description || ''}</p>
+        <p> Duration of the course: ${course.duration || ''}</p>
+        <div class="course-price">₹${course.price}</div>
+        ${isLoggedIn 
+          ? `<button id="enrollBtn" class="enroll-button">Pay & Enroll</button>` 
+          : `<button id="loginBtn" class="enroll-button">Login to Enroll</button>`}
+      </div>
+    </div>
+
+    <section class="topics-section">
+      <h2>What You'll Learn</h2>
+      <div class="learn-list">
+        
+        ${formatLearnPoints(course.what_you_will_learn)}
+
+      </div>
+    </section>
+  `;
+
+  if (isLoggedIn) {
+    document.getElementById("enrollBtn")
+      .addEventListener("click", () => enrollCourse(course, user.id));
+  } else {
+    document.getElementById("loginBtn")
+      .addEventListener("click", () => {
+        window.location.href = `index_aaiyana.html?return=${encodeURIComponent(window.location.href)}`;
+      });
+  }
+}
+
+async function enrollCourse(course, user_id) {
+  try {
+    const res = await fetch("http://localhost:3000/api/enroll", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id, course_slug: course.slug }),
+    });
+
+    const data = await res.json();
+    if (data.success) {
+      alert("You are now enrolled!");
+    } else {
+      alert("Enrollment failed.");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Failed to enroll.");
+  }
+}
+
+loadCourse();
+</script>
+
+</body>
+</html>

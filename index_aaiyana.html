@@ -1,0 +1,3518 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>alphaprime - Learn and Grow</title>
+
+  <!-- Google Fonts: main + accent for logo -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@700&family=Poppins:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+  <style>
+    /* Reset and base styles */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background-color: #ffffff;
+      color: #0a585b;
+      transition: background-color 0.4s, color 0.4s;
+    }
+
+    a {
+      color: #0a585b;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Logo-area styles */
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .site-logo {
+      height: 52px;
+      width: auto;
+      border-radius: 16px;
+      animation: logo-pulse 2s infinite alternate;
+    }
+
+    .logo-text-wrap {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .logo-text {
+      font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: clamp(1.3rem, 3.5vw, 2rem);
+      color: #0a585b;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+
+    .logo-subtext {
+      font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: clamp(0.6rem, 1.8vw, 0.8rem);
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: #0f766e;
+    }
+
+    /* simple glow on logo */
+    @keyframes logo-pulse {
+      0% {
+        filter: brightness(1);
+      }
+
+      100% {
+        filter: brightness(1.18);
+      }
+    }
+
+    /* Animated images */
+    .animated-img {
+      /* animation: float 3s ease-in-out infinite alternate; */
+      border-radius: 10px;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0);
+      }
+
+      100% {
+        transform: translateY(-9px);
+      }
+    }
+
+    /* Buttons base */
+    button,
+    .menu-button {
+      cursor: pointer;
+      background-color: #ffffff;
+      border: 2px solid #0a585b;
+      padding: 10px 22px;
+      border-radius: 999px;
+      color: #0a585b;
+      font-weight: 600;
+      font-size: 0.98rem;
+      transition: background-color 0.3s, color 0.3s, border 0.3s, transform 0.2s, box-shadow 0.2s;
+    }
+
+    button:hover,
+    .menu-button:hover {
+      background-color: #0a585b;
+      color: #ffffff;
+      border-color: #0a585b;
+      box-shadow: 0 10px 22px rgba(10, 88, 91, 0.25);
+      transform: translateY(-1px);
+    }
+
+    /* Header styles - glassy card */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 150;
+      padding: 12px 5%;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.92), rgba(224, 252, 250, 0.9));
+      border-bottom: 1px solid rgba(10, 88, 91, 0.08);
+      box-shadow: 0 10px 30px rgba(10, 88, 91, 0.12);
+    }
+
+    header .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: nowrap;
+    }
+
+    .header-btn {
+      border-radius: 999px;
+      padding: 8px 18px;
+      border: 2px solid #0a585b;
+      background-color: #ffffff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s, box-shadow 0.2s;
+    }
+
+    .header-btn:hover {
+      background-color: #0a585b;
+      color: #ffffff;
+      box-shadow: 0 8px 18px rgba(10, 88, 91, 0.22);
+    }
+
+    /* On very small screens, just shrink font/padding instead of wrapping */
+    @media (max-width: 650px) {
+      .header-actions {
+        gap: 4px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      .header-btn {
+        padding: 6px 10px;
+        font-size: 0.75rem;
+        white-space: nowrap;
+      }
+
+      .menu-button {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+        white-space: nowrap;
+      }
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Dropdown container */
+    .dropdown {
+      position: relative;
+    }
+
+    .menu-button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      user-select: none;
+      background: #0f766e;
+      color: #ffffff;
+      border-color: #0f766e;
+    }
+
+    .menu-button svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+      transition: transform 0.3s;
+    }
+
+    .dropdown.open .menu-button svg {
+      transform: rotate(180deg);
+    }
+
+    /* Dropdown menu */
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 47px;
+      background-color: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 16px 30px rgba(10, 88, 91, 0.20);
+      min-width: 220px;
+      padding: 10px 0;
+      z-index: 160;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .dropdown.open .dropdown-menu {
+      display: block;
+    }
+
+    .dropdown-menu a,
+    .dropdown-menu button {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background-color: transparent;
+      color: #0a585b;
+      padding: 12px 20px;
+      border-radius: 0;
+      border: none;
+      font-weight: 500;
+      font-size: 0.98rem;
+      line-height: 1.4;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .dropdown-menu a:hover,
+    .dropdown-menu button:hover,
+    .dropdown-menu a:focus,
+    .dropdown-menu button:focus {
+      background-color: #0a585b;
+      color: #ffffff;
+    }
+
+    a:focus,
+    button:focus,
+    .menu-button:focus {
+      outline: 2px solid #0a585b;
+      outline-offset: 2px;
+    }
+
+    main {
+      padding: 40px 5%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Hero section with image */
+    .hero {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      align-items: center;
+      min-height: 250px;
+      padding: 30px;
+      background: linear-gradient(135deg, #ffffff 0%, #f0f9f8 50%, #e6f7f6 100%);
+      border-radius: 20px;
+      margin-bottom: 60px;
+      box-shadow: 0 10px 26px rgba(10, 88, 91, 0.16), 0 0 40px rgba(10, 88, 91, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(10, 88, 91, 0.03), transparent);
+      animation: shimmer 3s infinite;
+    }
+
+    /* Floating particles */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+        radial-gradient(circle at 20% 80%, rgba(10, 88, 91, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(15, 118, 110, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(10, 88, 91, 0.05) 0%, transparent 50%);
+      animation: particleFloat 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes shimmer {
+      0% {
+        left: -100%;
+      }
+
+      100% {
+        left: 100%;
+      }
+    }
+
+    @keyframes particleFloat {
+      0% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      100% {
+        transform: translateY(-10px) rotate(5deg);
+      }
+    }
+
+    .hero .hero-text {
+      flex: 1;
+      text-align: center;
+      z-index: 1;
+    }
+
+    .hero .hero-image {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    .hero .hero-image img {
+      width: 600px;
+      /* controls image size */
+      max-width: 100%;
+      /* keeps it responsive */
+      border-radius: 0;
+      box-shadow: 0 6px 15px rgba(10, 88, 91, 0.14);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hero .hero-image img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 25px rgba(10, 88, 91, 0.25);
+    }
+
+    /* Button pulse animation */
+    .hero button {
+      animation: buttonPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes buttonPulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.05);
+      }
+    }
+
+    .hero button:hover {
+      animation: none;
+      transform: translateY(-2px);
+    }
+
+
+    /* Enhanced hero text animations */
+    .hero h1,
+    .hero p {
+      animation: slideInLeft 1.2s ease forwards;
+      opacity: 0;
+    }
+
+    .hero h1 {
+      animation-delay: 0.3s;
+      font-size: clamp(1.8rem, 5vw, 2.9rem);
+      color: #0a585b;
+      margin-bottom: 15px;
+      line-height: 1.1;
+      position: relative;
+    }
+
+    .hero h1::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #0a585b, #0f766e);
+      animation: underlineExpand 1.5s ease forwards;
+      animation-delay: 1.2s;
+    }
+
+    .hero p {
+      animation-delay: 0.8s;
+      font-size: clamp(0.95rem, 2.5vw, 1.18rem);
+      color: #0f766e;
+      margin-bottom: 25px;
+      max-width: 450px;
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes underlineExpand {
+      from {
+        width: 0;
+      }
+
+      to {
+        width: 60%;
+      }
+    }
+
+    /* Hero image zoom-in animation */
+    .hero .hero-image img {
+      animation: zoomIn 1.5s ease forwards;
+      animation-delay: 0.5s;
+      opacity: 0;
+    }
+
+    @keyframes zoomIn {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    section {
+      margin-bottom: 60px;
+    }
+
+    h2.section-title {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      color: #0a585b;
+      border-bottom: 3px solid #0a585b;
+      padding-bottom: 8px;
+      margin-bottom: 25px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    /* courses */
+    .courses-list {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 28px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      scroll-behavior: smooth;
+    }
+
+    .course-card {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 18px;
+      box-shadow: 0 3px 7px rgba(10, 88, 91, 0.11);
+      transition: box-shadow 0.3s, background-color 0.4s, transform 0.3s;
+      display: flex;
+      flex-direction: column;
+      border: 1.5px solid #0a585b22;
+      flex: 0 0 clamp(280px, 90vw, 320px);
+      max-width: 320px;
+      text-align: center;
+    }
+
+    .course-card:hover {
+      box-shadow: 0 10px 20px rgba(10, 88, 91, 0.22);
+      transform: translateY(-2px);
+    }
+
+    .course-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      display: block;
+      background: linear-gradient(135deg, #0a585b 0%, #0f766e 100%);
+      image-rendering: crisp-edges;
+    }
+
+    .course-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      color: #0a585b;
+    }
+
+    .course-card p {
+      font-size: 0.95rem;
+      color: #0a585b;
+      margin-bottom: 15px;
+      flex-grow: 1;
+    }
+
+    /* Blog */
+    .blog-list {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 30px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      scroll-behavior: smooth;
+    }
+
+    .blog-post {
+      background-color: #ffffff;
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 3px 8px rgba(10, 88, 91, 0.11);
+      transition: box-shadow 0.3s, background-color 0.4s;
+      border: 1.5px solid #0a585b22;
+      flex: 0 0 clamp(280px, 90vw, 340px);
+      max-width: 340px;
+      text-align: center;
+    }
+
+    .blog-post:hover {
+      box-shadow: 0 8px 20px rgba(10, 88, 91, 0.22);
+    }
+
+    .blog-post img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+
+    .blog-post h3 {
+      margin-top: 0;
+      font-size: 1.3rem;
+      color: #0a585b;
+      margin-bottom: 8px;
+    }
+
+    .blog-post p {
+      font-size: 0.95rem;
+      color: #0a585b;
+      margin-bottom: 12px;
+      min-height: 60px;
+    }
+
+    /* Blog "Read More" link style */
+    .read-more {
+      color: #0a585b;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .read-more:hover {
+      text-decoration: underline;
+    }
+
+    /* Career guidance */
+    .career-list {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    .career-item {
+      background-color: #ffffff;
+      padding: 18px;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(10, 88, 91, 0.08);
+      transition: box-shadow 0.3s, background-color 0.4s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      border: 1.5px solid #0a585b22;
+      text-align: center;
+    }
+
+    .career-item h3 {
+      color: #0a585b;
+    }
+
+    .career-item:hover {
+      box-shadow: 0 6px 14px rgba(10, 88, 91, 0.11);
+    }
+
+    /* Market Trends & Charts Grid */
+    .market-charts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      justify-items: center;
+    }
+
+    .market-charts-grid figcaption {
+      margin-top: 6px;
+      font-size: 0.9rem;
+      color: #0a585b;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #0a585b;
+      color: #ffffff;
+      text-align: center;
+      padding: 30px 5%;
+      font-size: 0.9rem;
+      margin-top: 60px;
+      border-radius: 15px 15px 0 0;
+    }
+
+    footer a {
+      color: #ffffff;
+      font-weight: 600;
+      margin: 0 8px;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Shared modal styles + OTP layout */
+    .modal-overlay,
+    .blog-modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(10, 88, 91, 0.15);
+      justify-content: center;
+      align-items: center;
+      z-index: 160;
+    }
+
+    .modal-overlay.active,
+    .blog-modal-overlay.active {
+      display: flex;
+    }
+
+    .modal,
+    .blog-modal {
+      background: #ffffff;
+      padding: 30px 25px;
+      border-radius: 18px;
+      max-width: 480px;
+      width: 90%;
+      box-shadow: 0 18px 40px rgba(10, 88, 91, 0.28);
+      color: #0a585b;
+    }
+
+    .modal h3,
+    .blog-modal h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      color: #0a585b;
+    }
+
+    .modal input[type="text"],
+    .modal input[type="email"],
+    .modal input[type="tel"],
+    .modal input[type="password"] {
+      width: 100%;
+      padding: 10px 12px;
+      margin: 6px 0 16px;
+      border: 1.5px solid #0a585b;
+      border-radius: 10px;
+      font-size: 0.98rem;
+    }
+
+    .modal input::placeholder {
+      color: #a8a8a8;
+    }
+
+    /* OTP group */
+    .otp-section {
+      margin-top: 4px;
+    }
+
+    .otp-label {
+      font-weight: 600;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .otp-inputs {
+      display: flex;
+      gap: 10px;
+      margin: 6px 0 12px;
+    }
+
+    .otp-inputs input {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      border: 1.5px solid #0a585b;
+      text-align: center;
+      font-size: 1.3rem;
+    }
+
+    /* Modal buttons */
+    .modal .modal-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 15px;
+    }
+
+    .modal .close-btn,
+    .blog-modal .close-btn {
+      background-color: #c94f4f;
+      color: #fff;
+    }
+
+    .modal .close-btn:hover,
+    .blog-modal .close-btn:hover {
+      background-color: #a33b3b;
+    }
+
+    .modal .submit-btn {
+      background-color: #0a585b;
+      color: #ffffff;
+      border: none;
+    }
+
+    .modal .submit-btn:hover {
+      background-color: #0f766e;
+    }
+
+    /* Forgot password button */
+    .forgot-password-btn {
+      background: none;
+      border: none;
+      color: #0f766e;
+      cursor: pointer;
+      text-decoration: underline;
+      font-weight: 500;
+      padding: 0;
+      font-size: 0.9rem;
+    }
+
+    .forgot-password-btn:hover {
+      color: #0a585b;
+      text-decoration-color: #0a585b;
+    }
+
+    /* OTP input styling for forgot password */
+    #forgot-password-otp-step .otp-inputs input {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      border: 2px solid #0a585b;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    #forgot-password-otp-step .otp-inputs input:disabled {
+      background-color: #e8e8e8;
+      cursor: not-allowed;
+    }
+
+    #forgot-password-otp-step .otp-inputs input:focus {
+      outline: none;
+      border-color: #0f766e;
+      box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
+    }
+
+    /* dark theme */
+    body.dark {
+      background-color: #121212;
+      color: #d0d9ca;
+    }
+
+    body.dark header {
+      background: linear-gradient(120deg, rgba(18, 18, 18, 0.96), rgba(14, 45, 40, 0.96));
+    }
+
+    body.dark .logo-text {
+      color: #a8d5a3;
+    }
+
+    body.dark .logo-subtext {
+      color: #7bdcb5;
+    }
+
+    body.dark .dropdown-menu {
+      background-color: #26392b;
+      box-shadow: 0 8px 20px rgba(58, 125, 68, 0.5);
+    }
+
+    body.dark .dropdown-menu a,
+    body.dark .dropdown-menu button {
+      color: #d0d9ca;
+    }
+
+    body.dark .dropdown-menu a:hover,
+    body.dark .dropdown-menu button:hover,
+    body.dark .dropdown-menu a:focus,
+    body.dark .dropdown-menu button:focus {
+      background-color: #3a7d44;
+      color: #e4f0d4;
+    }
+
+    body.dark .hero {
+      background-color: #26392b;
+    }
+
+    body.dark .hero h1 {
+      color: #bbee9f;
+    }
+
+    body.dark .hero p {
+      color: #dce9cd;
+    }
+
+    body.dark .section-title {
+      color: #a5cc8e;
+      border-color: #3a7d44;
+    }
+
+    body.dark .course-card {
+      background-color: #1e2a1b;
+    }
+
+    body.dark .course-card h3 {
+      color: #c2f2a3;
+    }
+
+    body.dark .blog-post {
+      background-color: #1f2e1e;
+    }
+
+    body.dark .blog-post h3 {
+      color: #c2f2a3;
+    }
+
+    body.dark .career-item {
+      background-color: #22371f;
+    }
+
+    body.dark footer {
+      background-color: #3a7d44;
+      color: #d3edab;
+    }
+
+    body.dark .modal,
+    body.dark .blog-modal {
+      background: #1e2a1b;
+      box-shadow: 0 8px 24px rgba(58, 125, 68, 0.9);
+      color: #bddca1;
+    }
+
+    .explore-more {
+      text-align: center;
+      margin-top: 25px;
+    }
+
+    .explore-more a {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #0a585b;
+      color: white;
+      border-radius: 10px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .explore-more a:hover {
+      background-color: #063b3b;
+    }
+
+    /* Floating logo decor */
+    .floating-logo {
+      position: fixed;
+      top: 30%;
+      right: 20px;
+      width: 100px;
+      opacity: 0.15;
+      border-radius: 15px;
+      animation: floatSlow 6s ease-in-out infinite alternate;
+      pointer-events: none;
+      z-index: 50;
+    }
+
+    @keyframes floatSlow {
+      0% {
+        transform: translateY(0);
+      }
+
+      100% {
+        transform: translateY(-20px);
+      }
+    }
+
+    /* extra tweaks for very small phones */
+    @media (max-width: 400px) {
+      .logo-area {
+        gap: 8px;
+      }
+
+      .site-logo {
+        height: 44px;
+      }
+
+      .logo-text {
+        letter-spacing: 1.2px;
+      }
+    }
+
+    @media (max-width: 650px) {
+      header {
+        padding: 10px 4%;
+      }
+
+      main {
+        padding: 30px 4%;
+      }
+
+      .dropdown-menu {
+        min-width: 180px;
+      }
+
+      .hero {
+        flex-direction: column;
+      }
+    }
+
+    /* STEP 2: Fix Market Trends image size to 160×107 */
+    .market-charts-grid img {
+      width: 160px;
+      height: 107px;
+      object-fit: cover;
+      /* prevents stretching */
+      border-radius: 10px;
+      /* matches your UI style */
+    }
+
+    /* STEP 3: Center images and captions */
+    .market-charts-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 22px;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 0;
+    }
+
+    .market-charts-grid figure {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+    }
+
+    /* ================= NEW CONTENT SECTIONS ================= */
+
+    /* Generic info section */
+    .info-section {
+      background: #ffffff;
+      padding: clamp(90px, 5vw, 30px);
+      border-radius: 20px;
+      box-shadow: 0 8px 22px rgba(10, 88, 91, 0.12);
+      margin-bottom: 60px;
+      text-align: justify;
+    }
+
+    .info-section h2 {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      color: #0a585b;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .info-section p {
+      font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+      line-height: 1.7;
+      color: #0f766e;
+      max-width: 900px;
+    }
+
+    /* Achievements with photo slideshow */
+    .achievements {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+
+    .achievement-box {
+      background: #f8fffe;
+      padding: clamp(18px, 4vw, 25px);
+      border-radius: 18px;
+      text-align: center;
+      box-shadow: 0 6px 18px rgba(10, 88, 91, 0.12);
+      position: relative;
+      overflow: hidden;
+      min-height: 200px;
+    }
+
+    .achievement-box .photo-slideshow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .achievement-box .photo-slideshow img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      animation: slideShow 12s infinite;
+    }
+
+    .achievement-box .photo-slideshow img:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .achievement-box .photo-slideshow img:nth-child(2) {
+      animation-delay: 3s;
+    }
+
+    .achievement-box .photo-slideshow img:nth-child(3) {
+      animation-delay: 6s;
+    }
+
+    .achievement-box .photo-slideshow img:nth-child(4) {
+      animation-delay: 9s;
+    }
+
+    @keyframes slideShow {
+
+      0%,
+      25% {
+        opacity: 0;
+        transform: scale(1.1);
+      }
+
+      25.01%,
+      50% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50.01%,
+      75% {
+        opacity: 0;
+        transform: scale(1.1);
+      }
+
+      75.01%,
+      100% {
+        opacity: 0;
+        transform: scale(1.1);
+      }
+    }
+
+    .achievement-box .content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .achievement-box h3 {
+      font-size: clamp(1.8rem, 5vw, 2.2rem);
+      color: #0a585b;
+      margin: 0;
+    }
+
+    .achievement-box p {
+      margin-top: 8px;
+      font-weight: 600;
+      color: #0f766e;
+    }
+
+    /* FAQ */
+    .faq-item {
+      margin-bottom: 15px;
+    }
+
+    .faq-question {
+      font-weight: 600;
+      cursor: pointer;
+      padding: 12px;
+      background: #e6f7f6;
+      border-radius: 10px;
+    }
+
+    /* FAQ ANIMATION */
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 12px;
+      color: #0f766e;
+      line-height: 1.6;
+      transition: max-height 0.4s ease, padding 0.3s ease, opacity 0.3s ease;
+      opacity: 0;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 300px;
+      /* enough for text */
+      padding: 12px;
+      opacity: 1;
+    }
+
+    /* Optional arrow indicator */
+    .faq-question {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .faq-question::after {
+      content: "+";
+      position: absolute;
+      right: 15px;
+      font-size: 1.4rem;
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.active .faq-question::after {
+      content: "−";
+    }
+
+
+    /* Testimonials */
+    .testimonials {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      max-width: 100%;
+      overflow: hidden;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+
+    .testimonial-card {
+      background: #ffffff;
+      padding: 22px;
+      border-radius: 18px;
+      box-shadow: 0 6px 18px rgba(10, 88, 91, 0.12);
+      text-align: center;
+    }
+
+    .testimonial-card p {
+      font-style: italic;
+    }
+
+    .testimonial-card h4 {
+      margin-top: 12px;
+      color: #0a585b;
+    }
+
+    /* HOW WE ARE DIFFERENT – SPLIT LAYOUT */
+    .different-section {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      margin-bottom: 60px;
+      padding: 20px 0;
+    }
+
+    .different-image {
+      flex: 1;
+    }
+
+    .different-image img {
+      width: 100%;
+      border-radius: 20px;
+      /* box-shadow: 0 8px 20px rgba(10, 88, 91, 0.18); */
+    }
+
+    .different-content {
+      flex: 1.2;
+    }
+
+    .different-content h2 {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      color: #0a585b;
+      margin-bottom: 15px;
+    }
+
+    .different-content ul {
+      padding-left: 20px;
+    }
+
+    .different-content li {
+      font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+      color: #0f766e;
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+      .different-section {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .different-content ul {
+        text-align: left;
+      }
+    }
+
+    /* Features Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin-top: 30px;
+      padding: 20px;
+    }
+
+    .feature-card {
+      background: #ffffff;
+      padding: clamp(8px, 1.5vw, 12px) clamp(6px, 1vw, 10px);
+      border-radius: 18px;
+      box-shadow: 0 4px 12px rgba(10, 88, 91, 0.08);
+      border: 1.5px solid #0a585b22;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(10, 88, 91, 0.05), transparent);
+      transition: left 0.5s;
+    }
+
+    .feature-card:hover::before {
+      left: 100%;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(10, 88, 91, 0.15);
+      border-color: #0a585b44;
+    }
+
+    .feature-card i {
+      font-size: clamp(2.2rem, 6vw, 3rem);
+      color: #0a585b;
+      margin-bottom: 20px;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover i {
+      transform: scale(1.1);
+    }
+
+    .feature-card h3 {
+      font-size: clamp(1.2rem, 3vw, 1.4rem);
+      color: #0a585b;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .feature-card p {
+      font-size: clamp(0.9rem, 2.1vw, 1rem);
+      color: #0f766e;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Tablet/Laptop adjustments for features */
+    @media (max-width: 1024px) and (min-width: 769px) {
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+      }
+
+      .feature-card {
+        padding: clamp(18px, 3vw, 25px) clamp(16px, 2.5vw, 20px);
+      }
+
+      .feature-card i {
+        font-size: clamp(2.5rem, 5vw, 2.8rem);
+        margin-bottom: 18px;
+      }
+
+      .feature-card h3 {
+        font-size: clamp(1.3rem, 2.5vw, 1.4rem);
+      }
+
+      .feature-card p {
+        font-size: clamp(0.95rem, 2vw, 1rem);
+      }
+    }
+
+    /* Mobile adjustments for features */
+    @media (max-width: 768px) {
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .feature-card {
+        padding: 25px 20px;
+      }
+
+      .feature-card i {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+      }
+
+      .feature-card h3 {
+        font-size: 1.3rem;
+      }
+    }
+
+    /* Additional mobile optimizations */
+    @media (max-width: 768px) {
+      header {
+        padding: 10px 3%;
+      }
+
+      main {
+        padding: 20px 3%;
+      }
+
+      section {
+        margin-bottom: 40px;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: clamp(15px, 4vw, 25px);
+        margin-bottom: 40px;
+        gap: 15px;
+      }
+
+      .hero-image img {
+        width: 100%;
+        height: auto;
+        max-height: 300px;
+      }
+
+      .info-section {
+        padding: clamp(20px, 3.5vw, 30px);
+        margin-bottom: 40px;
+      }
+
+      .achievements {
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+
+      .achievement-box {
+        padding: clamp(15px, 3vw, 20px);
+      }
+
+      .course-card {
+        flex: 0 0 clamp(200px, 80vw, 280px);
+        padding: 15px;
+      }
+
+      .course-card img {
+        height: 150px;
+      }
+
+      .course-card h3 {
+        font-size: 1.1rem;
+      }
+
+      .course-card p {
+        font-size: 0.9rem;
+      }
+
+      .blog-post {
+        flex: 0 0 clamp(200px, 80vw, 280px);
+        padding: 15px;
+      }
+
+      .blog-post h3 {
+        font-size: 1.1rem;
+      }
+
+      .blog-post p {
+        font-size: 0.9rem;
+      }
+
+      .career-item {
+        gap: 10px;
+        padding: 15px;
+      }
+
+      .different-section {
+        gap: 20px;
+        padding: 15px 0;
+      }
+
+      .modal,
+      .blog-modal {
+        padding: clamp(20px, 5vw, 25px);
+        max-width: 95%;
+        width: 100%;
+      }
+
+      .otp-inputs {
+        gap: 6px;
+      }
+
+      .otp-inputs input {
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+      }
+
+      footer {
+        padding: 20px 3%;
+        font-size: 0.85rem;
+      }
+
+      .floating-logo {
+        width: 70px;
+        opacity: 0.08;
+      }
+
+      .market-charts-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .market-charts-grid img {
+        width: 100%;
+        height: auto;
+        max-width: 140px;
+        max-height: 94px;
+      }
+
+      .market-charts-grid figcaption {
+        font-size: 0.8rem;
+      }
+    }
+
+    /* Extra small phones (below 400px) */
+    @media (max-width: 400px) {
+      .site-logo {
+        height: 40px;
+      }
+
+      .logo-text {
+        font-size: 1.1rem;
+        letter-spacing: 0.8px;
+      }
+
+      .logo-subtext {
+        font-size: 0.5rem;
+        letter-spacing: 0.8px;
+      }
+
+      header {
+        padding: 8px 2%;
+      }
+
+      header .header-inner {
+        gap: 4px;
+      }
+
+      .header-btn {
+        padding: 5px 8px;
+        font-size: 0.65rem;
+        display: none;
+      }
+
+      .menu-button {
+        padding: 5px 8px;
+        font-size: 0.65rem;
+      }
+
+      .menu-button svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      .hero {
+        padding: 12px;
+      }
+
+      .hero h1 {
+        font-size: 1.6rem;
+        margin-bottom: 10px;
+      }
+
+      .hero p {
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+      }
+
+      .hero button {
+        padding: 8px 16px;
+        font-size: 0.8rem;
+      }
+
+      main {
+        padding: 15px 3%;
+      }
+
+      h2.section-title {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+        padding-bottom: 6px;
+      }
+
+      .info-section {
+        padding: 15px;
+      }
+
+      .achievements {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .achievement-box h3 {
+        font-size: 1.5rem;
+      }
+
+      .achievement-box p {
+        font-size: 0.85rem;
+      }
+
+      .feature-card {
+        padding: 15px 12px;
+      }
+
+      .feature-card i {
+        font-size: 1.8rem;
+        margin-bottom: 12px;
+      }
+
+      .feature-card h3 {
+        font-size: 1rem;
+        margin-bottom: 10px;
+      }
+
+      .feature-card p {
+        font-size: 0.8rem;
+      }
+
+      .course-card {
+        flex: 0 0 clamp(160px, 100%, 240px);
+      }
+
+      .course-card img {
+        height: 120px;
+      }
+
+      .blog-post {
+        flex: 0 0 clamp(160px, 100%, 240px);
+      }
+
+      .modal,
+      .blog-modal {
+        padding: 15px;
+      }
+
+      .modal h3,
+      .blog-modal h3 {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+      }
+
+      .modal input {
+        padding: 8px 10px;
+        font-size: 0.9rem;
+        margin: 5px 0 12px;
+      }
+
+      .dropdown-menu {
+        min-width: 140px;
+        right: -10px;
+        top: 40px;
+        max-height: 80vh;
+        overflow-y: auto;
+      }
+
+      .dropdown-menu a,
+      .dropdown-menu button {
+        padding: 10px 12px;
+        font-size: 0.8rem;
+      }
+    }
+
+    /* Mobile header fine-tuning for 480px */
+    @media (max-width: 480px) {
+      .logo-area {
+        gap: 8px;
+        min-width: 0;
+        flex-shrink: 1;
+      }
+
+      .logo-text {
+        font-size: 1.2rem;
+      }
+
+      .logo-subtext {
+        font-size: 0.55rem;
+      }
+    }
+
+    /* Mobile header fine-tuning for tablets */
+    @media (max-width: 768px) and (min-width: 481px) {
+      .header-actions {
+        gap: 8px;
+      }
+    }
+
+    /* ================= SCROLL-BASED ANIMATIONS ================= */
+
+    /* Initial states for scroll animations */
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .animate-on-scroll.fade-in-left {
+      transform: translateX(-50px);
+    }
+
+    .animate-on-scroll.fade-in-right {
+      transform: translateX(50px);
+    }
+
+    .animate-on-scroll.scale-in {
+      transform: scale(0.9);
+    }
+
+    /* Animated states */
+    .animate-on-scroll.animate {
+      opacity: 1;
+      transform: translateY(0) translateX(0) scale(1);
+    }
+
+    /* Staggered animations for multiple elements */
+    .animate-on-scroll:nth-child(1) {
+      transition-delay: 0.1s;
+    }
+
+    .animate-on-scroll:nth-child(2) {
+      transition-delay: 0.2s;
+    }
+
+    .animate-on-scroll:nth-child(3) {
+      transition-delay: 0.3s;
+    }
+
+    .animate-on-scroll:nth-child(4) {
+      transition-delay: 0.4s;
+    }
+
+    .animate-on-scroll:nth-child(5) {
+      transition-delay: 0.5s;
+    }
+
+    .animate-on-scroll:nth-child(6) {
+      transition-delay: 0.6s;
+    }
+
+    /* Specific animations for different elements */
+    .section-title.animate-on-scroll {
+      transform: translateY(20px);
+    }
+
+    .course-card.animate-on-scroll,
+    .blog-post.animate-on-scroll,
+    .testimonial-card.animate-on-scroll,
+    .career-item.animate-on-scroll,
+    .feature-card.animate-on-scroll {
+      transform: translateY(40px);
+    }
+
+    .achievement-box.animate-on-scroll {
+      transform: translateY(30px) scale(0.95);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Floating decorative logo -->
+  <img src="2.png" alt="Floating Alphaprime Logo" class="floating-logo" />
+
+  <header>
+    <div class="header-inner">
+      <div class="logo-area">
+        <img src="2.png" alt="Alphaprime Logo" class="site-logo" />
+        <div class="logo-text-wrap">
+          <span class="logo-text">ALPHAPRIME</span>
+          <span class="logo-subtext"> Profit · From · Knowledge</span>
+        </div>
+      </div>
+
+      <!-- RIGHT SIDE: Register | Login | Menu all in ONE line -->
+      <div class="header-actions" style="display:flex; align-items:center; gap:12px;">
+        <button id="registerBtn" class="header-btn">Register</button>
+
+        <div class="dropdown" id="dropdownMenu">
+          <button class="menu-button" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-content"
+            id="menuButton">
+            Menu
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M7 10l5 5 5-5H7z" />
+            </svg>
+          </button>
+          <div class="dropdown-menu" id="dropdown-content" role="menu" aria-labelledby="menuButton" tabindex="-1">
+            <a href="#home" role="menuitem" tabindex="0" class="menu-link">Home</a>
+            <a href="#courses" role="menuitem" tabindex="0" class="menu-link">Courses</a>
+            <a href="#blog" role="menuitem" tabindex="0" class="menu-link">Blog</a>
+            <a href="#career" role="menuitem" tabindex="0" class="menu-link">Career Guidance</a>
+            <a href="#contact" role="menuitem" tabindex="0" class="menu-link">Contact</a>
+            <!--<button type="button" class="menu-btn enroll-btn" role="menuitem" tabindex="0">Enroll Now</button>-->
+            <button type="button" class="menu-btn" id="registerBtnDropdown" role="menuitem"
+              tabindex="0">Register</button>
+            <button type="button" class="menu-btn" id="loginBtnDropdown" role="menuitem" tabindex="0">Login</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+  <main>
+    <section id="home" class="hero" aria-label="Website introduction">
+      <div class="hero-text">
+        <h1>Trading Courses in Amritsar</h1>
+        <p>Learn, Analyze, and Trade Smarter with Our Expert-Led Stock Market Course That Builds Confidence, Discipline,
+          and Consistency.
+        </p>
+        <button id="scrollCourses">Explore Courses</button>
+      </div>
+      <div class="hero-image">
+        <img src="1234.JPG" alt="Learning and Growth" />
+      </div>
+    </section>
+
+    <section class="info-section">
+      <h2 class="animate-on-scroll">Why Choose Alphaprime?</h2>
+      <div class="features-grid">
+
+        <div class="feature-card animate-on-scroll">
+          <i class="fas fa-laptop"></i>
+          <h3>Flexible Learning</h3>
+          <p>Choose between online and offline classes in Amritsar to fit your schedule and preferred learning style.
+          </p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <i class="fas fa-chart-line"></i>
+          <h3>Live Trading Practice</h3>
+          <p>Gain hands-on experience with real market scenarios, live setups, and practical trading strategies.</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <i class="fas fa-shield-alt"></i>
+          <h3>Risk Management</h3>
+          <p>Master essential risk management techniques to protect your capital and ensure sustainable trading success.
+          </p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <i class="fas fa-search"></i>
+          <h3>Nifty 50 & Sensex Analysis</h3>
+          <p>Deep dive into index analysis with comprehensive coverage of Nifty 50 trends and Sensex market direction.
+          </p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <i class="fas fa-graduation-cap"></i>
+          <h3>Beginner to Advanced</h3>
+          <p>Courses designed for all skill levels, from complete beginners to experienced traders seeking advanced
+            techniques.</p>
+        </div>
+
+        <div class="feature-card animate-on-scroll">
+          <i class="fas fa-trophy"></i>
+          <h3>Proven Results</h3>
+          <p>Join thousands of successful traders who have transformed their financial futures with our comprehensive
+            training.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="courses" aria-label="Featured courses">
+      <h2 class="section-title animate-on-scroll">Featured Courses</h2>
+      <div class="courses-list" id="courseList">
+        <p class="loading">Loading featured courses…</p>
+      </div>
+      <div class="explore-more">
+        <a href="courses.html">Explore More Courses →</a>
+      </div>
+    </section>
+
+    <!-- HOW WE ARE DIFFERENT SECTION -->
+    <section class="different-section" id="different">
+
+      <!-- LEFT IMAGE -->
+      <div class="different-image">
+        <img src="upscaledhardil.png" alt="How Alphaprime is Different">
+      </div>
+
+      <!-- RIGHT CONTENT -->
+      <div class="different-content">
+        <h2>How We Are Different?</h2>
+        <ul>
+          <li>
+            <strong> Learning Flexibility:</strong> Our best trading course in Amritsar is available in both online and
+            offline formats, allowing learners to choose how they attend share market classes and stock market classes
+            based on their schedule and comfort, without missing practical exposure.
+          </li>
+          <li>
+            <strong>Suitable for All Skill Levels:</strong> The trading course is designed for beginners and experienced
+            traders alike, ensuring our share market classes explain concepts clearly while our stock market classes
+            deliver advanced market insights.
+          </li>
+          <li>
+            <strong>Practical Market-Oriented Training:</strong> Through our trading course, students gain real-time
+            learning using live market scenarios, helping learners apply concepts taught in share market classes and
+            stock market classes effectively.
+          </li>
+          <li>
+            <strong>Structured and Easy-to-Follow Approach:</strong> Our share market classes follow a clear,
+            step-by-step structure, while the stock market classes focus on strategy building, analysis, and disciplined
+            execution throughout the trading course.
+          </li>
+          <li>
+            <strong>Index-Focused Learning:</strong> Dedicated sessions on nifty 50 and sensex help students understand
+            nifty 50 trends and analyze sensex movements, strengthening decision-making within our trading course, share
+            market classes, and stock market classes.
+          </li>
+        </ul>
+      </div>
+
+    </section>
+
+
+    <section>
+      <h2 class="section-title animate-on-scroll">Market Trends & Charts</h2>
+      <br><br>
+      <div class="market-charts-grid">
+        <figure>
+          <video width="160" height="107" controls class="animated-img">
+            <source src="shareholder.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <figcaption>Shareholding Pattern</figcaption>
+        </figure>
+        <figure>
+          <video width="160" height="107" controls class="animated-img">
+            <source src="over under val.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <figcaption>Re-Balancing</figcaption>
+        </figure>
+        <figure>
+          <video width="160" height="107" controls class="animated-img">
+            <source src="futre opt .mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <figcaption>Future & Options Trade</figcaption>
+        </figure>
+        <figure>
+          <video width="160" height="107" controls class="animated-img">
+            <source src="webinar2.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <figcaption>How to Invest Properly</figcaption>
+        </figure>
+        <figure>
+          <video width="160" height="107" controls class="animated-img">
+            <source src="caption repair copper.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <figcaption>Potential of Copper</figcaption>
+        </figure>
+        <figure>
+          <!-- <video width="160" height="107" controls class="animated-img">
+            <source src="investment-charts.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video> -->
+          <!-- <figcaption>Investment Charts</figcaption> -->
+        </figure>
+      </div>
+    </section>
+
+
+    <section class="info-section">
+      <h2>Our Achievements</h2>
+      <p>
+        Over the years, Alphaprime has successfully trained hundreds of learners through its industry-focused trading
+        course in Amritsar offline as well as online classes, helping students build confidence and consistency in the
+        markets. Our result-driven share market classes
+        have enabled beginners and professionals alike to understand market structure, while our practical stock market
+        classes emphasize real trading discipline and strategy execution. A major achievement of our trading course is
+        its strong focus on index analysis, where students learn to read trends and momentum in nifty 50 effectively.
+        Our learners also gain clarity on market direction by studying sensex, making informed decisions backed by data.
+        With proven outcomes from our share market classes, hands-on exposure in stock market classes, and consistent
+        tracking of nifty 50 and sensex, Alphaprime continues to set benchmarks in quality stock market education.
+      </p>
+
+      <div class="achievements">
+        <div class="achievement-box">
+          <video controls width="100%" height="200px">
+            <source src="achivement1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+
+        <div class="achievement-box">
+          <video controls width="100%" height="200px">
+            <source src="achievement2.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+
+        <div class="achievement-box">
+          <video controls width="100%" height="200px">
+            <source src="achievement3.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+
+
+    </section>
+    <br><br>
+
+    <section id="blog" aria-label="Blog highlights">
+      <h2 class="section-title">Latest from the Blog</h2>
+      <div class="blog-list" id="blogList">
+        <article class="blog-post" tabindex="0">
+          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=320&q=80"
+            alt="Market Sentiment" />
+          <h3>Can Students Start Stock Market Trading in India?</h3>
+          <p>Many students in India today are curious about whether they can start trading in....</p>
+          <a href="blog.html" class="read-more">Read More</a>
+        </article>
+        <article class="blog-post" tabindex="0">
+          <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=320&q=80"
+            alt="Technical Indicators" />
+          <h3>How NSE India Works : Simple Explanation for Beginners </h3>
+          <p>National Stock Exchange of India, popularly known as NSE India, is the core platform....</p>
+          <a href="blog3.html" class="read-more">Read More</a>
+        </article>
+        <article class="blog-post" tabindex="0">
+          <img src="412b5b4a-d13f-4941-9c1d-131a5de5a0eb.png" alt="Risk Management" />
+          <h3>Introduction to Nifty 50 for Beginners</h3>
+          <p>The Nifty 50 trade is considered the most reliable way for beginners in India to....</p>
+          <a href="blog4.html" class="read-more">Read More</a>
+        </article>
+        <article class="blog-post" tabindex="0">
+          <img src="blogpic2.jpg" alt="Risk Management" />
+          <h3>Nifty 50 vs Sensex: Which Index Should You Trade as a Beginner?</h3>
+          <p>When new traders come into the stock market, their very first question usually is....</p>
+          <a href="blog2.html" class="read-more">Read More</a>
+        </article>
+        <article class="blog-post" tabindex="0">
+          <img src="blogpic.jpg" alt="Risk Management" />
+          <h3>Stock Market Explained in Simple Language for Beginners</h3>
+          <p>The stock market is a place where people trade the shares of companies, and for a....</p>
+          <a href="blog1.html" class="read-more">Read More</a>
+        </article>
+      </div>
+      <!--<div class="explore-more">
+        <a href="blogs.html">Explore More Blogs →</a>
+      </div>
+    </section>-->
+      <br><br><br><br><br>
+
+      <section class="info-section">
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <div class="faq-question">What is Alphaprime?</div>
+          <div class="faq-answer">Alphaprime is a professional trading education platform designed to help beginners and
+            aspiring traders learn the fundamentals of financial markets, technical analysis, and practical trading
+            strategies.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">Who are these courses for?</div>
+          <div class="faq-answer">Our courses are perfect for:
+            <ul>
+              <li>Beginners with zero trading knowledge</li>
+              <li>Students interested in stock market careers</li>
+              <li>Working professionals looking for an additional income skill</li>
+              <li>Traders who want to improve their strategy and risk management</li>
+            </ul>
+
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">What will I learn in the Basic Trading Course?</div>
+          <div class="faq-answer">You will learn:
+            <ul>
+              <li>Stock market fundamentals</li>
+              <li>How charts work</li>
+              <li>Technical indicators</li>
+              <li>Risk management</li>
+              <li>Trading psychology</li>
+              <li>Live market trading concepts</li>
+            </ul>
+          </div>
+
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">Are the classes at Alphaprime conducted online or offline?</div>
+          <div class="faq-answer">Alphaprime offers both online and offline classes to suit different learning
+            preferences. Students can attend live interactive sessions from anywhere through our online platform, or
+            join offline classroom training in Amritsar for an in-person learning experience.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">How can I enroll in a course?</div>
+          <div class="faq-answer">You can enroll directly through the Alphaprime website by selecting your course and
+            completing the registration and payment process.</div>
+        </div>
+      </section>
+
+      <br><br><br><br>
+
+
+      <section class="info-section">
+        <h2>What Our Students Say</h2>
+
+        <div class="testimonials">
+          <div class="testimonial-card animate-on-scroll">
+            <p>"Alphaprime completely changed my understanding of trading."</p>
+            <h4>— Rahul Sharma</h4>
+          </div>
+
+          <div class="testimonial-card animate-on-scroll">
+            <p>"The courses are practical, clear, and easy to follow."</p>
+            <h4>— Ananya Verma</h4>
+          </div>
+
+          <div class="testimonial-card animate-on-scroll">
+            <p>"Best platform for learning stock market fundamentals."</p>
+            <h4>— Kunal Mehta</h4>
+          </div>
+        </div>
+      </section>
+      <br><br><br>
+
+
+      <section id="career" aria-label="Career guidance">
+        <h2 class="section-title animate-on-scroll">Career Guidance</h2>
+        <div class="career-list">
+          <article class="career-item animate-on-scroll" tabindex="0">
+            <img src="https://cdn-icons-png.flaticon.com/64/2991/2991148.png" alt="Career Building" />
+            <h3>Building a Trading Career</h3>
+            <p>Essential steps and skills to become a professional trader in today’s markets.</p>
+          </article>
+          <article class="career-item animate-on-scroll" tabindex="0">
+            <img src="https://cdn-icons-png.flaticon.com/64/2910/2910767.png" alt="Job Opportunities" />
+            <h3>Job Opportunities in Finance</h3>
+            <p>Discover promising roles and how to leverage your trading knowledge to land jobs.</p>
+          </article>
+          <article class="career-item animate-on-scroll" tabindex="0">
+            <img src="https://cdn-icons-png.flaticon.com/64/3135/3135715.png" alt="Networking Tips" />
+            <h3>Networking Tips for Traders</h3>
+            <p>How to connect with industry experts and grow your professional network.</p>
+          </article>
+        </div>
+      </section>
+  </main>
+
+  <!-- Footer -->
+  <footer id="contact" aria-label="Contact information">
+    <p>Contact us at: <a href="mailto:Thealphaprimeofficial@gmail.com">Thealphaprimeofficial@gmail.com</a> | Phone: <a href="tel:+916280952152">+91 62809 52152</a></p>
+    <p>
+      Follow us:
+      <a href="https://www.instagram.com/hardilpreetsingh333?igsh=MXp0MjF1bW1yaDNo" aria-label="Instagram">Instagram</a> |
+      <a href="https://wa.me/916280952152?text=Hi%2C%20I%E2%80%99m%20interested%20in%20learning%20stock%20trading" aria-label="WhatsApp">WhatsApp</a> |
+      <a href="https://youtube.com/@alphaprimeace?si=kEDXgq9mwWlGiFyd" aria-label="YouTube">YouTube</a>
+    </p>
+    <p>&copy; 2026 alphaprime. All rights reserved.</p>
+  </footer>
+
+
+  <!-- Enrollment Modal WITH OTP -->
+  <div class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal" role="document">
+      <h3 id="modal-title">Course Title</h3>
+      <p id="modal-description">Course description goes here.</p>
+      <p id="modal-details" style="white-space: pre-line;"></p>
+      <form id="enroll-form" novalidate>
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="Your full name" required />
+
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="Your email" required />
+
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" placeholder="Linked mobile number" required />
+
+        <button type="button" id="enroll-send-otp" class="submit-btn" style="width:100%;margin-bottom:10px;">Send
+          OTP</button>
+
+        <div class="otp-section" id="enroll-otp-section" style="display:none;">
+          <span class="otp-label">Enter OTP</span>
+          <div class="otp-inputs">
+            <input type="text" inputmode="numeric" maxlength="1">
+            <input type="text" inputmode="numeric" maxlength="1" disabled>
+            <input type="text" inputmode="numeric" maxlength="1" disabled>
+            <input type="text" inputmode="numeric" maxlength="1" disabled>
+          </div>
+        </div>
+
+        <div class="modal-buttons">
+          <button type="button" class="close-btn">Cancel</button>
+          <button type="submit" class="submit-btn">Verify & Enroll</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Payment Modal (demo) -->
+  <div class="modal-overlay" id="paymentModal" aria-hidden="true" role="dialog" aria-modal="true"
+    aria-labelledby="payment-label">
+    <div class="modal" role="document">
+      <h3 id="payment-label">Payment</h3>
+      <p id="payment-desc">Complete payment to enroll in the course.</p>
+
+      <label for="payment-method">Choose Payment Method</label>
+      <select id="payment-method">
+        <option value="card">Card</option>
+        <option value="upi">UPI</option>
+        <option value="wallet">Wallet</option>
+      </select>
+
+      <div style="margin-top:12px;">
+        <label for="payment-amount">Amount</label>
+        <input type="text" id="payment-amount" readonly />
+      </div>
+
+      <div class="modal-buttons" style="margin-top:18px;">
+        <button type="button" class="close-btn" id="closePayment">Cancel</button>
+        <button type="button" class="submit-btn" id="payNow">Pay Now</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Blog Modal (unchanged) -->
+  <div class="blog-modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="blog-modal-title">
+    <div class="blog-modal" role="document">
+      <h3 id="blog-modal-title"></h3>
+      <p id="blog-modal-content"></p>
+      <button type="button" class="close-btn">Close</button>
+    </div>
+  </div>
+
+  <!-- Registration Modal WITH OTP -->
+  <div class="modal-overlay" id="registerModal" aria-hidden="true" role="dialog" aria-modal="true"
+    aria-labelledby="register-label">
+    <div class="modal" role="document">
+      <h3 id="register-label">Register for alphaprime</h3>
+      <form id="register-form" novalidate>
+        <label for="reg-name">Full Name</label>
+        <input type="text" id="reg-name" name="reg-name" placeholder="Your full name" required />
+
+        <label for="reg-email">Email</label>
+        <input type="email" id="reg-email" name="reg-email" placeholder="Your email" required />
+
+        <label for="reg-phone">Phone Number</label>
+        <input type="tel" id="reg-phone" name="reg-phone" placeholder="Linked mobile number" required />
+
+        <label for="reg-password">Password</label>
+        <input type="password" id="reg-password" name="reg-password" placeholder="Create a password" required />
+
+        <button type="button" id="reg-send-otp" class="submit-btn" style="width:100%;margin-bottom:10px;">Send
+          OTP</button>
+
+        <div class="otp-section" id="reg-otp-section" style="display:none;">
+          <span class="otp-label">Enter OTP</span>
+          <div class="otp-inputs">
+            <input type="text" inputmode="numeric" maxlength="1">
+            <input type="text" inputmode="numeric" maxlength="1" disabled>
+            <input type="text" inputmode="numeric" maxlength="1" disabled>
+            <input type="text" inputmode="numeric" maxlength="1" disabled>
+          </div>
+        </div>
+
+        <div class="modal-buttons" style="margin-top:15px;">
+          <button type="button" class="close-btn" id="closeRegister">Cancel</button>
+          <button type="submit" class="submit-btn">Verify & Register</button>
+        </div>
+        <p style="margin-top:15px; text-align:center; font-size:0.9rem;">
+          Already have an account?
+          <a href="#" id="goToLogin" style="color:#0a585b; font-weight:600;">
+            Login
+          </a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div class="modal-overlay" id="loginModal" aria-hidden="true" role="dialog" aria-modal="true"
+    aria-labelledby="login-label">
+    <div class="modal" role="document">
+      <h3 id="login-label">Login to alphaprime</h3>
+
+      <!-- Login Form Section -->
+      <div id="login-form-section">
+        <form id="login-form" novalidate>
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" name="login-email" placeholder="Registered email" required />
+
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" name="login-password" placeholder="Your password" required />
+
+          <div class="modal-buttons" style="margin-top:15px;">
+            <button type="button" class="close-btn" id="closeLogin">Cancel</button>
+            <button type="submit" class="submit-btn">Login</button>
+          </div>
+        </form>
+        <div style="text-align:center; margin-top:12px;">
+          <button type="button" class="forgot-password-btn" id="showForgotPassword"
+            style="background:none; border:none; color:#0f766e; cursor:pointer; text-decoration:underline; font-weight:500;">Forgot
+            Password?</button>
+        </div>
+      </div>
+
+      <!-- Forgot Password Form Section -->
+      <div id="forgot-password-section" style="display:none;">
+        <div id="forgot-password-email-step">
+          <p style="margin:0 0 15px 0; color:#0f766e; font-size:0.95rem;">Enter your registered email to receive an OTP
+          </p>
+          <form id="forgot-password-email-form" novalidate>
+            <label for="forgot-email">Email</label>
+            <input type="email" id="forgot-email" name="forgot-email" placeholder="Registered email" required />
+
+            <div class="modal-buttons" style="margin-top:15px;">
+              <button type="button" class="close-btn" id="backToLogin">Back</button>
+              <button type="submit" class="submit-btn">Send OTP</button>
+            </div>
+          </form>
+        </div>
+
+        <div id="forgot-password-otp-step" style="display:none;">
+          <p style="margin:0 0 15px 0; color:#0f766e; font-size:0.95rem;">Enter the OTP sent to your email</p>
+          <form id="forgot-password-otp-form" novalidate>
+            <label>OTP</label>
+            <div class="otp-inputs" style="display:flex; gap:8px; justify-content:center; margin:15px 0;">
+              <input type="text" maxlength="1" inputmode="numeric" />
+              <input type="text" maxlength="1" inputmode="numeric" disabled />
+              <input type="text" maxlength="1" inputmode="numeric" disabled />
+              <input type="text" maxlength="1" inputmode="numeric" disabled />
+            </div>
+
+            <div class="modal-buttons" style="margin-top:15px;">
+              <button type="button" class="close-btn" id="backToEmailStep">Back</button>
+              <button type="submit" class="submit-btn">Verify OTP</button>
+            </div>
+          </form>
+        </div>
+
+        <div id="forgot-password-reset-step" style="display:none;">
+          <p style="margin:0 0 15px 0; color:#0f766e; font-size:0.95rem;">Create your new password</p>
+          <form id="forgot-password-reset-form" novalidate>
+            <label for="forgot-new-password">New Password</label>
+            <input type="password" id="forgot-new-password" name="forgot-new-password" placeholder="Enter new password"
+              required />
+
+            <label for="forgot-confirm-password">Confirm Password</label>
+            <input type="password" id="forgot-confirm-password" name="forgot-confirm-password"
+              placeholder="Confirm password" required />
+
+            <div class="modal-buttons" style="margin-top:15px;">
+              <button type="button" class="close-btn" id="closeReset">Cancel</button>
+              <button type="submit" class="submit-btn">Reset Password</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    let tempRegisterUserId = null;
+    let tempRegisterCredentials = null;
+
+    /* existing JS for dropdown, theme toggle, scrolling, blog modal, etc. can stay the same
+      — below is only the OTP+minor updates part */
+
+    /* Simple helper to wire 4-box OTP input */
+    function setupOtp(sectionEl) {
+      const inputs = sectionEl.querySelectorAll('.otp-inputs input');
+      inputs.forEach((input, idx) => {
+        input.addEventListener('input', () => {
+          input.value = input.value.replace(/\\D/g, '').slice(0, 1);
+          if (input.value && idx < inputs.length - 1) {
+            inputs[idx + 1].disabled = false;
+            inputs[idx + 1].focus();
+          }
+        });
+        input.addEventListener('keydown', e => {
+          if (e.key === 'Backspace' && !input.value && idx > 0) {
+            inputs[idx - 1].focus();
+          }
+        });
+      });
+      return () => Array.from(inputs).map(i => i.value).join('');
+    }
+
+    /* Dropdown menu toggle */
+    const dropdown = document.getElementById('dropdownMenu');
+    const menuButton = document.getElementById('menuButton');
+    menuButton.addEventListener('click', () => {
+      const isOpen = dropdown.classList.toggle('open');
+      menuButton.setAttribute('aria-expanded', isOpen);
+      if (isOpen) {
+        document.getElementById('dropdown-content').focus();
+      }
+    });
+    document.addEventListener('click', e => {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove('open');
+        menuButton.setAttribute('aria-expanded', false);
+      }
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && dropdown.classList.contains('open')) {
+        dropdown.classList.remove('open');
+        menuButton.setAttribute('aria-expanded', false);
+        menuButton.focus();
+      }
+    });
+
+    /* Theme toggle */
+    const themeToggleBtns = document.querySelectorAll('.toggle-theme-btn');
+    themeToggleBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.body.classList.toggle('dark');
+        const enabled = document.body.classList.contains('dark');
+        themeToggleBtns.forEach(b => {
+          b.textContent = enabled ? 'Light Mode' : 'Dark Mode';
+          b.setAttribute('aria-pressed', enabled);
+        });
+      });
+    });
+
+    /* Scroll explore courses */
+    document.getElementById('scrollCourses')?.addEventListener('click', () => {
+      document.getElementById('courses').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    /* Load featured courses from backend */
+    async function loadFeaturedCourses(limit = 5) {
+      const container = document.getElementById('courseList');
+      if (!container) return;
+      container.innerHTML = '<p class="loading">Loading featured courses…</p>';
+
+      // 4K Course Images - High resolution stock market related images
+      const courseImages = {
+        'Technical-Analysis': 'blur-1853262_1280.jpg',
+        'Day-Trading': 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?ixlib=rb-4.0.3&auto=format&fit=crop&w=3840&q=80',
+        'Swing-Trading': 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=3840&q=80',
+        'Options-Trading': 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=3840&q=80',
+        'Intraday-Trading': 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=3840&q=80',
+        'Stock-Market-Basics': 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=3840&q=80',
+        'Forex-Trading': 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=3840&q=80',
+        'Risk-Management': 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=3840&q=80'
+      };
+
+      try {
+        const resp = await fetch('http://localhost:3000/api/courses');
+        if (!resp.ok) throw new Error('Failed to fetch courses');
+        let courses;
+        try {
+          courses = await resp.json();
+        } catch (jsonErr) {
+          throw new Error('Invalid JSON response from server');
+        }
+        if (!Array.isArray(courses)) throw new Error('Unexpected response');
+
+        container.innerHTML = '';
+        const featured = courses.slice(0, limit);
+
+        if (featured.length === 0) {
+          container.innerHTML = '<p class="no-data">No featured courses available.</p>';
+          return;
+        }
+
+        featured.forEach((c, idx) => {
+          const article = document.createElement('article');
+          article.className = 'course-card';
+          article.tabIndex = 0;
+          article.dataset.courseSlug = c.slug || '';
+          article.dataset.coursePrice = c.price || 0;
+
+          // Use database image_url directly
+          let imgSrc = c.image_url;
+
+          article.innerHTML = `
+          <img src="${imgSrc}" alt="${(c.title || 'Course').replace(/"/g, '')}" loading="lazy" />
+          <h3>${c.title || ''}</h3>
+          <p>${c.description || ''}</p>
+          <button class="enroll-btn">Login to Enroll</button>
+        `;
+
+          container.appendChild(article);
+        });
+
+      } catch (err) {
+        console.error('Error loading featured courses', err);
+        container.innerHTML = '<p class="error">Failed to load featured courses. Please try again later.</p>';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => loadFeaturedCourses());
+
+    /* Enrollment modal (with OTP) */
+    /*const modalOverlay = document.querySelector('.modal-overlay[aria-labelledby="modal-title"]');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDescription = document.getElementById('modal-description');
+    const modalDetails = document.getElementById('modal-details');*/
+    /*const enrollForm = document.getElementById('enroll-form');
+    const closeModalBtn = modalOverlay.querySelector('.close-btn');
+    const enrollOtpSection = document.getElementById('enroll-otp-section');
+    const enrollSendOtpBtn = document.getElementById('enroll-send-otp');
+    let getEnrollOtpValue = ()=>''*/
+
+    /* NEW: keep track of selected course */
+    let selectedCourseSlug = null;
+    let pendingEnrollCourse = null;
+    let selectedCourseTitle = null;
+
+    /*document.querySelectorAll('.enroll-btn, .menu-btn.enroll-btn').forEach(btn => {
+      btn.onclick = e => {
+        const card = e.target.closest('.course-card');
+  
+        if (card) {
+          selectedCourseSlug = card.dataset.courseSlug || null;
+          selectedCourseTitle = card.querySelector('h3')?.textContent || 'Enrollment';
+  
+          modalTitle.textContent = selectedCourseTitle;
+          modalDescription.textContent = 'Fill your details and verify with OTP to enroll.';
+          modalDetails.textContent = 'You are enrolling in: ' + selectedCourseTitle;
+        } else {
+          // If Enroll is clicked from menu (not from course card)
+          selectedCourseSlug = null;
+          selectedCourseTitle = 'Enrollment';
+          modalTitle.textContent = 'Enrollment';
+          modalDescription.textContent = 'Fill your details and verify with OTP to enroll.';
+          modalDetails.textContent = '';
+        }
+  
+        enrollForm.reset();
+        enrollOtpSection.style.display = 'none';
+        Array.from(enrollOtpSection.querySelectorAll('input')).forEach((i, idx) => {
+          i.value = '';
+          i.disabled = idx !== 0;
+        });
+  
+        modalOverlay.classList.add('active');
+        modalOverlay.setAttribute('aria-hidden', 'false');
+        enrollForm.name.focus();
+        dropdown.classList.remove('open');
+        menuButton.setAttribute('aria-expanded', false);
+      };
+    });*/
+
+    /* enrollSendOtpBtn.addEventListener('click', () => {
+       if(!enrollForm.phone.value){
+         alert('Please enter your phone number first.');
+         enrollForm.phone.focus();
+         return;
+       }
+       alert('Demo OTP sent: 1234');
+       enrollOtpSection.style.display = 'block';
+       getEnrollOtpValue = setupOtp(enrollOtpSection);
+     });*/
+
+    /* closeModalBtn.onclick = () => {
+       modalOverlay.classList.remove('active');
+       modalOverlay.setAttribute('aria-hidden','true');
+     };
+     modalOverlay.addEventListener('click', e => {
+       if(e.target === modalOverlay) closeModalBtn.click();
+     });*/
+
+    /*enrollForm.addEventListener('submit', async e => {
+      e.preventDefault();
+  
+      if (!enrollForm.checkValidity()) {
+        enrollForm.reportValidity();
+        return;
+      }
+  
+      const otp = getEnrollOtpValue();
+      if (otp !== '1234') {
+        alert('Invalid OTP. Please try again (demo code is 1234).');
+        return;
+      }
+  
+      if (!selectedCourseSlug) {
+        alert('No course selected. Please click "Enroll Now" on a course.');
+        return;
+      }
+  
+      const payload = {
+        full_name: enrollForm.name.value,
+        email: enrollForm.email.value,
+        phone: enrollForm.phone.value,
+        course_slug: selectedCourseSlug
+      };
+  
+      try {
+        const response = await fetch('http://localhost:3000/api/enroll', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+  
+        const data = await response.json();
+  
+        if (!response.ok || !data.success) {
+          throw new Error(data.message || 'Failed to enroll');
+        }
+  
+        alert('Thank you for enrolling, ' + payload.full_name + ' in ' +
+          (selectedCourseTitle || 'the course') + '!');
+        closeModalBtn.click();
+      } catch (err) {
+        console.error('Enroll error:', err);
+        alert('Error saving enrollment to database: ' + err.message);
+      }
+    });*/
+
+    /* Blog modal (unchanged) */
+    const blogModalOverlay = document.querySelector('.blog-modal-overlay');
+    const blogModalTitle = document.getElementById('blog-modal-title');
+    const blogModalContent = document.getElementById('blog-modal-content');
+    const blogModalCloseBtn = blogModalOverlay.querySelector('.close-btn');
+    // document.querySelectorAll('.read-more').forEach(btn => {
+    //   btn.addEventListener('click', e => {
+    //     e.preventDefault();
+    //     const post = e.target.closest('.blog-post');
+    //     if (post) {
+    //       blogModalTitle.textContent = post.querySelector('h3').textContent;
+    //       blogModalContent.textContent = post.querySelector('p').textContent;
+    //       blogModalOverlay.classList.add('active');
+    //       blogModalOverlay.setAttribute('aria-hidden', 'false');
+    //       blogModalCloseBtn.focus();
+    //     }
+    //   });
+    // });
+
+    document.querySelectorAll('.read-more').forEach(btn => {
+      btn.addEventListener('click', e => {
+        const post = e.target.closest('.blog-post');
+        const title = post?.querySelector('h3')?.textContent.trim();
+
+        const redirectBlogTitles = [
+          'Can Students Start Stock Market Trading in India?',
+          'How NSE India Works : Simple Explanation for Beginners',
+          'Introduction to Nifty 50 for Beginners',
+          'Nifty 50 vs Sensex: Which Index Should You Trade as a Beginner?',
+          'Stock Market Explained in Simple Language for Beginners'
+        ];
+
+
+        // ✅ Redirect ONLY for this specific blog
+        if (redirectBlogTitles.includes(title)) {
+          // Let browser handle normal navigation
+          return;
+        }
+
+
+        // ❌ Prevent default ONLY for other blogs
+        // e.preventDefault();
+
+        // Existing modal behavior for other blogs
+        blogModalTitle.textContent = title;
+        // blogModalContent.textContent = post.querySelector('p').textContent;
+        blogModalOverlay.classList.add('active');
+        blogModalOverlay.setAttribute('aria-hidden', 'false');
+      });
+    });
+
+    blogModalCloseBtn.addEventListener('click', () => {
+      blogModalOverlay.classList.remove('active');
+      blogModalOverlay.setAttribute('aria-hidden', 'true');
+    });
+    blogModalOverlay.addEventListener('click', e => {
+      if (e.target === blogModalOverlay) blogModalCloseBtn.click();
+    });
+
+    /* Registration modal with OTP */
+    const registerModal = document.getElementById('registerModal');
+    const registerBtn = document.getElementById('registerBtn');
+    const registerBtnDropdown = document.getElementById('registerBtnDropdown');
+    const closeRegisterBtn = document.getElementById('closeRegister');
+    const registerForm = document.getElementById('register-form');
+    const regOtpSection = document.getElementById('reg-otp-section');
+    const regSendOtpBtn = document.getElementById('reg-send-otp');
+    let getRegOtpValue = () => '';
+
+    function openRegisterModal() {
+      registerModal.classList.add('active');
+      registerModal.setAttribute('aria-hidden', 'false');
+      registerForm.reset();
+      regOtpSection.style.display = 'none';
+      Array.from(regOtpSection.querySelectorAll('input')).forEach((i, idx) => {
+        i.value = '';
+        i.disabled = idx !== 0;
+      });
+      document.getElementById('reg-name').focus();
+      dropdown.classList.remove('open');
+      menuButton.setAttribute('aria-expanded', false);
+    }
+    if (registerBtn) registerBtn.onclick = openRegisterModal;
+    if (registerBtnDropdown) registerBtnDropdown.onclick = openRegisterModal;
+
+    regSendOtpBtn.addEventListener("click", async () => {
+
+      // validate full form
+      if (!registerForm.checkValidity()) {
+        registerForm.reportValidity();
+        return;
+      }
+
+      const payload = {
+        full_name: registerForm["reg-name"].value,
+        email: registerForm["reg-email"].value,
+        phone: registerForm["reg-phone"].value,
+        password: registerForm["reg-password"].value
+      };
+
+      // save credentials to auto-login after verification if needed
+      tempRegisterCredentials = {
+        email: payload.email,
+        password: payload.password,
+        full_name: payload.full_name,
+        phone: payload.phone
+      };
+
+      try {
+        const response = await fetch(
+          "http://localhost:3000/api/register/send-otp",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          }
+        );
+
+        let data;
+        try {
+          data = await response.json();
+        } catch (jsonErr) {
+          throw new Error("Invalid JSON response from server");
+        }
+
+        if (!response.ok || !data.success) {
+          throw new Error(data.message || "Failed to send OTP");
+        }
+
+        // save user id
+        tempRegisterUserId = data.user_id;
+
+        alert("OTP sent successfully");
+
+        regOtpSection.style.display = "block";
+        getRegOtpValue = setupOtp(regOtpSection);
+
+        // optional UX
+        regSendOtpBtn.disabled = true;
+        regSendOtpBtn.textContent = "OTP Sent";
+
+      } catch (err) {
+        alert(err.message);
+      }
+    });
+
+
+    closeRegisterBtn.addEventListener('click', () => {
+      registerModal.classList.remove('active');
+      pendingEnrollCourse = null;
+      registerModal.setAttribute('aria-hidden', 'true');
+
+      tempRegisterUserId = null;
+      regSendOtpBtn.disabled = false;
+      regSendOtpBtn.textContent = "Send OTP";
+    });
+
+    registerForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      if (!tempRegisterUserId) {
+        alert("Please click Send OTP first");
+        return;
+      }
+
+      const otp = getRegOtpValue();
+
+      if (!otp || otp.length !== 4) {
+        alert("Please enter a valid 4-digit OTP");
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          "http://localhost:3000/api/register/verify-otp",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              user_id: tempRegisterUserId,
+              otp
+            })
+          }
+        );
+
+        let data;
+        try {
+          data = await response.json();
+        } catch (jsonErr) {
+          throw new Error("Invalid JSON response from server");
+        }
+
+        if (!response.ok || !data.success) {
+          throw new Error(data.message || "OTP verification failed");
+        }
+
+        // Registration successful
+        alert('Registration successful! Welcome to Alphaprime.');
+
+        // close the register modal UI
+        closeRegisterBtn.click();
+
+        // re-enable the reg send otp button for future use
+        regSendOtpBtn.disabled = false;
+        regSendOtpBtn.textContent = 'Send OTP';
+
+        // store the newly registered user's identity in localStorage so subsequent pages show the same user
+        try {
+          if (tempRegisterUserId) localStorage.setItem('alphaprimeUserId', tempRegisterUserId);
+          if (tempRegisterCredentials?.email) localStorage.setItem('alphaprimeEmail', tempRegisterCredentials.email);
+          if (tempRegisterCredentials?.full_name) localStorage.setItem('alphaprimeName', tempRegisterCredentials.full_name);
+        } catch (e) { console.error('Setting localStorage for new user failed', e); }
+
+        // redirect to dashboard instead of opening enroll modal
+        window.location.href = 'dashboard.html';
+
+        // keep tempRegisterUserId available for enrollment API calls (so we can enroll without login)
+        // do not auto-login here per your desired flow
+
+
+      } catch (err) {
+        alert(err.message);
+      }
+    });
+
+
+    /* Enrollment modal helpers and handlers (open after registration) */
+    const enrollModalOverlay = document.querySelector('.modal-overlay[aria-labelledby="modal-title"]');
+    const enrollModalTitle = document.getElementById('modal-title');
+    const enrollModalDescription = document.getElementById('modal-description');
+    const enrollModalDetails = document.getElementById('modal-details');
+    const enrollForm = document.getElementById('enroll-form');
+    const enrollOtpSection = document.getElementById('enroll-otp-section');
+    const enrollSendOtpBtn = document.getElementById('enroll-send-otp');
+    let getEnrollOtpValue = () => '';
+
+    function openEnrollModalFromRegistration() {
+      if (!enrollModalOverlay) return;
+
+      selectedCourseSlug = pendingEnrollCourse || selectedCourseSlug;
+      selectedCourseTitle = document.querySelector(`[data-course-slug="${selectedCourseSlug}"] h3`)?.textContent || 'Enrollment';
+
+      enrollModalTitle.textContent = selectedCourseTitle;
+      enrollModalDescription.textContent = 'Fill your details and verify with OTP to enroll.';
+      enrollModalDetails.textContent = selectedCourseTitle ? ('You are enrolling in: ' + selectedCourseTitle) : '';
+
+      enrollForm.reset();
+
+      // prefill with values collected during registration
+      enrollForm.name.value = registerForm['reg-name'].value || tempRegisterCredentials?.full_name || '';
+      enrollForm.email.value = registerForm['reg-email'].value || tempRegisterCredentials?.email || '';
+      enrollForm.phone.value = registerForm['reg-phone'].value || tempRegisterCredentials?.phone || '';
+
+      enrollOtpSection.style.display = 'none';
+      Array.from(enrollOtpSection.querySelectorAll('input')).forEach((i, idx) => {
+        i.value = '';
+        i.disabled = idx !== 0;
+      });
+
+      enrollModalOverlay.classList.add('active');
+      enrollModalOverlay.setAttribute('aria-hidden', 'false');
+      enrollForm.name.focus();
+    }
+
+    if (enrollSendOtpBtn) {
+      enrollSendOtpBtn.addEventListener('click', () => {
+        if (!enrollForm.phone.value) {
+          alert('Please enter your phone number first.');
+          enrollForm.phone.focus();
+          return;
+        }
+        alert('Demo OTP sent: 1234');
+        enrollOtpSection.style.display = 'block';
+        getEnrollOtpValue = setupOtp(enrollOtpSection);
+        enrollSendOtpBtn.disabled = true;
+        enrollSendOtpBtn.textContent = 'OTP Sent';
+      });
+    }
+
+    if (enrollForm) {
+      const enrollCloseBtn = enrollModalOverlay.querySelector('.close-btn');
+
+      enrollForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        if (!enrollForm.checkValidity()) {
+          enrollForm.reportValidity();
+          return;
+        }
+
+        const otp = getEnrollOtpValue();
+        if (otp !== '1234') {
+          alert('Invalid OTP. Please try again (demo code is 1234).');
+          return;
+        }
+
+        if (!selectedCourseSlug) {
+          alert('No course selected. Please click "Enroll Now" on a course.');
+          return;
+        }
+
+        try {
+          // choose user id: prefer tempRegisterUserId (just registered) else logged-in user
+          const userId = tempRegisterUserId || localStorage.getItem('alphaprimeUserId');
+          if (!userId) {
+            alert('Please login or register before enrolling.');
+            return;
+          }
+
+          // if course requires payment, open payment modal and pass user id via currentPaymentCourseUser
+          if (pendingCoursePrice && pendingCoursePrice > 0) {
+            // store the id to use after payment
+            currentPaymentCourseUser = userId;
+            openPaymentModalForCourse(selectedCourseSlug, pendingCoursePrice);
+            if (enrollCloseBtn) enrollCloseBtn.click();
+            return;
+          }
+
+          // free course: call enroll API
+          const resp = await fetch('http://localhost:3000/api/enroll', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user_id: userId, course_slug: selectedCourseSlug })
+          });
+
+          const data = await resp.json();
+          if (!resp.ok || !data.success) {
+            throw new Error(data.message || 'Enrollment failed');
+          }
+
+          alert('Enrollment successful! Redirecting to login page.');
+
+          // store user info in localStorage so the login page shows the newly registered user
+          try {
+            if (tempRegisterUserId) localStorage.setItem('alphaprimeUserId', tempRegisterUserId);
+            if (tempRegisterCredentials?.email) localStorage.setItem('alphaprimeEmail', tempRegisterCredentials.email);
+            if (tempRegisterCredentials?.full_name) localStorage.setItem('alphaprimeName', tempRegisterCredentials.full_name);
+          } catch (e) { console.error('Setting localStorage failed', e); }
+
+          // clear temporary register states
+          tempRegisterUserId = null;
+          tempRegisterCredentials = null;
+          pendingEnrollCourse = null;
+
+          // after enrollment, redirect to login page as you requested
+          window.location.href = 'login.html';
+
+        } catch (err) {
+          console.error('Enroll error:', err);
+          alert('Error while enrolling: ' + err.message);
+        }
+      });
+
+      if (enrollCloseBtn) {
+        enrollCloseBtn.addEventListener('click', () => {
+          enrollModalOverlay.classList.remove('active');
+          enrollModalOverlay.setAttribute('aria-hidden', 'true');
+          // if user closed, keep pending course so they can come back
+        });
+
+        enrollModalOverlay.addEventListener('click', (e) => {
+          if (e.target === enrollModalOverlay) enrollCloseBtn.click();
+        });
+      }
+    }
+
+    /* Payment modal and helpers */
+    const paymentModal = document.getElementById('paymentModal');
+    const closePaymentBtn = document.getElementById('closePayment');
+    const payNowBtn = document.getElementById('payNow');
+    const paymentAmountInput = document.getElementById('payment-amount');
+    const paymentMethodSelect = document.getElementById('payment-method');
+
+    let pendingCoursePrice = 0;
+    let currentPaymentCourse = null;
+
+    function openPaymentModalForCourse(courseSlug, price) {
+      currentPaymentCourse = courseSlug;
+      pendingCoursePrice = price;
+      paymentAmountInput.value = '₹' + price;
+      paymentModal.classList.add('active');
+      paymentModal.setAttribute('aria-hidden', 'false');
+    }
+
+    closePaymentBtn.addEventListener('click', () => {
+      paymentModal.classList.remove('active');
+      paymentModal.setAttribute('aria-hidden', 'true');
+      currentPaymentCourse = null;
+      pendingCoursePrice = 0;
+    });
+
+    payNowBtn.addEventListener('click', async () => {
+      // Demo payment: simulate success after 1 sec
+      payNowBtn.disabled = true;
+      payNowBtn.textContent = 'Processing...';
+
+      setTimeout(async () => {
+        try {
+          // call enroll API after payment success
+          const userId = localStorage.getItem('alphaprimeUserId');
+          if (!userId) {
+            alert('Please login to complete payment.');
+            paymentModal.classList.remove('active');
+            paymentModal.setAttribute('aria-hidden', 'true');
+            openLoginModal();
+            return;
+          }
+
+          const resp = await fetch('http://localhost:3000/api/enroll', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user_id: userId, course_slug: currentPaymentCourse })
+          });
+          const data = await resp.json();
+          if (!resp.ok || !data.success) {
+            throw new Error(data.message || 'Enrollment failed');
+          }
+
+          alert('Payment & Enrollment successful! Redirecting to dashboard.');
+          paymentModal.classList.remove('active');
+          paymentModal.setAttribute('aria-hidden', 'true');
+          payNowBtn.disabled = false;
+          payNowBtn.textContent = 'Pay Now';
+
+          window.location.href = 'dashboard.html';
+        } catch (err) {
+          console.error('Payment/Enroll error:', err);
+          alert('Payment or enrollment failed: ' + err.message);
+          payNowBtn.disabled = false;
+          payNowBtn.textContent = 'Pay Now';
+        }
+      }, 1000);
+
+    });
+
+    /* Login modal */
+    const loginModal = document.getElementById('loginModal');
+    const loginBtn = document.getElementById('loginBtn');                 // header button
+    const loginBtnDropdown = document.getElementById('loginBtnDropdown'); // menu button
+    const closeLoginBtn = document.getElementById('closeLogin');
+    const loginForm = document.getElementById('login-form');
+
+    function openLoginModal() {
+      loginModal.classList.add('active');
+      loginModal.setAttribute('aria-hidden', 'false');
+      loginForm.reset();
+      document.getElementById('login-email').focus();
+      // close dropdown if open
+      dropdown.classList.remove('open');
+      menuButton.setAttribute('aria-expanded', false);
+    }
+
+    if (loginBtn) loginBtn.onclick = openLoginModal;
+    if (loginBtnDropdown) loginBtnDropdown.onclick = openLoginModal;
+
+    closeLoginBtn.addEventListener('click', () => {
+      loginModal.classList.remove('active');
+      loginModal.setAttribute('aria-hidden', 'true');
+    });
+
+    loginModal.addEventListener('click', (e) => {
+      if (e.target === loginModal) {
+        closeLoginBtn.click();
+      }
+    });
+
+
+
+    /* Handle login submit */
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (!loginForm.checkValidity()) {
+        loginForm.reportValidity();
+        return;
+      }
+
+      const payload = {
+        email: loginForm['login-email'].value,
+        password: loginForm['login-password'].value
+      };
+
+      try {
+        const response = await fetch('http://localhost:3000/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          throw new Error(data.message || 'Invalid email or password');
+        }
+
+        // store user for next steps
+        localStorage.setItem("alphaprimeUserId", data.user.id);
+        localStorage.setItem("alphaprimeName", data.user.full_name);
+        localStorage.setItem("alphaprimeEmail", data.user.email);
+
+        // If the user arrived because of a pending enroll, continue the flow
+        if (pendingEnrollCourse) {
+          // fetch course details to decide payment vs free
+          const cs = await fetch('http://localhost:3000/api/course/' + pendingEnrollCourse);
+          const csd = await cs.json();
+          const price = csd.course?.price || 0;
+
+          if (price === 0) {
+            await fetch('http://localhost:3000/api/enroll', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ user_id: data.user.id, course_slug: pendingEnrollCourse })
+            });
+            pendingEnrollCourse = null;
+            alert('Enrollment successful! Redirecting to dashboard.');
+            window.location.href = 'dashboard.html';
+            return;
+          }
+
+          // paid: open payment modal
+          pendingCoursePrice = price;
+          openPaymentModalForCourse(pendingEnrollCourse, price);
+          return;
+        }
+
+        // otherwise go to dashboard after login
+        window.location.href = 'dashboard.html';
+
+      } catch (err) {
+        console.error('Login error:', err);
+        alert('Login failed: ' + err.message);
+      }
+    });
+
+    /* ====== FORGOT PASSWORD FLOW ====== */
+    let forgotPasswordUserId = null;
+    let forgotPasswordOtp = null;
+
+    const showForgotPasswordBtn = document.getElementById('showForgotPassword');
+    const forgotPasswordSection = document.getElementById('forgot-password-section');
+    const loginFormSection = document.getElementById('login-form-section');
+    const backToLoginBtn = document.getElementById('backToLogin');
+    const closeResetBtn = document.getElementById('closeReset');
+
+    // Show forgot password section
+    showForgotPasswordBtn.addEventListener('click', () => {
+      loginFormSection.style.display = 'none';
+      forgotPasswordSection.style.display = 'block';
+      document.getElementById('forgot-email').focus();
+    });
+
+    // Back to login
+    backToLoginBtn.addEventListener('click', () => {
+      forgotPasswordSection.style.display = 'none';
+      loginFormSection.style.display = 'block';
+      resetForgotPasswordFlow();
+      document.getElementById('login-email').focus();
+    });
+
+    // Close from reset
+    closeResetBtn.addEventListener('click', () => {
+      closeLoginBtn.click();
+      resetForgotPasswordFlow();
+    });
+
+    // Reset forgot password flow
+    function resetForgotPasswordFlow() {
+      document.getElementById('forgot-password-email-step').style.display = 'block';
+      document.getElementById('forgot-password-otp-step').style.display = 'none';
+      document.getElementById('forgot-password-reset-step').style.display = 'none';
+      document.getElementById('forgot-password-email-form').reset();
+      document.getElementById('forgot-password-otp-form').reset();
+      document.getElementById('forgot-password-reset-form').reset();
+      forgotPasswordUserId = null;
+      forgotPasswordOtp = null;
+    }
+
+    // Step 1: Send OTP
+    document.getElementById('forgot-password-email-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('forgot-email').value.trim();
+
+      if (!email) {
+        alert('Please enter your email');
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:3000/api/forgot-password/send-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+
+        let data;
+        try {
+          data = await response.json();
+        } catch (parseErr) {
+          console.error('JSON Parse Error:', parseErr);
+          console.error('Response status:', response.status);
+          console.error('Response text:', await response.text());
+          throw new Error('Server error - invalid response. Check server logs.');
+        }
+
+        if (!response.ok || !data.success) {
+          throw new Error(data.message || 'Failed to send OTP');
+        }
+
+        forgotPasswordUserId = data.user_id;
+        console.log('OTP sent to:', email);
+        console.log('Check server console for OTP code');
+
+        // Move to OTP step
+        document.getElementById('forgot-password-email-step').style.display = 'none';
+        document.getElementById('forgot-password-otp-step').style.display = 'block';
+
+        // Setup OTP input fields
+        setupForgotPasswordOtpInput();
+        document.querySelector('#forgot-password-otp-step .otp-inputs input:first-child').focus();
+
+      } catch (err) {
+        console.error('Error sending OTP:', err);
+        alert('Error: ' + err.message);
+      }
+    });
+
+    // Setup OTP input for forgot password
+    function setupForgotPasswordOtpInput() {
+      const inputs = document.querySelectorAll('#forgot-password-otp-step .otp-inputs input');
+      inputs.forEach((input, idx) => {
+        // Enable first input, keep others disabled until needed
+        if (idx === 0) {
+          input.disabled = false;
+        }
+
+        input.addEventListener('input', () => {
+          input.value = input.value.replace(/\D/g, '').slice(0, 1);
+          if (input.value) {
+            if (idx < inputs.length - 1) {
+              inputs[idx + 1].disabled = false;
+              inputs[idx + 1].focus();
+            }
+          }
+        });
+        input.addEventListener('keydown', e => {
+          if (e.key === 'Backspace') {
+            if (!input.value && idx > 0) {
+              // Move to previous input when current is empty
+              inputs[idx - 1].focus();
+              inputs[idx - 1].value = '';
+            } else if (input.value) {
+              // Clear current input and stay in it
+              input.value = '';
+            }
+          }
+        });
+      });
+    }
+
+    // Step 2: Verify OTP
+    document.getElementById('forgot-password-otp-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const inputs = document.querySelectorAll('#forgot-password-otp-step .otp-inputs input');
+      const otp = Array.from(inputs).map(i => i.value).join('');
+
+      if (otp.length !== 4) {
+        alert('Please enter complete OTP');
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:3000/api/forgot-password/verify-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user_id: forgotPasswordUserId, otp })
+        });
+
+        let data;
+        try {
+          data = await response.json();
+        } catch (parseErr) {
+          console.error('JSON Parse Error:', parseErr);
+          console.error('Response status:', response.status);
+          throw new Error('Server error - invalid response. Check server logs.');
+        }
+
+        if (!response.ok || !data.success) {
+          throw new Error(data.message || 'Invalid OTP');
+        }
+
+        forgotPasswordOtp = otp;
+        console.log('OTP verified successfully');
+
+        // Move to reset password step
+        document.getElementById('forgot-password-otp-step').style.display = 'none';
+        document.getElementById('forgot-password-reset-step').style.display = 'block';
+        document.getElementById('forgot-new-password').focus();
+
+      } catch (err) {
+        console.error('Error verifying OTP:', err);
+        alert('Error: ' + err.message);
+      }
+    });
+
+    // Back to email step
+    document.getElementById('backToEmailStep').addEventListener('click', () => {
+      document.getElementById('forgot-password-email-step').style.display = 'block';
+      document.getElementById('forgot-password-otp-step').style.display = 'none';
+      document.getElementById('forgot-password-email-form').reset();
+      document.getElementById('forgot-email').focus();
+      forgotPasswordUserId = null;
+    });
+
+    // Step 3: Reset Password
+    document.getElementById('forgot-password-reset-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const newPassword = document.getElementById('forgot-new-password').value.trim();
+      const confirmPassword = document.getElementById('forgot-confirm-password').value.trim();
+
+      if (!newPassword || !confirmPassword) {
+        alert('Please enter both passwords');
+        return;
+      }
+
+      if (newPassword !== confirmPassword) {
+        alert('Passwords do not match');
+        return;
+      }
+
+      if (newPassword.length < 6) {
+        alert('Password must be at least 6 characters');
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:3000/api/forgot-password/reset-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            user_id: forgotPasswordUserId,
+            otp: forgotPasswordOtp,
+            new_password: newPassword
+          })
+        });
+
+        let data;
+        try {
+          data = await response.json();
+        } catch (parseErr) {
+          console.error('JSON Parse Error:', parseErr);
+          console.error('Response status:', response.status);
+          throw new Error('Server error - invalid response. Check server logs.');
+        }
+
+        if (!response.ok || !data.success) {
+          throw new Error(data.message || 'Failed to reset password');
+        }
+
+        alert('Password reset successfully! Please login with your new password.');
+        closeLoginBtn.click();
+        resetForgotPasswordFlow();
+
+      } catch (err) {
+        console.error('Error resetting password:', err);
+        alert('Error: ' + err.message);
+      }
+    });
+
+    /* Smooth scroll for menu navigation links */
+    document.querySelectorAll('.menu-link').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(e.target.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+          dropdown.classList.remove('open');
+          menuButton.setAttribute('aria-expanded', false);
+        }
+      });
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const courseCards = document.querySelectorAll("#courseList .course-card");
+
+      courseCards.forEach((card, index) => {
+        if (index >= 5) card.style.display = "none";
+      });
+    });
+
+
+    document.addEventListener("click", (e) => {
+      const enrollBtn = e.target.closest(".enroll-btn");
+      if (!enrollBtn) return;
+
+
+      const card = enrollBtn.closest(".course-card");
+
+
+      // Store selected course slug for enrollment after registration
+      if (card) {
+        pendingEnrollCourse = card.dataset.courseSlug || null;
+        pendingCoursePrice = parseFloat(card.dataset.coursePrice || 0);
+      }
+
+
+      // Open REGISTER modal instead of login
+      openRegisterModal();
+    });
+
+    const goToLoginLink = document.getElementById("goToLogin");
+
+    if (goToLoginLink) {
+      goToLoginLink.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        // close register
+        registerModal.classList.remove("active");
+        registerModal.setAttribute("aria-hidden", "true");
+
+        // open login
+        openLoginModal();
+      });
+    }
+
+    /* ================= COUNTER ANIMATION ================= */
+
+    const counters = document.querySelectorAll(".counter");
+    let countersStarted = false;
+
+    function runCounters() {
+      if (countersStarted) return;
+      countersStarted = true;
+
+      counters.forEach(counter => {
+        const target = +counter.dataset.target;
+        const speed = 200; // smaller = faster
+
+        const update = () => {
+          const current = +counter.innerText.replace(/\D/g, '');
+          const increment = Math.ceil(target / speed);
+
+          if (current < target) {
+            counter.innerText = current + increment;
+            setTimeout(update, 20);
+          } else {
+            // final formatting
+            if (target >= 1000) {
+              counter.innerText = target / 1000 + "K+";
+            } else if (target === 95) {
+              counter.innerText = target + "%";
+            } else {
+              counter.innerText = target + "+";
+            }
+          }
+        };
+
+        update();
+      });
+    }
+
+    /* ========== TRIGGER WHEN SECTION IS VISIBLE ========== */
+
+    const achievementSection = document.querySelector(".achievements");
+
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            runCounters();
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+
+    if (achievementSection) {
+      observer.observe(achievementSection);
+    }
+
+    /* ========== FAQ TOGGLE WITH ANIMATION ========== */
+
+    const faqQuestions = document.querySelectorAll(".faq-question");
+
+    faqQuestions.forEach(question => {
+      question.addEventListener("click", () => {
+        const faqItem = question.parentElement;
+
+        // Close all other FAQs
+        document.querySelectorAll(".faq-item").forEach(item => {
+          if (item !== faqItem) {
+            item.classList.remove("active");
+          }
+        });
+
+        // Toggle current FAQ
+        faqItem.classList.toggle("active");
+      });
+    });
+
+    /* ================= SCROLL-BASED ANIMATIONS ================= */
+
+    // Function to handle scroll animations
+    function initScrollAnimations() {
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate');
+            // Stop observing once animated
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      // Observe all elements with animate-on-scroll class
+      const animateElements = document.querySelectorAll('.animate-on-scroll');
+      animateElements.forEach(element => {
+        observer.observe(element);
+      });
+    }
+
+    // Initialize scroll animations when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      initScrollAnimations();
+    });
+
+
+  </script>
+</body>
+<!-- 24jan2026 -->
+
+</html>

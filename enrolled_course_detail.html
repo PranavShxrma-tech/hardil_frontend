@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alphaprime – Enrolled Course Details</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ===== BASE ===== */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #ffffff;
+  color: #0a585b;
+}
+main {
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px 5%;
+}
+
+/* ===== HEADER ===== */
+header {
+  background: linear-gradient(120deg, rgba(255,255,255,0.92), rgba(224,252,250,0.9));
+  padding: 16px 5%;
+  text-align: center;
+  font-weight: 700;
+  border-bottom: 1px solid rgba(10,88,91,0.08);
+}
+.logo-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.site-logo {
+  height: 52px;
+  border-radius: 14px;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background:#0a585b;
+  color:#fff;
+  padding:30px;
+  text-align:center;
+  margin-top:60px;
+}
+
+/* ===== COURSE HERO ===== */
+.course-hero {
+  display:grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap:30px;
+  margin-bottom:40px;
+}
+.course-hero img {
+  width:100%;
+  border-radius:20px;
+}
+.course-hero h1 {
+  margin-top:0;
+}
+.course-progress {
+  margin-top: 20px;
+}
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #0a585b, #0f766e);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+/* ===== SECTIONS ===== */
+.section-title {
+  font-size:1.6rem;
+  border-bottom:3px solid #0a585b;
+  margin-bottom:20px;
+  padding-bottom:6px;
+}
+
+/* ===== WHAT YOU WILL LEARN ===== */
+.learn-list {
+  display:grid;
+  grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+  gap:14px;
+}
+.learn-item {
+  background:#f1f8f7;
+  padding:14px;
+  border-radius:12px;
+}
+
+/* ===== TOPICS ===== */
+.topic-card {
+  border:1px solid #0a585b22;
+  border-radius:16px;
+  padding:16px;
+  margin-bottom:16px;
+  transition: box-shadow 0.3s;
+}
+.topic-card:hover {
+  box-shadow: 0 4px 12px rgba(10,88,91,0.15);
+}
+.topic-header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.topic-header h3 {
+  margin:0;
+}
+.topic-duration {
+  font-size:0.85rem;
+  color:#0f766e;
+}
+.topic-desc {
+  margin:10px 0;
+}
+.topic-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+.topic-btn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #0a585b;
+  background: #fff;
+  color: #0a585b;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+.topic-btn:hover {
+  background: #0a585b;
+  color: #fff;
+}
+.topic-btn.completed {
+  background: #0f766e;
+  color: #fff;
+}
+
+
+
+/* ===== LOADING/ERROR ===== */
+.loading {
+  text-align: center;
+  padding: 40px;
+}
+.error {
+  background: #fee;
+  color: #c33;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #fcc;
+  margin-bottom: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo-area">
+    <img src="2.png" alt="Alphaprime Logo" class="site-logo" />
+    <div>
+      <div><strong>ALPHAPRIME</strong></div>
+      <small>Learn · Trade · Grow</small>
+    </div>
+  </div>
+</header>
+
+<main id="mainContent">
+  <div class="loading">Loading course details...</div>
+</main>
+
+<footer>
+  © 2025 Alphaprime. All rights reserved.
+</footer>
+
+<script>
+const API_BASE = 'http://localhost:3000';
+
+// Get course slug from URL
+const params = new URLSearchParams(window.location.search);
+const slug = params.get("slug");
+
+// Get user data from localStorage
+const userId = localStorage.getItem('alphaprimeUserId');
+const userEmail = localStorage.getItem('alphaprimeEmail');
+
+if (!slug) {
+  document.getElementById('mainContent').innerHTML = '<div class="error">Invalid course link.</div>';
+} else if (!userEmail) {
+  document.getElementById('mainContent').innerHTML = '<div class="error">Please login to access enrolled course details.</div>';
+} else {
+  loadEnrolledCourseDetails();
+}
+
+async function loadEnrolledCourseDetails() {
+  try {
+    // Check if user is enrolled in this course
+    const enrollmentsRes = await fetch(`${API_BASE}/api/enrollments?email=${encodeURIComponent(userEmail)}`);
+    if (!enrollmentsRes.ok) throw new Error('Failed to check enrollment');
+
+    const enrollmentsData = await enrollmentsRes.json();
+    const enrolledCourses = enrollmentsData.courses || [];
+    const isEnrolled = enrolledCourses.some(course => course.slug === slug);
+
+    if (!isEnrolled) {
+      document.getElementById('mainContent').innerHTML = '<div class="error">You are not enrolled in this course. Please enroll first.</div>';
+      return;
+    }
+
+    // Load course details
+    const courseRes = await fetch(`${API_BASE}/api/course/${encodeURIComponent(slug)}`);
+    if (!courseRes.ok) throw new Error('Failed to load course');
+
+    const courseData = await courseRes.json();
+    const course = courseData.course;
+
+    // Load topics with progress
+    const topicsRes = await fetch(`${API_BASE}/api/course/${encodeURIComponent(slug)}/topics?user_id=${userId}`);
+    const topicsData = topicsRes.ok ? await topicsRes.json() : { topics: [] };
+    const topics = topicsData.topics || [];
+
+    // Find enrolled course for progress
+    const enrolledCourse = enrolledCourses.find(c => c.slug === slug);
+
+    renderEnrolledCourse(course, topics, enrolledCourse);
+
+  } catch (error) {
+    console.error('Error loading course:', error);
+    document.getElementById('mainContent').innerHTML = `<div class="error">Error loading course details: ${error.message}</div>`;
+  }
+}
+
+function renderEnrolledCourse(course, topics, enrolledCourse) {
+  const progressPercent = enrolledCourse ? enrolledCourse.progress : 0;
+  const totalTopics = enrolledCourse ? enrolledCourse.total_topics : topics.length;
+  const completedTopics = enrolledCourse ? enrolledCourse.completed_topics : 0;
+
+  // Course images fallback
+  const courseImages = {
+    'Technical-Analysis': 'blur-1853262_1280.jpg',
+    'Day-Trading': 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?ixlib=rb-4.0.3&auto=format&fit=crop&w=3840&q=80',
+    'Swing-Trading': 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=3840&q=80',
+    'Options-Trading': 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=3840&q=80',
+    'Intraday-Trading': 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=3840&q=80',
+    'Stock-Market-Basics': 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=3840&q=80',
+    'Forex-Trading': 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=3840&q=80',
+    'Risk-Management': 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=3840&q=80'
+  };
+
+  let imgSrc = course.image_url;
+  if (!imgSrc || imgSrc.includes('placeholder')) {
+    imgSrc = courseImages[course.slug] || 'placeholder.jpg';
+  }
+
+  // What you will learn (mock data or from course)
+  const learnItems = [
+    'Master fundamental concepts of stock trading',
+    'Learn technical analysis techniques',
+    'Understand risk management strategies',
+    'Practice with real market scenarios',
+    'Develop a profitable trading mindset'
+  ];
+
+  document.getElementById('mainContent').innerHTML = `
+    <!-- COURSE HERO -->
+    <section class="course-hero">
+      <img src="${imgSrc}" alt="${course.title || 'Course'}" loading="lazy">
+      <div>
+        <h1>${course.title || 'Course Title'}</h1>
+        <p>${course.description || 'Course description not available.'}</p>
+        <div class="course-progress">
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: ${progressPercent}%"></div>
+          </div>
+          <div style="font-size: 0.9rem; color: #666;">${progressPercent}% complete (${completedTopics}/${totalTopics} topics)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHAT YOU WILL LEARN -->
+    <section>
+      <h2 class="section-title">What You Will Learn</h2>
+      <div class="learn-list">
+        ${learnItems.map(item => `<div class="learn-item">✔ ${item}</div>`).join('')}
+      </div>
+    </section>
+
+    <!-- COURSE CONTENT -->
+    <section>
+      <h2 class="section-title">Course Content</h2>
+      <div id="topicsContainer">
+        ${topics.length === 0 ? '<p>No topics available yet.</p>' : topics.map(topic => `
+          <div class="topic-card">
+            <div class="topic-header">
+              <h3>${topic.title || 'Topic Title'}</h3>
+              <span class="topic-duration">${topic.duration_minutes || 0} min</span>
+            </div>
+            <p class="topic-desc">${topic.description || 'No description available.'}</p>
+            <div class="topic-actions">
+  ${topic.video_url ? `<a href="${topic.video_url}" target="_blank" class="topic-btn">Watch Video</a>` : ''}
+
+  <button class="topic-btn join-btn" onclick="joinCourse(${topic.id})">
+    Join Now
+  </button>
+
+  <button class="topic-btn ${topic.completed ? 'completed' : ''}" onclick="markTopicComplete(${topic.id})">
+    ${topic.completed ? 'Completed' : 'Mark Complete'}
+  </button>
+  
+</div>
+
+
+
+          </div>
+        `).join('')}
+      </div>
+    </section>
+
+
+  `;
+
+
+}
+
+
+
+async function markTopicComplete(topicId) {
+  if (!userId) {
+    alert('Please login to mark topics complete.');
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_BASE}/api/mark-complete`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId: userId,
+        topicId: topicId
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.success) {
+      alert('Topic marked as complete!');
+      // Reload the page to reflect the updated progress
+      location.reload();
+    } else {
+      alert('Failed to mark topic complete: ' + (result.message || 'Unknown error'));
+    }
+  } catch (error) {
+    console.error('Error marking topic complete:', error);
+    alert('Error marking topic complete: ' + error.message + '. Please try again.');
+  }
+}
+
+
+// function joinCourse(topicId) {
+//   window.location.href = "https://meet.google.com/ezo-gjij-bva";
+// }
+
+
+
+</script>
+
+</body>
+</html>

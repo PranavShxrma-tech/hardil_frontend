@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alphaprime - Dashboard</title>
+
+  <!-- Google Fonts: main + accent for logo -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@700&family=Poppins:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+
+  <!-- Razorpay Checkout Script -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+  <style>
+    /* Reset and base styles */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background-color: #ffffff;
+      color: #0a585b;
+      transition: background-color 0.4s, color 0.4s;
+    }
+
+    a {
+      color: #0a585b;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Logo-area styles */
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .site-logo {
+      height: 52px;
+      width: auto;
+      border-radius: 16px;
+      animation: logo-pulse 2s infinite alternate;
+    }
+
+    .logo-text-wrap {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .logo-text {
+      font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: clamp(1.3rem, 3.5vw, 2rem);
+      color: #0a585b;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+
+    .logo-subtext {
+      font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: clamp(0.6rem, 1.8vw, 0.8rem);
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: #0f766e;
+    }
+
+    /* simple glow on logo */
+    @keyframes logo-pulse {
+      0% {
+        filter: brightness(1);
+      }
+
+      100% {
+        filter: brightness(1.18);
+      }
+    }
+
+    /* Buttons base */
+    button,
+    .menu-button {
+      cursor: pointer;
+      background-color: #ffffff;
+      border: 2px solid #0a585b;
+      padding: 10px 22px;
+      border-radius: 999px;
+      color: #0a585b;
+      font-weight: 600;
+      font-size: 0.98rem;
+      transition: background-color 0.3s, color 0.3s, border 0.3s, transform 0.2s, box-shadow 0.2s;
+    }
+
+    button:hover,
+    .menu-button:hover {
+      background-color: #0a585b;
+      color: #ffffff;
+      border-color: #0a585b;
+      box-shadow: 0 10px 22px rgba(10, 88, 91, 0.25);
+      transform: translateY(-1px);
+    }
+
+    /* Header styles - glassy card */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 150;
+      padding: 12px 5%;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.92), rgba(224, 252, 250, 0.9));
+      border-bottom: 1px solid rgba(10, 88, 91, 0.08);
+      box-shadow: 0 10px 30px rgba(10, 88, 91, 0.12);
+    }
+
+    header .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: nowrap;
+    }
+
+    .header-btn {
+      border-radius: 999px;
+      padding: 8px 18px;
+      border: 2px solid #0a585b;
+      background-color: #ffffff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s, box-shadow 0.2s;
+    }
+
+    .header-btn:hover {
+      background-color: #0a585b;
+      color: #ffffff;
+      box-shadow: 0 8px 18px rgba(10, 88, 91, 0.22);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      main {
+        padding: 30px 4%;
+      }
+
+      .dashboard-welcome {
+        padding: 30px;
+      }
+
+      .dashboard-welcome h1 {
+        font-size: 2.2rem;
+      }
+
+      .courses-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+      }
+
+      .enrollment-card img,
+      .course-card img {
+        height: 160px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      main {
+        padding: 20px 3%;
+      }
+
+      .dashboard-welcome {
+        padding: 25px;
+        margin-bottom: 30px;
+      }
+
+      .dashboard-welcome h1 {
+        font-size: 1.8rem;
+      }
+
+      .dashboard-welcome p {
+        font-size: 1rem;
+      }
+
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .quick-actions {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .action-card {
+        padding: 20px;
+      }
+
+      .action-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+      }
+
+      .profile-section {
+        padding: 20px;
+      }
+
+      .profile-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+      }
+
+      .profile-stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+      }
+
+      .activities-section h2,
+      .courses-section h2,
+      .available-courses-section h2 {
+        font-size: 1.5rem;
+      }
+
+      .courses-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .enrollment-card img,
+      .course-card img {
+        height: 140px;
+      }
+
+      .course-card h3,
+      .enrollment-card h3 {
+        font-size: 1.1rem;
+      }
+
+      .activity-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .activity-time {
+        align-self: flex-end;
+        font-size: 0.75rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      main {
+        padding: 15px 2%;
+      }
+
+      .dashboard-welcome {
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+
+      .dashboard-welcome h1 {
+        font-size: 1.5rem;
+      }
+
+      .dashboard-welcome p {
+        font-size: 0.9rem;
+      }
+
+      .dashboard-card {
+        padding: 20px;
+      }
+
+      .dashboard-card h3 {
+        font-size: 1.3rem;
+      }
+
+      .dashboard-card .stat {
+        font-size: 2rem;
+      }
+
+      .quick-actions {
+        gap: 10px;
+      }
+
+      .action-card {
+        padding: 15px;
+      }
+
+      .action-card h3 {
+        font-size: 1rem;
+      }
+
+      .action-card p {
+        font-size: 0.8rem;
+      }
+
+      .profile-section {
+        padding: 15px;
+        margin-bottom: 30px;
+      }
+
+      .profile-avatar {
+        width: 70px;
+        height: 70px;
+        font-size: 1.8rem;
+      }
+
+      .profile-info h2 {
+        font-size: 1.4rem;
+      }
+
+      .profile-stats {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .profile-stat {
+        text-align: center;
+      }
+
+      .activities-section h2,
+      .courses-section h2,
+      .available-courses-section h2 {
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+      }
+
+      .activity-item {
+        padding: 15px;
+      }
+
+      .activity-content h4 {
+        font-size: 0.95rem;
+      }
+
+      .activity-content p {
+        font-size: 0.85rem;
+      }
+
+      .course-card,
+      .enrollment-card {
+        padding: 15px;
+      }
+
+      .course-card h3,
+      .enrollment-card h3 {
+        font-size: 1rem;
+      }
+
+      .course-card p,
+      .enrollment-card p {
+        font-size: 0.9rem;
+      }
+
+      .enrollment-card img,
+      .course-card img {
+        height: 120px;
+      }
+
+      .course-actions,
+      .enrollment-actions {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .course-btn,
+      .enroll-btn {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+      }
+
+      .loading {
+        padding: 30px 20px;
+      }
+
+      .no-data {
+        padding: 30px 20px;
+        font-size: 0.9rem;
+      }
+
+      .success {
+        max-width: 90vw;
+        right: 10px;
+        left: 10px;
+        top: 80px;
+      }
+    }
+
+    /* On very small screens, just shrink font/padding instead of wrapping */
+    @media (max-width: 650px) {
+      .header-actions {
+        gap: 6px;
+      }
+
+      .header-btn {
+        padding: 6px 10px;
+        font-size: 0.78rem;
+      }
+
+      .menu-button {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+      }
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Dropdown container */
+    .dropdown {
+      position: relative;
+    }
+
+    .menu-button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      user-select: none;
+      background: #0f766e;
+      color: #ffffff;
+      border-color: #0f766e;
+    }
+
+    .menu-button svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+      transition: transform 0.3s;
+    }
+
+    .dropdown.open .menu-button svg {
+      transform: rotate(180deg);
+    }
+
+    /* Dropdown menu */
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 47px;
+      background-color: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 16px 30px rgba(10, 88, 91, 0.20);
+      min-width: 220px;
+      padding: 10px 0;
+      z-index: 160;
+    }
+
+    .dropdown.open .dropdown-menu {
+      display: block;
+    }
+
+    .dropdown-menu a,
+    .dropdown-menu button {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background-color: transparent;
+      color: #0a585b;
+      padding: 12px 20px;
+      border-radius: 0;
+      border: none;
+      font-weight: 500;
+      font-size: 0.98rem;
+      line-height: 1.4;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .dropdown-menu a:hover,
+    .dropdown-menu button:hover,
+    .dropdown-menu a:focus,
+    .dropdown-menu button:focus {
+      background-color: #0a585b;
+      color: #ffffff;
+    }
+
+    a:focus,
+    button:focus,
+    .menu-button:focus {
+      outline: 2px solid #0a585b;
+      outline-offset: 2px;
+    }
+
+    main {
+      padding: 40px 5%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Dashboard specific styles */
+    .dashboard-welcome {
+      background: linear-gradient(135deg, #0a585b 0%, #0f766e 100%);
+      color: white;
+      padding: 40px;
+      border-radius: 20px;
+      margin-bottom: 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dashboard-welcome::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .dashboard-welcome h1 {
+      margin: 0 0 10px 0;
+      font-size: 2.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .dashboard-welcome p {
+      margin: 0;
+      font-size: 1.2rem;
+      opacity: 0.9;
+      position: relative;
+      z-index: 1;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .dashboard-card {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 18px;
+      box-shadow: 0 3px 7px rgba(10, 88, 91, 0.11);
+      border: 1.5px solid #0a585b22;
+      transition: box-shadow 0.3s, transform 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dashboard-card:hover {
+      box-shadow: 0 10px 20px rgba(10, 88, 91, 0.22);
+      transform: translateY(-2px);
+    }
+
+    .dashboard-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, #0a585b, #0f766e);
+    }
+
+    .dashboard-card h3 {
+      margin: 0 0 15px 0;
+      color: #0a585b;
+      font-size: 1.5rem;
+    }
+
+    .dashboard-card p {
+      margin: 0 0 20px 0;
+      color: #0a585b;
+      line-height: 1.6;
+    }
+
+    .dashboard-card .stat {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #0f766e;
+      margin-bottom: 10px;
+    }
+
+    .dashboard-card .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e0e0e0;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .dashboard-card .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #0a585b, #0f766e);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+
+    /* Profile section */
+    .profile-section {
+      background: #f8fdfd;
+      padding: 30px;
+      border-radius: 18px;
+      margin-bottom: 40px;
+      border: 1px solid #0a585b11;
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0a585b, #0f766e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .profile-info h2 {
+      margin: 0 0 5px 0;
+      color: #0a585b;
+    }
+
+    .profile-info p {
+      margin: 0;
+      color: #666;
+    }
+
+    .profile-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .profile-stat {
+      text-align: center;
+    }
+
+    .profile-stat .number {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #0f766e;
+    }
+
+    .profile-stat .label {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 5px;
+    }
+
+    /* Recent activities */
+    .activities-section h2 {
+      font-size: 2rem;
+      color: #0a585b;
+      border-bottom: 3px solid #0a585b;
+      padding-bottom: 8px;
+      margin-bottom: 25px;
+      font-weight: 700;
+    }
+
+    .activities-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .activity-item {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(10, 88, 91, 0.08);
+      border: 1px solid #0a585b11;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .activity-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #0f766e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .activity-content {
+      flex: 1;
+    }
+
+    .activity-content h4 {
+      margin: 0 0 5px 0;
+      color: #0a585b;
+      font-size: 1rem;
+    }
+
+    .activity-content p {
+      margin: 0;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .activity-time {
+      color: #999;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+
+    /* Course cards */
+    .courses-section h2 {
+      font-size: 2rem;
+      color: #0a585b;
+      border-bottom: 3px solid #0a585b;
+      padding-bottom: 8px;
+      margin-bottom: 25px;
+      font-weight: 700;
+    }
+
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 28px;
+    }
+
+    .course-card {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 18px;
+      box-shadow: 0 3px 7px rgba(10, 88, 91, 0.11);
+      transition: box-shadow 0.3s, background-color 0.4s, transform 0.3s;
+      display: flex;
+      flex-direction: column;
+      border: 1.5px solid #0a585b22;
+    }
+
+    .course-card:hover {
+      box-shadow: 0 10px 20px rgba(10, 88, 91, 0.22);
+      transform: translateY(-2px);
+    }
+
+    .course-card img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .course-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      color: #0a585b;
+    }
+
+    .course-card p {
+      font-size: 0.95rem;
+      color: #0a585b;
+      margin-bottom: 15px;
+      flex-grow: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .course-progress {
+      margin-bottom: 15px;
+    }
+
+    .course-progress .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e0e0e0;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 5px;
+    }
+
+    .course-progress .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #0a585b, #0f766e);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+
+    .course-progress .progress-text {
+      font-size: 0.85rem;
+      color: #666;
+      text-align: right;
+    }
+
+    .course-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .course-btn {
+      flex: 1;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #0a585b;
+      background: #fff;
+      color: #0a585b;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .course-btn:hover {
+      background: #0a585b;
+      color: #fff;
+    }
+
+    .course-btn.primary {
+      background: #0a585b;
+      color: #fff;
+    }
+
+    .course-btn.primary:hover {
+      background: #0f766e;
+    }
+
+    .enrollment-date {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    /* Quick actions */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .action-card {
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 3px 8px rgba(10, 88, 91, 0.1);
+      border: 1px solid #0a585b22;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+
+    .action-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(10, 88, 91, 0.15);
+    }
+
+    .action-icon {
+      width: 50px;
+      height: 50px;
+      margin: 0 auto 15px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0a585b, #0f766e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .action-card h3 {
+      margin: 0 0 10px 0;
+      color: #0a585b;
+      font-size: 1.2rem;
+    }
+
+    .action-card p {
+      margin: 0;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    /* Loading and error states */
+    .loading {
+      text-align: center;
+      color: #0a585b;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #e0e0e0;
+      border-top: 4px solid #0a585b;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .no-data {
+      text-align: center;
+      color: #666;
+      padding: 40px;
+      font-style: italic;
+    }
+
+    .error {
+      background: #fee;
+      color: #c33;
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #fcc;
+      margin-bottom: 20px;
+    }
+
+    .success {
+      background: #d4edda;
+      color: #155724;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #c3e6cb;
+      margin-bottom: 20px;
+      position: fixed;
+      top: 100px;
+      right: 20px;
+      z-index: 1000;
+      max-width: 400px;
+    }
+
+    /* Available courses section */
+    .available-courses-section {
+      margin-bottom: 60px;
+    }
+
+    .available-courses-section h2 {
+      font-size: 2rem;
+      color: #0a585b;
+      border-bottom: 3px solid #0a585b;
+      padding-bottom: 8px;
+      margin-bottom: 25px;
+      font-weight: 700;
+    }
+
+    .enrollment-card {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 18px;
+      box-shadow: 0 3px 7px rgba(10, 88, 91, 0.11);
+      transition: box-shadow 0.3s, background-color 0.4s, transform 0.3s;
+      display: flex;
+      flex-direction: column;
+      border: 1.5px solid #0a585b22;
+      position: relative;
+    }
+
+    .enrollment-card:hover {
+      box-shadow: 0 10px 20px rgba(10, 88, 91, 0.22);
+      transform: translateY(-2px);
+    }
+
+    .enrollment-card.enrolled {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .enrollment-card.enrolled::after {
+      content: '✓ ENROLLED';
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #0f766e;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .enrollment-card img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .enrollment-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      color: #0a585b;
+    }
+
+    .enrollment-card p {
+      font-size: 0.95rem;
+      color: #0a585b;
+      margin-bottom: 15px;
+      flex-grow: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .course-price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #0f766e;
+      margin-bottom: 15px;
+    }
+
+    .course-price.free {
+      color: #0a585b;
+    }
+
+    .enrollment-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .enroll-btn {
+      flex: 1;
+      padding: 10px 15px;
+      border-radius: 8px;
+      border: 1px solid #0a585b;
+      background: #0a585b;
+      color: #fff;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 600;
+    }
+
+    .enroll-btn:hover:not(:disabled) {
+      background: #0f766e;
+      transform: translateY(-1px);
+    }
+
+    .enroll-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .enroll-btn.free {
+      background: #0f766e;
+    }
+
+    .enroll-btn.free:hover:not(:disabled) {
+      background: #0a585b;
+    }
+
+    /* Debug Panel */
+    .debug-panel {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #1a1a1a;
+      color: #00ff00;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-family: 'Courier New', monospace;
+      max-width: 300px;
+      max-height: 200px;
+      overflow-y: auto;
+      z-index: 2000;
+      border: 1px solid #00ff00;
+      display: none;
+    }
+
+    .debug-panel.show {
+      display: block;
+    }
+
+    .debug-panel h4 {
+      margin: 0 0 10px 0;
+      color: #00ff00;
+      border-bottom: 1px solid #00ff00;
+      padding-bottom: 5px;
+    }
+
+    .debug-panel p {
+      margin: 3px 0;
+      font-size: 0.75rem;
+    }
+
+
+    /* Terms Modal */
+.terms-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+}
+
+.terms-overlay.show {
+  display: flex;
+}
+
+.terms-card {
+  background: #ffffff;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  animation: popIn 0.3s ease;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.terms-card h2 {
+  margin-top: 0;
+  color: #0a585b;
+}
+
+.terms-content {
+  max-height: 220px;
+  overflow-y: auto;
+  font-size: 0.9rem;
+  color: #444;
+  margin: 15px 0;
+  padding-right: 8px;
+}
+
+.terms-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+.terms-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* Disabled Proceed Payment Button */
+#proceedPayment:disabled {
+  background-color: #ccc;
+  color: #777;
+  border-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+  box-shadow: none;
+  transform: none;
+}
+
+.course-btn:disabled:hover {
+  background-color: #ccc;
+  color: #777;
+}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="index_aaiyana.html" class="logo-area">
+        <img src="2.png" alt="Alphaprime Logo" class="site-logo" />
+        <div class="logo-text-wrap">
+          <span class="logo-text">ALPHAPRIME</span>
+          <span class="logo-subtext">Learn · Trade · Grow</span>
+        </div>
+      </a>
+
+      <div class="header-actions">
+        <div class="dropdown" id="dropdownMenu">
+          <button class="menu-button" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-content" id="menuButton">
+            <span id="userName">Dashboard</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M7 10l5 5 5-5H7z" />
+            </svg>
+          </button>
+          <div class="dropdown-menu" id="dropdown-content" role="menu" aria-labelledby="menuButton" tabindex="-1">
+            <a href="dashboard.html" role="menuitem" tabindex="0">Dashboard</a>
+            <button type="button" id="logoutBtn" role="menuitem" tabindex="0">Logout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Welcome Section -->
+    <div class="dashboard-welcome">
+      <h1>Welcome back, <span id="welcomeName">User</span>!</h1>
+      <p>Continue your learning journey with Alphaprime</p>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+      <div class="action-card" onclick="window.location.href='#courses'">
+        <div class="action-icon">📊</div>
+        <h3>My Progress</h3>
+        <p>Track your learning progress</p>
+      </div>
+      <div class="action-card" onclick="window.location.href='index_aaiyana.html'">
+        <div class="action-icon">🏠</div>
+        <h3>Back to Home</h3>
+        <p>Return to the main website</p>
+      </div>
+    </div>
+
+    <!-- Available Courses for Enrollment -->
+    <section class="available-courses-section">
+      <h2>Available Courses</h2>
+      <div id="availableCourses" class="courses-grid">
+        <div class="loading">
+          <div class="loading-spinner"></div>
+          <p>Loading available courses...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dashboard Stats -->
+    <div class="dashboard-grid" id="statsGrid">
+      <div class="dashboard-card">
+        <h3>Enrolled Courses</h3>
+        <div class="stat" id="enrolledCount">0</div>
+        <p>Courses you're currently taking</p>
+      </div>
+      <div class="dashboard-card">
+        <h3>Completed Courses</h3>
+        <div class="stat" id="completedCount">0</div>
+        <p>Courses you've finished</p>
+      </div>
+      <div class="dashboard-card">
+        <h3>Learning Progress</h3>
+        <div class="stat" id="progressPercent">0%</div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+        </div>
+        <p>Overall completion rate</p>
+      </div>
+    </div>
+
+    <!-- Profile Section -->
+    <div class="profile-section" id="profileSection">
+      <div class="profile-header">
+        <div class="profile-avatar" id="profileAvatar">U</div>
+        <div class="profile-info">
+          <h2 id="profileName">Loading...</h2>
+          <p id="profileEmail">Loading...</p>
+          <p id="profileJoined">Member since: Loading...</p>
+        </div>
+      </div>
+      <div class="profile-stats">
+        <div class="profile-stat">
+          <div class="number" id="totalCourses">0</div>
+          <div class="label">Total Courses</div>
+        </div>
+        <div class="profile-stat">
+          <div class="number" id="totalTopics">0</div>
+          <div class="label">Topics Completed</div>
+        </div>
+        <div class="profile-stat">
+          <div class="number" id="studyStreak">0</div>
+          <div class="label">Study Streak</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Activities -->
+    <section class="activities-section">
+      <h2>Recent Activities</h2>
+      <div id="activitiesList" class="activities-list">
+        <div class="loading">
+          <div class="loading-spinner"></div>
+          <p>Loading recent activities...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Enrolled Courses -->
+    <section class="courses-section">
+      <h2>My Courses</h2>
+      <div id="courses" class="courses-grid">
+        <div class="loading">
+          <div class="loading-spinner"></div>
+          <p>Loading your courses...</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Debug Panel -->
+  <div class="debug-panel" id="debugPanel">
+    <h4>🔍 Debug Console</h4>
+    <p id="debugOutput"></p>
+  </div>
+
+
+  <!-- Terms & Conditions Modal -->
+<div id="termsModal" class="terms-overlay">
+  <div class="terms-card">
+    <h2>Terms & Conditions</h2>
+
+    <div class="terms-content">
+      <p><strong>1. Course Access</strong><br>
+        Course access is granted only to the registered user and cannot be shared.
+      </p>
+
+      <p><strong>2. Payments</strong><br>
+        All payments are non-refundable once the course is accessed.
+      </p>
+
+      <p><strong>3. Content Usage</strong><br>
+        Course videos, PDFs, and materials are for personal learning only.
+      </p>
+
+      <p><strong>4. Misuse</strong><br>
+        Any misuse or redistribution may result in account termination.
+      </p>
+
+      <p><strong>5. Platform Rights</strong><br>
+        Alphaprime reserves the right to update course content anytime.
+      </p>
+    </div>
+
+    <label class="terms-checkbox">
+      <input type="checkbox" id="agreeCheckbox" />
+      I have read and agree to the Terms & Conditions
+    </label>
+
+    <div class="terms-actions">
+      <button id="cancelTerms" class="course-btn">Cancel</button>
+      <button id="proceedPayment" class="course-btn primary" disabled>
+        Proceed to Payment
+      </button>
+    </div>
+  </div>
+</div>
+
+  <script>
+
+    let pendingCourseSlug = null;
+let pendingCoursePrice = 0;
+    // Configuration
+    const API_BASE_URL = 'http://localhost:3000';
+    
+    // Check if user is logged in
+    const userId = localStorage.getItem('alphaprimeUserId');
+    const userName = localStorage.getItem('alphaprimeName');
+    const userEmail = localStorage.getItem('alphaprimeEmail');
+
+    // Debug logging
+    console.log('🔍 Dashboard Debug Info:');
+    console.log('  userId:', userId);
+    console.log('  userName:', userName);
+    console.log('  userEmail:', userEmail);
+
+    if (!userEmail) {
+      console.warn('⚠️  No user email found in localStorage. Redirecting to login...');
+      // Uncomment to enforce login
+      // window.location.href = 'index_aaiyana.html';
+      // For testing, use demo data
+      localStorage.setItem('alphaprimeUserId', '3');
+      localStorage.setItem('alphaprimeName', 'Demo User');
+      localStorage.setItem('alphaprimeEmail', 'aaiyana@gmail.com');
+      console.log('✅ Set demo user data for testing');
+    }
+
+    // Update UI with user info
+    if (userName) {
+      document.getElementById('welcomeName').textContent = userName;
+      document.getElementById('userName').textContent = userName;
+      document.getElementById('profileAvatar').textContent = userName.charAt(0).toUpperCase();
+    }
+
+    // Logout functionality
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('alphaprimeUserId');
+      localStorage.removeItem('alphaprimeName');
+      localStorage.removeItem('alphaprimeEmail');
+      window.location.href = 'index_aaiyana.html';
+    });
+
+    // Dropdown functionality
+    const dropdown = document.getElementById('dropdownMenu');
+    const menuButton = document.getElementById('menuButton');
+
+    menuButton.addEventListener('click', () => {
+      dropdown.classList.toggle('open');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove('open');
+      }
+    });
+
+    // Load dashboard data
+    async function loadDashboard() {
+      try {
+        console.log('📊 Loading dashboard for:', userEmail);
+        const url = `${API_BASE_URL}/api/dashboard?email=${encodeURIComponent(userEmail)}`;
+        console.log('📍 Fetching from:', url);
+        
+        const response = await fetch(url);
+        console.log('📡 Response status:', response.status);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        console.log('✅ Dashboard data received:', data);
+
+        if (!data.success) {
+          showError('Failed to load dashboard data: ' + (data.message || 'Unknown error'));
+          return;
+        }
+
+        const { user, stats, courses, recent_activities } = data;
+
+        // Update profile
+        document.getElementById('profileName').textContent = user.name;
+        document.getElementById('profileEmail').textContent = user.email;
+        document.getElementById('profileJoined').textContent = `Member since: ${new Date(user.joined_date).toLocaleDateString()}`;
+
+        // Update stats
+        document.getElementById('enrolledCount').textContent = stats.enrolled_courses;
+        document.getElementById('completedCount').textContent = stats.completed_courses;
+        document.getElementById('progressPercent').textContent = stats.average_progress + '%';
+        document.getElementById('progressBar').style.width = stats.average_progress + '%';
+
+        // Update profile stats
+        document.getElementById('totalCourses').textContent = stats.enrolled_courses;
+        const totalTopics = courses.reduce((sum, course) => sum + course.completed_topics, 0);
+        document.getElementById('totalTopics').textContent = totalTopics;
+        document.getElementById('studyStreak').textContent = Math.floor(Math.random() * 30) + 1; // Mock data
+
+        // Update activities
+        const activitiesContainer = document.getElementById('activitiesList');
+        if (recent_activities.length === 0) {
+          activitiesContainer.innerHTML = '<div class="no-data">No recent activities yet. Start learning to see your progress here!</div>';
+        } else {
+          activitiesContainer.innerHTML = recent_activities.map(activity => `
+            <div class="activity-item">
+              <div class="activity-icon">✅</div>
+              <div class="activity-content">
+                <h4>Completed: ${activity.topic_title}</h4>
+                <p>In course: ${activity.course_title}</p>
+              </div>
+              <div class="activity-time">${new Date(activity.updated_at).toLocaleDateString()}</div>
+            </div>
+          `).join('');
+        }
+
+        // Update enrolled courses
+        const coursesContainer = document.getElementById('courses');
+        if (courses.length === 0) {
+          coursesContainer.innerHTML = '<div class="no-data">You have not enrolled in any courses yet. <a href="courses.html">Browse courses</a> to get started.</div>';
+        } else {
+          coursesContainer.innerHTML = courses.map(course => `
+            <div class="course-card">
+              <img src="${course.image_url || 'placeholder.jpg'}" alt="${course.title}" />
+              <h3>${course.title}</h3>
+              <p>${course.description || ''}</p>
+              <div class="enrollment-date">Enrolled on ${new Date(course.created_at).toLocaleDateString()}</div>
+              <div class="course-progress">
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: ${course.progress}%"></div>
+                </div>
+                <div class="progress-text">${course.progress}% complete (${course.completed_topics}/${course.total_topics} topics)</div>
+              </div>
+              <div class="course-actions">
+                <button class="course-btn" onclick="window.location.href='enrolled_course_detail.html?slug=${course.slug}'">View Details</button>
+              </div>
+            </div>
+          `).join('');
+        }
+
+        // Load available courses for enrollment
+        await loadAvailableCourses(courses);
+
+      } catch (error) {
+        console.error('❌ Error loading dashboard:', error);
+        showError('Failed to load dashboard. Error: ' + error.message);
+      }
+    }
+
+    // Load available courses for enrollment
+    async function loadAvailableCourses(enrolledCourses) {
+      try {
+        console.log('📚 Loading available courses...');
+        const url = `${API_BASE_URL}/api/courses`;
+        console.log('📍 Fetching from:', url);
+        
+        const response = await fetch(url);
+        console.log('📡 Response status:', response.status);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const availableCourses = await response.json();
+        console.log('✅ Available courses received:', availableCourses.length, 'courses');
+
+        const enrolledSlugs = enrolledCourses.map(c => c.slug);
+
+        const coursesContainer = document.getElementById('availableCourses');
+        coursesContainer.innerHTML = '';
+
+        if (availableCourses.length === 0) {
+          coursesContainer.innerHTML = '<div class="no-data">No courses available at the moment.</div>';
+          return;
+        }
+
+        availableCourses.forEach(course => {
+          const isEnrolled = enrolledSlugs.includes(course.slug);
+          const priceText = course.price > 0 ? `₹${course.price}` : 'FREE';
+          const priceClass = course.price > 0 ? '' : 'free';
+          const buttonText = course.price > 0 ? 'Enroll Now' : 'Enroll Free';
+          const buttonClass = course.price > 0 ? '' : 'free';
+
+          const courseCard = document.createElement('div');
+          courseCard.className = `enrollment-card ${isEnrolled ? 'enrolled' : ''}`;
+          courseCard.innerHTML = `
+            <img src="${course.image_url || 'placeholder.jpg'}" alt="${course.title}" />
+            <h3>${course.title}</h3>
+            <p>${course.description || ''}</p>
+            <div class="course-price ${priceClass}">${priceText}</div>
+            <div class="enrollment-actions">
+              <button class="enroll-btn ${buttonClass}" 
+                      onclick="openTerms('${course.slug}', ${course.price})"
+                      ${isEnrolled ? 'disabled' : ''}>
+                ${isEnrolled ? 'Already Enrolled' : buttonText}
+              </button>
+            </div>
+          `;
+          coursesContainer.appendChild(courseCard);
+        });
+
+      } catch (error) {
+        console.error('❌ Error loading available courses:', error);
+        document.getElementById('availableCourses').innerHTML = '<div class="no-data">Failed to load available courses. Error: ' + error.message + '</div>';
+      }
+    }
+
+    // Enroll in course function
+    async function enrollInCourse(courseSlug, price) {
+      try {
+        console.log('📝 Processing enrollment for course:', courseSlug, 'Price:', price);
+
+        if (price > 0) {
+          // Paid course - initiate Razorpay payment
+          console.log('💳 Initiating payment for paid course');
+
+          const orderResponse = await fetch(`${API_BASE_URL}/api/create-order`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              course_slug: courseSlug,
+              user_id: userId
+            })
+          });
+
+          const orderData = await orderResponse.json();
+          console.log('📋 Order created:', orderData);
+
+          if (!orderData.success) {
+            showError(orderData.message || 'Failed to create payment order');
+            return;
+          }
+
+          // Initialize Razorpay checkout
+          const options = {
+            key: orderData.key,
+            amount: orderData.amount,
+            currency: orderData.currency,
+            order_id: orderData.order_id,
+            name: 'Alphaprime',
+            description: `Payment for ${courseSlug}`,
+            handler: async function (response) {
+              console.log('💰 Payment successful:', response);
+
+              // Verify payment on server
+              try {
+                const verifyResponse = await fetch(`${API_BASE_URL}/api/verify-payment`, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    razorpay_order_id: response.razorpay_order_id,
+                    razorpay_payment_id: response.razorpay_payment_id,
+                    razorpay_signature: response.razorpay_signature
+                  })
+                });
+
+                const verifyResult = await verifyResponse.json();
+                console.log('✅ Payment verification:', verifyResult);
+
+                if (verifyResult.success) {
+                  showSuccess('Payment successful! You are now enrolled in the course.');
+                  loadDashboard(); // Refresh dashboard
+                } else {
+                  showError('Payment verification failed. Please contact support.');
+                }
+              } catch (verifyError) {
+                console.error('❌ Payment verification error:', verifyError);
+                showError('Payment verification failed. Please contact support.');
+              }
+            },
+            prefill: {
+              name: userName,
+              email: userEmail
+            },
+            theme: {
+              color: '#0a585b'
+            },
+            modal: {
+              ondismiss: function() {
+                console.log('💳 Payment modal dismissed');
+                showError('Payment was cancelled.');
+              }
+            }
+          };
+
+          const rzp = new Razorpay(options);
+          rzp.open();
+
+        } else {
+          // Free course - direct enrollment
+          console.log('🆓 Enrolling in free course');
+          const payload = {
+            user_id: userId,
+            course_slug: courseSlug
+          };
+
+          const response = await fetch(`${API_BASE_URL}/api/enroll`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload)
+          });
+
+          const result = await response.json();
+          console.log('✅ Enrollment response:', result);
+
+          if (result.success) {
+            showSuccess('Successfully enrolled in the course!');
+            loadDashboard(); // Refresh dashboard
+          } else {
+            showError(result.message || 'Failed to enroll in course');
+          }
+        }
+      } catch (error) {
+        console.error('❌ Error processing enrollment:', error);
+        showError('Failed to process enrollment. Error: ' + error.message);
+      }
+    }
+
+    // Show success message
+    function showSuccess(message) {
+      const successDiv = document.createElement('div');
+      successDiv.className = 'success';
+      successDiv.innerHTML = `✅ ${message}`;
+      successDiv.style.cssText = `
+        background: #d4edda;
+        color: #155724;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #c3e6cb;
+        margin-bottom: 20px;
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        z-index: 1000;
+        max-width: 400px;
+      `;
+
+      document.body.appendChild(successDiv);
+      setTimeout(() => {
+        successDiv.remove();
+      }, 5000);
+    }
+
+    function showError(message) {
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'error';
+      errorDiv.textContent = message;
+
+      const main = document.querySelector('main');
+      main.insertBefore(errorDiv, main.firstChild);
+
+      setTimeout(() => {
+        errorDiv.remove();
+      }, 5000);
+    }
+
+    // Load dashboard on page load
+    loadDashboard();
+
+    // Auto-refresh data every 30 seconds
+    setInterval(loadDashboard, 30000);
+
+    // Toggle debug panel with keyboard shortcut (Ctrl+Shift+D)
+    document.addEventListener('keydown', (e) => {
+      if (e.ctrlKey && e.shiftKey && e.code === 'KeyD') {
+        const debugPanel = document.getElementById('debugPanel');
+        debugPanel.classList.toggle('show');
+      }
+    });
+
+    // Log all messages to debug panel
+    const originalLog = console.log;
+    const debugMessages = [];
+    const maxMessages = 50;
+
+    console.log = function(...args) {
+      originalLog.apply(console, args);
+      
+      const message = args.map(arg => {
+        if (typeof arg === 'object') {
+          return JSON.stringify(arg, null, 2);
+        }
+        return String(arg);
+      }).join(' ');
+      
+      debugMessages.unshift(message);
+      if (debugMessages.length > maxMessages) {
+        debugMessages.pop();
+      }
+      
+      const debugPanel = document.getElementById('debugPanel');
+      const debugOutput = document.getElementById('debugOutput');
+      if (debugOutput) {
+        debugOutput.innerHTML = debugMessages.map(m => `<p>${m.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>`).join('');
+      }
+    };
+
+    // Show debug panel automatically if there are errors
+    const originalError = console.error;
+    console.error = function(...args) {
+      originalError.apply(console, args);
+      const debugPanel = document.getElementById('debugPanel');
+      if (debugPanel) {
+        debugPanel.classList.add('show');
+      }
+    };
+
+
+    function openTerms(slug, price) {
+  pendingCourseSlug = slug;
+  pendingCoursePrice = price;
+
+  document.getElementById('agreeCheckbox').checked = false;
+  document.getElementById('proceedPayment').disabled = true;
+  document.getElementById('termsModal').classList.add('show');
+}
+
+document.getElementById('agreeCheckbox').addEventListener('change', (e) => {
+  document.getElementById('proceedPayment').disabled = !e.target.checked;
+});
+
+document.getElementById('cancelTerms').addEventListener('click', () => {
+  document.getElementById('termsModal').classList.remove('show');
+});
+
+document.getElementById('proceedPayment').addEventListener('click', () => {
+  document.getElementById('termsModal').classList.remove('show');
+  enrollInCourse(pendingCourseSlug, pendingCoursePrice);
+});
+  </script>
+</body>
+</html>

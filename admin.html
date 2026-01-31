@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Dashboard</title>
+<style>
+body { font-family: Arial; padding: 30px; }
+input, textarea, button { display:block; margin:10px 0; padding:8px; }
+</style>
+</head>
+<body>
+
+<h1>Admin Panel – Alphaprime</h1>
+
+<h2>Add Course</h2>
+<input id="courseTitle" placeholder="Course title">
+<input id="courseSlug" placeholder="Course slug">
+<textarea id="courseDesc" placeholder="Course description"></textarea>
+<input id="courseImage" placeholder="Image URL">
+<button onclick="addCourse()">Add Course</button>
+
+<hr>
+
+<h2>Add Topic</h2>
+<input id="topicCourseId" placeholder="Course ID">
+<input id="topicTitle" placeholder="Topic title">
+<textarea id="topicDesc" placeholder="Topic description"></textarea>
+<input id="topicVideo" placeholder="Video URL">
+<input id="topicDuration" placeholder="Duration (minutes)">
+<input id="topicOrder" placeholder="Order number">
+
+<button onclick="addTopic()">Add Topic</button>
+
+<script>
+const API_BASE = "http://localhost:3000"; // backend URL
+
+async function addCourse() {
+  const payload = {
+    title: document.getElementById("courseTitle").value,
+    slug: document.getElementById("courseSlug").value,
+    description: document.getElementById("courseDesc").value,
+    image: document.getElementById("courseImage").value
+  };
+
+  try {
+    const res = await fetch(`${API_BASE}/api/admin/course`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+
+    if (!res.ok || !data.success) {
+      throw new Error(data.message || "Failed to add course");
+    }
+
+    alert("✅ Course added successfully");
+  } catch (err) {
+    alert("❌ Error: " + err.message);
+    console.error(err);
+  }
+}
+
+async function addTopic() {
+  const payload = {
+    course_id: document.getElementById("topicCourseId").value,
+    title: document.getElementById("topicTitle").value,
+    description: document.getElementById("topicDesc").value,
+    video_url: document.getElementById("topicVideo").value,
+    duration_minutes: document.getElementById("topicDuration").value,
+    order_no: document.getElementById("topicOrder").value
+  };
+
+  try {
+    const res = await fetch(`${API_BASE}/api/admin/topic`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+
+    if (!res.ok || !data.success) {
+      throw new Error(data.message || "Failed to add topic");
+    }
+
+    alert("✅ Topic added successfully");
+  } catch (err) {
+    alert("❌ Error: " + err.message);
+    console.error(err);
+  }
+}
+</script>
+
+
+</body>
+</html>
