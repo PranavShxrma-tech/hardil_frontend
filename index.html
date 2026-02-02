@@ -2413,7 +2413,7 @@
       };
 
       try {
-        const resp = await fetch('http://localhost:3000/api/courses');
+        const resp = await fetch("https://hardil-backend.vercel.app/api/courses");
         if (!resp.ok) throw new Error('Failed to fetch courses');
         let courses;
         try {
