@@ -136,7 +136,7 @@ if (!slug) {
 
 async function loadCourse() {
   try {
-    const courseRes = await fetch(`http://localhost:3000/api/course/${slug}`);
+    const courseRes = await fetch(`https://hardil-backend.vercel.app/api/course/${slug}`);
     if (!courseRes.ok) throw new Error("Course API failed");
 
     const courseData = await courseRes.json();
@@ -208,7 +208,7 @@ function renderCourse(course) {
 
 async function enrollCourse(course, user_id) {
   try {
-    const res = await fetch("http://localhost:3000/api/enroll", {
+    const res = await fetch("https://hardil-backend.vercel.app/api/enroll", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ user_id, course_slug: course.slug }),
