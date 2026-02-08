@@ -3070,9 +3070,15 @@ Thanku Hardil sir"</p>
     if (loginBtnDropdown) loginBtnDropdown.onclick = openLoginModal;
 
     closeLoginBtn.addEventListener('click', () => {
-      loginModal.classList.remove('active');
-      loginModal.setAttribute('aria-hidden', 'true');
-    });
+  // Close modal
+  loginModal.classList.remove('active');
+  loginModal.setAttribute('aria-hidden', 'true');
+
+  // 🔥 Clear any pending enrollment or payment flow
+  pendingEnrollCourse = null;
+  pendingCoursePrice = 0;
+  currentPaymentCourse = null;
+});
 
     loginModal.addEventListener('click', (e) => {
       if (e.target === loginModal) {
@@ -3115,23 +3121,30 @@ Thanku Hardil sir"</p>
         localStorage.setItem("alphaprimeEmail", data.user.email);
 
         // If the user arrived because of a pending enroll, continue the flow
-        if (pendingEnrollCourse) {
-          // fetch course details to decide payment vs free
-          const cs = await fetch("https://hardil-backend.vercel.app/api/course/" + pendingEnrollCourse);
-          const csd = await cs.json();
-          const price = csd.course?.price || 0;
+       // If the user arrived because of a pending enroll, continue the flow
+if (pendingEnrollCourse) {
+  const cs = await fetch("https://hardil-backend.vercel.app/api/course/" + pendingEnrollCourse);
+  const csd = await cs.json();
+  const price = csd.course?.price || 0;
 
-          if (price === 0) {
-            await fetch("https://hardil-backend.vercel.app/api/enroll", {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ user_id: data.user.id, course_slug: pendingEnrollCourse })
-            });
-            pendingEnrollCourse = null;
-            alert('Enrollment successful! Redirecting to dashboard.');
-            window.location.href = 'dashboard.html';
-            return;
-          }
+  if (price === 0) {
+    await fetch("https://hardil-backend.vercel.app/api/enroll", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user_id: data.user.id, course_slug: pendingEnrollCourse })
+    });
+    pendingEnrollCourse = null;
+    alert('Enrollment successful! Redirecting to dashboard.');
+    window.location.href = 'dashboard.html';
+    return;
+  }
+
+  // paid: open payment modal
+  pendingCoursePrice = price;
+  openPaymentModalForCourse(pendingEnrollCourse, price);
+  return;
+}
+
 
           // paid: open payment modal
           pendingCoursePrice = price;
