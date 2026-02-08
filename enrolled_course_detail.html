@@ -213,6 +213,15 @@ footer {
   border: 1px solid #fcc;
   margin-bottom: 20px;
 }
+
+
+.topic-btn:disabled {
+  background: #94a3b8;
+  border-color: #94a3b8;
+  color: #fff;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
 </style>
 </head>
 
@@ -386,9 +395,11 @@ function renderEnrolledCourse(course, topics, enrolledCourse) {
     Join Now
   </button>-->
 
-  <button class="topic-btn ${topic.completed ? 'completed' : ''}" onclick="markTopicComplete(${topic.id})">
-    ${topic.completed ? 'Completed' : 'Mark Complete'}
-  </button>
+ <button 
+  class="topic-btn ${topic.completed ? 'completed' : ''}" 
+  ${topic.completed ? 'disabled' : `onclick="markTopicComplete(${topic.id}, event)"`}>
+  ${topic.completed ? 'Completed' : 'Mark Complete'}
+</button>
   
 </div>
 
@@ -407,7 +418,7 @@ function renderEnrolledCourse(course, topics, enrolledCourse) {
 
 
 
-async function markTopicComplete(topicId) {
+async function markTopicComplete(topicId, event) {
   if (!userId) {
     alert('Please login to mark topics complete.');
     return;
@@ -416,12 +427,10 @@ async function markTopicComplete(topicId) {
   try {
     const response = await fetch(`${API_BASE}/api/mark-complete`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        userId: userId,
-        topicId: topicId
+        userId: Number(userId),
+        topicId: Number(topicId)
       })
     });
 
@@ -432,17 +441,21 @@ async function markTopicComplete(topicId) {
     const result = await response.json();
 
     if (result.success) {
-      alert('Topic marked as complete!');
-      // Reload the page to reflect the updated progress
-      location.reload();
+      // Update button instantly instead of reload
+      const btn = event.target;
+      btn.textContent = "Completed";
+      btn.classList.add("completed");
+      btn.disabled = true;
+      btn.removeAttribute("onclick");
     } else {
-      alert('Failed to mark topic complete: ' + (result.message || 'Unknown error'));
+      alert('Failed to mark topic complete');
     }
   } catch (error) {
     console.error('Error marking topic complete:', error);
-    alert('Error marking topic complete: ' + error.message + '. Please try again.');
+    alert('Server error. Please try again.');
   }
 }
+
 
 
 // function joinCourse(topicId) {
