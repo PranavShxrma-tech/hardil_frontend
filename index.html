@@ -3083,7 +3083,7 @@ Thanku Hardil sir"</p>
 
 
     /* Handle login submit */
-    loginForm.addEventListener('submit', async (e) => {
+    /*loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       if (!loginForm.checkValidity()) {
@@ -3146,7 +3146,78 @@ Thanku Hardil sir"</p>
         console.error('Login error:', err);
         alert('Login failed: ' + err.message);
       }
-    });
+    });*/
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+  const loginForm = document.getElementById('login-form');
+
+  if (!loginForm) return;
+
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (!loginForm.checkValidity()) {
+      loginForm.reportValidity();
+      return;
+    }
+
+    const payload = {
+      email: document.getElementById('login-email').value,
+      password: document.getElementById('login-password').value
+    };
+
+    try {
+      const response = await fetch("https://hardil-backend.vercel.app/api/login", {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || 'Invalid email or password');
+      }
+
+      // Save user
+      localStorage.setItem("alphaprimeUserId", data.user.id);
+      localStorage.setItem("alphaprimeName", data.user.full_name);
+      localStorage.setItem("alphaprimeEmail", data.user.email);
+
+      // If enrolling in a course
+      if (pendingEnrollCourse) {
+        const cs = await fetch("https://hardil-backend.vercel.app/api/course/" + pendingEnrollCourse);
+        const csd = await cs.json();
+        const price = csd.course?.price || 0;
+
+        if (price === 0) {
+          await fetch("https://hardil-backend.vercel.app/api/enroll", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user_id: data.user.id, course_slug: pendingEnrollCourse })
+          });
+          pendingEnrollCourse = null;
+          alert('Enrollment successful! Redirecting to dashboard.');
+          window.location.href = 'dashboard.html';
+          return;
+        }
+
+        pendingCoursePrice = price;
+        openPaymentModalForCourse(pendingEnrollCourse, price);
+        return;
+      }
+
+      // Normal login
+      window.location.href = 'dashboard.html';
+
+    } catch (err) {
+      alert('Login failed: ' + err.message);
+    }
+  });
+
+});
+
 
     /* ====== FORGOT PASSWORD FLOW ====== */
     let forgotPasswordUserId = null;
