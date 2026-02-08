@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Alphaprime - Dashboard</title>
+  <title>Alphaprime | Dashboard</title>
+  <meta name="title" content="The Alphaprime - Dashboard" />
+
+  <!-- <meta name="description"
+    content="Join Alphaprime’s expert-led Trading course in Amritsar and learn stock market strategies, live trading, and practical skills from beginner to advanced levels." /> -->
+
+  <link rel="icon" type="image/png" href="2.png" />
 
   <!-- Google Fonts: main + accent for logo -->
   <link
@@ -516,7 +523,7 @@
       right: -50%;
       width: 200%;
       height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
       animation: float 6s ease-in-out infinite;
     }
 
@@ -540,6 +547,10 @@
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 30px;
       margin-bottom: 40px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 5%;
     }
 
     .dashboard-card {
@@ -606,10 +617,12 @@
     /* Profile section */
     .profile-section {
       background: #f8fdfd;
-      padding: 30px;
+      padding: 30px 5%;
       border-radius: 18px;
-      margin-bottom: 40px;
+      margin: 0 auto 40px auto;
       border: 1px solid #0a585b11;
+      max-width: 1200px;
+      box-sizing: border-box;
     }
 
     .profile-header {
@@ -666,6 +679,14 @@
     }
 
     /* Recent activities */
+    .activities-section {
+      margin-bottom: 60px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 5%;
+    }
+
     .activities-section h2 {
       font-size: 2rem;
       color: #0a585b;
@@ -727,6 +748,14 @@
     }
 
     /* Course cards */
+    .courses-section {
+      margin-bottom: 40px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 5%;
+    }
+
     .courses-section h2 {
       font-size: 2rem;
       color: #0a585b;
@@ -848,6 +877,33 @@
       margin-bottom: 10px;
     }
 
+
+
+
+    /* FOOTER  */
+
+    footer {
+      background-color: #0a585b;
+      color: #ffffff;
+      text-align: center;
+      padding: 30px 5%;
+      font-size: 0.9rem;
+      margin-top: 60px;
+      border-radius: 15px 15px 0 0;
+    }
+
+    footer a {
+      color: #ffffff;
+      font-weight: 600;
+      margin: 0 8px;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+
     /* Quick actions */
     .quick-actions {
       display: grid;
@@ -918,8 +974,13 @@
     }
 
     @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
     }
 
     .no-data {
@@ -955,6 +1016,10 @@
     /* Available courses section */
     .available-courses-section {
       margin-bottom: 60px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 5%;
     }
 
     .available-courses-section h2 {
@@ -1026,6 +1091,7 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
+
     .course-price {
       font-size: 1.5rem;
       font-weight: 700;
@@ -1112,79 +1178,87 @@
 
 
     /* Terms Modal */
-.terms-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 3000;
-}
+    .terms-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000;
+    }
 
-.terms-overlay.show {
-  display: flex;
-}
+    .terms-overlay.show {
+      display: flex;
+    }
 
-.terms-card {
-  background: #ffffff;
-  width: 90%;
-  max-width: 500px;
-  border-radius: 16px;
-  padding: 25px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
-  animation: popIn 0.3s ease;
-}
+    .terms-card {
+      background: #ffffff;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      animation: popIn 0.3s ease;
+    }
 
-@keyframes popIn {
-  from { transform: scale(0.95); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
+    @keyframes popIn {
+      from {
+        transform: scale(0.95);
+        opacity: 0;
+      }
 
-.terms-card h2 {
-  margin-top: 0;
-  color: #0a585b;
-}
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
 
-.terms-content {
-  max-height: 220px;
-  overflow-y: auto;
-  font-size: 0.9rem;
-  color: #444;
-  margin: 15px 0;
-  padding-right: 8px;
-}
+    .terms-card h2 {
+      margin-top: 0;
+      color: #0a585b;
+    }
 
-.terms-checkbox {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.9rem;
-  margin-bottom: 15px;
-}
+    .terms-content {
+      max-height: 220px;
+      overflow-y: auto;
+      font-size: 0.9rem;
+      color: #444;
+      margin: 15px 0;
+      padding-right: 8px;
+    }
 
-.terms-actions {
-  display: flex;
-  gap: 10px;
-}
+    .terms-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+    }
 
-/* Disabled Proceed Payment Button */
-#proceedPayment:disabled {
-  background-color: #ccc;
-  color: #777;
-  border-color: #ccc;
-  cursor: not-allowed;
-  opacity: 0.7;
-  box-shadow: none;
-  transform: none;
-}
+    .terms-actions {
+      display: flex;
+      gap: 10px;
+    }
 
-.course-btn:disabled:hover {
-  background-color: #ccc;
-  color: #777;
-}
+    /* Disabled Proceed Payment Button */
+    #proceedPayment:disabled {
+      background-color: #ccc;
+      color: #777;
+      border-color: #ccc;
+      cursor: not-allowed;
+      opacity: 0.7;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .course-btn:disabled:hover {
+      background-color: #ccc;
+      color: #777;
+    }
   </style>
 </head>
+
 <body>
   <header>
     <div class="header-inner">
@@ -1198,7 +1272,8 @@
 
       <div class="header-actions">
         <div class="dropdown" id="dropdownMenu">
-          <button class="menu-button" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-content" id="menuButton">
+          <button class="menu-button" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-content"
+            id="menuButton">
             <span id="userName">Dashboard</span>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <path d="M7 10l5 5 5-5H7z" />
@@ -1233,7 +1308,33 @@
         <p>Return to the main website</p>
       </div>
     </div>
- 
+
+    <!-- Profile Section -->
+    <div class="profile-section" id="profileSection">
+      <div class="profile-header">
+        <div class="profile-avatar" id="profileAvatar">U</div>
+        <div class="profile-info">
+          <h2 id="profileName">Loading...</h2>
+          <p id="profileEmail">Loading...</p>
+          <p id="profileJoined">Member since: Loading...</p>
+        </div>
+      </div>
+      <div class="profile-stats">
+        <div class="profile-stat">
+          <div class="number" id="totalCourses">0</div>
+          <div class="label">Total Courses</div>
+        </div>
+        <div class="profile-stat">
+          <div class="number" id="totalTopics">0</div>
+          <div class="label">Topics Completed</div>
+        </div>
+        <div class="profile-stat">
+          <div class="number" id="studyStreak">0</div>
+          <div class="label">Study Streak</div>
+        </div>
+      </div>
+    </div>
+
     <!-- Enrolled Courses -->
     <section class="courses-section">
       <h2>My Courses</h2>
@@ -1244,7 +1345,17 @@
         </div>
       </div>
     </section>
-  </main>
+
+    <!-- Recent Activities -->
+    <section class="activities-section">
+      <h2>Recent Activities</h2>
+      <div id="activitiesList" class="activities-list">
+        <div class="loading">
+          <div class="loading-spinner"></div>
+          <p>Loading recent activities...</p>
+        </div>
+      </div>
+    </section>
 
     <!-- Available Courses for Enrollment -->
     <section class="available-courses-section">
@@ -1278,45 +1389,9 @@
         <p>Overall completion rate</p>
       </div>
     </div>
+  </main>
 
-    <!-- Profile Section -->
-    <div class="profile-section" id="profileSection">
-      <div class="profile-header">
-        <div class="profile-avatar" id="profileAvatar">U</div>
-        <div class="profile-info">
-          <h2 id="profileName">Loading...</h2>
-          <p id="profileEmail">Loading...</p>
-          <p id="profileJoined">Member since: Loading...</p>
-        </div>
-      </div>
-      <div class="profile-stats">
-        <div class="profile-stat">
-          <div class="number" id="totalCourses">0</div>
-          <div class="label">Total Courses</div>
-        </div>
-        <div class="profile-stat">
-          <div class="number" id="totalTopics">0</div>
-          <div class="label">Topics Completed</div>
-        </div>
-        <div class="profile-stat">
-          <div class="number" id="studyStreak">0</div>
-          <div class="label">Study Streak</div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Recent Activities -->
-    <section class="activities-section">
-      <h2>Recent Activities</h2>
-      <div id="activitiesList" class="activities-list">
-        <div class="loading">
-          <div class="loading-spinner"></div>
-          <p>Loading recent activities...</p>
-        </div>
-      </div>
-    </section>
-
-   
 
   <!-- Debug Panel -->
   <div class="debug-panel" id="debugPanel">
@@ -1326,53 +1401,144 @@
 
 
   <!-- Terms & Conditions Modal -->
-<div id="termsModal" class="terms-overlay">
-  <div class="terms-card">
-    <h2>Terms & Conditions</h2>
+  <div id="termsModal" class="terms-overlay">
+    <div class="terms-card">
+      <h2>Terms & Conditions</h2>
 
-    <div class="terms-content">
-      <p><strong>1. Course Access</strong><br>
-        Course access is granted only to the registered user and cannot be shared.
-      </p>
+      <div class="terms-content">
 
-      <p><strong>2. Payments</strong><br>
-        All payments are non-refundable once the course is accessed.
-      </p>
+        <p>
+          The terms <strong>"We," "Us," "Our," "Company,"</strong> and
+          <strong>"The Company"</strong> refer to <strong>Alphaprime</strong>, while
+          <strong>"Visitor"</strong> or <strong>"User"</strong> refers to any individual accessing our services.
+          The Company reserves the right to modify these Terms and Conditions at any time.
+        </p>
 
-      <p><strong>3. Content Usage</strong><br>
-        Course videos, PDFs, and materials are for personal learning only.
-      </p>
+        <p><strong>1. Purpose of Services</strong><br>
+          Our services are designed for individuals seeking knowledge and educational training in technical and
+          fundamental analysis (equity and derivative) related to stock markets. The content is for informational and
+          educational purposes only.
+        </p>
 
-      <p><strong>4. Misuse</strong><br>
-        Any misuse or redistribution may result in account termination.
-      </p>
+        <p><strong>2. No Guarantee of Results</strong><br>
+          While our programs aim to equip you with strategies for success, we do not guarantee income or specific
+          outcomes. This is not a "get-rich-quick" program. Past results do not assure future performance.
+        </p>
 
-      <p><strong>5. Platform Rights</strong><br>
-        Alphaprime reserves the right to update course content anytime.
-      </p>
-    </div>
+        <p><strong>3. No Financial Advice</strong><br>
+          We do not offer financial advice or market recommendations. All investment decisions are solely your
+          responsibility. Alphaprime is not sebi registered and is not liable for any financial gain or loss incurred.
+        </p>
 
-    <label class="terms-checkbox">
-      <input type="checkbox" id="agreeCheckbox" />
-      I have read and agree to the Terms & Conditions
-    </label>
+        <p><strong>4. Copyright and Usage Restrictions</strong><br>
+          Course content is the intellectual property of Alphaprime. You agree not to reproduce, distribute, or
+          retransmit any content without prior written consent.
+        </p>
 
-    <div class="terms-actions">
-      <button id="cancelTerms" class="course-btn">Cancel</button>
-      <button id="proceedPayment" class="course-btn primary" disabled>
-        Proceed to Payment
-      </button>
+        <p><strong>5. Basis of Educational Content</strong><br>
+          Our courses are based on the personal views and market experiences of instructors and are not intended as
+          professional financial advice.
+        </p>
+
+        <p><strong>6. Market Risk Disclaimer</strong><br>
+          Trading and investing involve risk. Strategies shared are purely educational. We do not provide investment
+          tips or portfolio management services.
+        </p>
+
+        <p><strong>7. Refund Policy</strong><br>
+          No refunds will be provided under any circumstances, including dissatisfaction, misunderstanding of content,
+          or requests for course exchange.
+        </p>
+
+        <p><strong>8. Communication Policy</strong><br>
+          We respond only to students contacting us via their registered mobile number. Queries from parents or
+          guardians will not be entertained.
+        </p>
+
+        <p><strong>9. Age Verification</strong><br>
+          We do not verify age. Once services are delivered, refunds will not be entertained.
+        </p>
+
+        <p><strong>10. Dispute Resolution</strong><br>
+          For unresolved issues, disputes must be addressed under the jurisdiction of the courts in Amritsar, Punjab,
+          India.
+        </p>
+
+        <p><strong>11. Legal Jurisdiction</strong><br>
+          These Terms are governed by the laws of Punjab, India, excluding its conflict of law provisions.
+        </p>
+
+        <p><strong>12. Prohibited Conduct</strong><br>
+          Recording classes, sharing content, or distributing course tips online/offline is strictly prohibited.
+          Violators may face removal, financial penalties, and legal action.
+        </p>
+
+        <p><strong>General Rules</strong><br>
+        <ul>
+          <li>Classes will be conducted live via Google Meet or YouTube stream.</li>
+          <li>Missed topics can be covered in scheduled Doubt Sessions.</li>
+          <li>Batch changes are not allowed after selection. A ₹4000 fee applies for changes.</li>
+          <li>Batch pause/resume fee is ₹2000.</li>
+          <li>Course links are shared only to the registered WhatsApp number.</li>
+        </ul>
+        </p>
+
+        <p><strong>13. Intellectual Property</strong><br>
+          All course materials, including text, videos, graphics, and strategies, are protected by copyright.
+        </p>
+
+        <p><strong>Important Disclaimer</strong><br>
+          Alphaprime provides educational content only. We do not promote stock buying/selling. Always consult a
+          qualified financial advisor before making investment decisions
+        </p>
+
+        <p><strong>Acknowledgement & Agreement</strong><br>
+          By enrolling, I confirm that:<br>
+        <ul>
+          <li>I am solely responsible for my trading or investment outcomes.</li>
+          <li>I will not hold Alphaprime liable for any losses.</li>
+          <li>I have read and fully agree to the terms above.</li>
+          
+        </ul>
+        </p>
+
+      </div>
+
+      <label class="terms-checkbox">
+        <input type="checkbox" id="agreeCheckbox" />
+        I have read and agree to the Terms & Conditions
+      </label>
+
+      <div class="terms-actions">
+        <button id="cancelTerms" class="course-btn">Cancel</button>
+        <button id="proceedPayment" class="course-btn primary" disabled>
+          Proceed to Payment
+        </button>
+      </div>
     </div>
   </div>
-</div>
+
+  <footer id="contact" aria-label="Contact information">
+    <p>Contact us at: <a href="mailto:Thealphaprimeofficial@gmail.com">Thealphaprimeofficial@gmail.com</a> | Phone: <a
+        href="tel:+916280952152">+91 62809 52152</a></p>
+    <p>
+      Follow us:
+      <a href="https://www.instagram.com/hardilpreetsingh333?igsh=MXp0MjF1bW1yaDNo" aria-label="Instagram">Instagram</a>
+      |
+      <a href="https://wa.me/916280952152?text=Hi%2C%20I%E2%80%99m%20interested%20in%20learning%20stock%20trading"
+        aria-label="WhatsApp">WhatsApp</a> |
+      <a href="https://youtube.com/@alphaprimeace?si=kEDXgq9mwWlGiFyd" aria-label="YouTube">YouTube</a>
+    </p>
+    <p>&copy; 2026 alphaprime. All rights reserved.</p>
+  </footer>
 
   <script>
 
     let pendingCourseSlug = null;
-let pendingCoursePrice = 0;
+    let pendingCoursePrice = 0;
     // Configuration
     const API_BASE_URL = 'https://hardil-backend.vercel.app';
-    
+
     // Check if user is logged in
     const userId = localStorage.getItem('alphaprimeUserId');
     const userName = localStorage.getItem('alphaprimeName');
@@ -1431,14 +1597,14 @@ let pendingCoursePrice = 0;
         console.log('📊 Loading dashboard for:', userEmail);
         const url = `${API_BASE_URL}/api/dashboard?email=${encodeURIComponent(userEmail)}`;
         console.log('📍 Fetching from:', url);
-        
+
         const response = await fetch(url);
         console.log('📡 Response status:', response.status);
-        
+
         if (!response.ok) {
           throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
-        
+
         const data = await response.json();
         console.log('✅ Dashboard data received:', data);
 
@@ -1522,14 +1688,14 @@ let pendingCoursePrice = 0;
         console.log('📚 Loading available courses...');
         const url = `${API_BASE_URL}/api/courses`;
         console.log('📍 Fetching from:', url);
-        
+
         const response = await fetch(url);
         console.log('📡 Response status:', response.status);
-        
+
         if (!response.ok) {
           throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
-        
+
         const availableCourses = await response.json();
         console.log('✅ Available courses received:', availableCourses.length, 'courses');
 
@@ -1649,7 +1815,7 @@ let pendingCoursePrice = 0;
               color: '#0a585b'
             },
             modal: {
-              ondismiss: function() {
+              ondismiss: function () {
                 console.log('💳 Payment modal dismissed');
                 showError('Payment was cancelled.');
               }
@@ -1748,21 +1914,21 @@ let pendingCoursePrice = 0;
     const debugMessages = [];
     const maxMessages = 50;
 
-    console.log = function(...args) {
+    console.log = function (...args) {
       originalLog.apply(console, args);
-      
+
       const message = args.map(arg => {
         if (typeof arg === 'object') {
           return JSON.stringify(arg, null, 2);
         }
         return String(arg);
       }).join(' ');
-      
+
       debugMessages.unshift(message);
       if (debugMessages.length > maxMessages) {
         debugMessages.pop();
       }
-      
+
       const debugPanel = document.getElementById('debugPanel');
       const debugOutput = document.getElementById('debugOutput');
       if (debugOutput) {
@@ -1772,7 +1938,7 @@ let pendingCoursePrice = 0;
 
     // Show debug panel automatically if there are errors
     const originalError = console.error;
-    console.error = function(...args) {
+    console.error = function (...args) {
       originalError.apply(console, args);
       const debugPanel = document.getElementById('debugPanel');
       if (debugPanel) {
@@ -1782,26 +1948,27 @@ let pendingCoursePrice = 0;
 
 
     function openTerms(slug, price) {
-  pendingCourseSlug = slug;
-  pendingCoursePrice = price;
+      pendingCourseSlug = slug;
+      pendingCoursePrice = price;
 
-  document.getElementById('agreeCheckbox').checked = false;
-  document.getElementById('proceedPayment').disabled = true;
-  document.getElementById('termsModal').classList.add('show');
-}
+      document.getElementById('agreeCheckbox').checked = false;
+      document.getElementById('proceedPayment').disabled = true;
+      document.getElementById('termsModal').classList.add('show');
+    }
 
-document.getElementById('agreeCheckbox').addEventListener('change', (e) => {
-  document.getElementById('proceedPayment').disabled = !e.target.checked;
-});
+    document.getElementById('agreeCheckbox').addEventListener('change', (e) => {
+      document.getElementById('proceedPayment').disabled = !e.target.checked;
+    });
 
-document.getElementById('cancelTerms').addEventListener('click', () => {
-  document.getElementById('termsModal').classList.remove('show');
-});
+    document.getElementById('cancelTerms').addEventListener('click', () => {
+      document.getElementById('termsModal').classList.remove('show');
+    });
 
-document.getElementById('proceedPayment').addEventListener('click', () => {
-  document.getElementById('termsModal').classList.remove('show');
-  enrollInCourse(pendingCourseSlug, pendingCoursePrice);
-});
+    document.getElementById('proceedPayment').addEventListener('click', () => {
+      document.getElementById('termsModal').classList.remove('show');
+      enrollInCourse(pendingCourseSlug, pendingCoursePrice);
+    });
   </script>
 </body>
+
 </html>
