@@ -307,7 +307,7 @@ async function loadEnrolledCourseDetails() {
     const course = courseData.course;
 
     // Load topics with progress
-    const topicsRes = await fetch(`${API_BASE}/api/course/${encodeURIComponent(slug)}/topics?user_id=${userId}`);
+const topicsRes = await fetch(`${API_BASE}/api/course/${encodeURIComponent(slug)}/topics?userId=${userId}`);
     const topicsData = topicsRes.ok ? await topicsRes.json() : { topics: [] };
     const topics = topicsData.topics || [];
 
