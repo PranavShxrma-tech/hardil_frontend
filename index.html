@@ -3115,7 +3115,7 @@ Thanku Hardil sir"</p>
         localStorage.setItem("alphaprimeEmail", data.user.email);
 
         // If the user arrived because of a pending enroll, continue the flow
-        if (pendingEnrollCourse) {
+        /*if (pendingEnrollCourse) {
           // fetch course details to decide payment vs free
           const cs = await fetch("https://hardil-backend.vercel.app/api/course/" + pendingEnrollCourse);
           const csd = await cs.json();
@@ -3137,7 +3137,7 @@ Thanku Hardil sir"</p>
           pendingCoursePrice = price;
           openPaymentModalForCourse(pendingEnrollCourse, price);
           return;
-        }
+        }*/
 
         // otherwise go to dashboard after login
         window.location.href = 'dashboard.html';
