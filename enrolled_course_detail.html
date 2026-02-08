@@ -3,7 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Alphaprime – Enrolled Course Details</title>
+<title>The Alphaprime | Enrolled Course </title>
+  <meta name="title" content="The Alphaprime - Best Trading Courses Institute in Amritsar" />
+
+  <!-- <meta name="description"
+    content="Join Alphaprime’s expert-led Trading course in Amritsar and learn stock market strategies, live trading, and practical skills from beginner to advanced levels." /> -->
+
+  <link rel="icon" type="image/png" href="2.png" />
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -21,33 +27,74 @@ main {
   padding: 40px 5%;
 }
 
+/*FOOTER*/
+
+footer {
+      background-color: #0a585b;
+      color: #ffffff;
+      text-align: center;
+      padding: 30px 5%;
+      font-size: 0.9rem;
+      margin-top: 60px;
+      border-radius: 15px 15px 0 0;
+    }
+
+    footer a {
+      color: #ffffff;
+      font-weight: 600;
+      margin: 0 8px;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
 /* ===== HEADER ===== */
 header {
   background: linear-gradient(120deg, rgba(255,255,255,0.92), rgba(224,252,250,0.9));
   padding: 16px 5%;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   font-weight: 700;
   border-bottom: 1px solid rgba(10,88,91,0.08);
 }
 .logo-area {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
   gap: 14px;
+}
+.dashboard-btn {
+  background: linear-gradient(120deg, #0a585b, #0f766e);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+}
+.dashboard-btn:hover {
+  box-shadow: 0 4px 12px rgba(10,88,91,0.3);
+  transform: translateY(-2px);
 }
 .site-logo {
   height: 52px;
   border-radius: 14px;
 }
 
-/* ===== FOOTER ===== */
+/* ===== FOOTER =====
 footer {
   background:#0a585b;
   color:#fff;
   padding:30px;
   text-align:center;
   margin-top:60px;
-}
+} */
 
 /* ===== COURSE HERO ===== */
 .course-hero {
@@ -179,15 +226,26 @@ footer {
       <small>Learn · Trade · Grow</small>
     </div>
   </div>
+  <a href="#" class="dashboard-btn" onclick="redirectToDashboard(); return false;">Dashboard</a>
 </header>
 
 <main id="mainContent">
   <div class="loading">Loading course details...</div>
 </main>
 
-<footer>
-  © 2025 Alphaprime. All rights reserved.
-</footer>
+<footer id="contact" aria-label="Contact information">
+    <p>Contact us at: <a href="mailto:Thealphaprimeofficial@gmail.com">Thealphaprimeofficial@gmail.com</a> | Phone: <a
+        href="tel:+916280952152">+91 62809 52152</a></p>
+    <p>
+      Follow us:
+      <a href="https://www.instagram.com/hardilpreetsingh333?igsh=MXp0MjF1bW1yaDNo" aria-label="Instagram">Instagram</a>
+      |
+      <a href="https://wa.me/916280952152?text=Hi%2C%20I%E2%80%99m%20interested%20in%20learning%20stock%20trading"
+        aria-label="WhatsApp">WhatsApp</a> |
+      <a href="https://youtube.com/@alphaprimeace?si=kEDXgq9mwWlGiFyd" aria-label="YouTube">YouTube</a>
+    </p>
+    <p>&copy; 2026 alphaprime. All rights reserved.</p>
+  </footer>
 
 <script>
 const API_BASE = 'https://hardil-backend.vercel.app';
@@ -199,6 +257,15 @@ const slug = params.get("slug");
 // Get user data from localStorage
 const userId = localStorage.getItem('alphaprimeUserId');
 const userEmail = localStorage.getItem('alphaprimeEmail');
+
+// Function to redirect to dashboard with user context
+function redirectToDashboard() {
+  if (userId && userEmail) {
+    window.location.href = `dashboard.html?userId=${encodeURIComponent(userId)}&email=${encodeURIComponent(userEmail)}`;
+  } else {
+    window.location.href = 'dashboard.html';
+  }
+}
 
 if (!slug) {
   document.getElementById('mainContent').innerHTML = '<div class="error">Invalid course link.</div>';

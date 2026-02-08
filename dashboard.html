@@ -1539,10 +1539,21 @@
     // Configuration
     const API_BASE_URL = 'https://hardil-backend.vercel.app';
 
-    // Check if user is logged in
-    const userId = localStorage.getItem('alphaprimeUserId');
-    const userName = localStorage.getItem('alphaprimeName');
-    const userEmail = localStorage.getItem('alphaprimeEmail');
+    // Check if user ID and email are passed as URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const paramUserId = urlParams.get('userId');
+    const paramEmail = urlParams.get('email');
+
+    // Use URL parameters if available, otherwise fall back to localStorage
+    let userId = paramUserId || localStorage.getItem('alphaprimeUserId');
+    let userEmail = paramEmail || localStorage.getItem('alphaprimeEmail');
+    let userName = localStorage.getItem('alphaprimeName');
+
+    // If URL parameters were provided, update localStorage to keep user context consistent
+    if (paramUserId && paramEmail) {
+      localStorage.setItem('alphaprimeUserId', paramUserId);
+      localStorage.setItem('alphaprimeEmail', paramEmail);
+    }
 
     // Debug logging
     console.log('🔍 Dashboard Debug Info:');
@@ -1558,6 +1569,9 @@
       localStorage.setItem('alphaprimeUserId', '3');
       localStorage.setItem('alphaprimeName', 'Demo User');
       localStorage.setItem('alphaprimeEmail', 'aaiyana@gmail.com');
+      userId = '3';
+      userName = 'Demo User';
+      userEmail = 'aaiyana@gmail.com';
       console.log('✅ Set demo user data for testing');
     }
 
