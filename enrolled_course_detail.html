@@ -376,15 +376,15 @@ function renderEnrolledCourse(course, topics, enrolledCourse) {
           <div class="topic-card">
             <div class="topic-header">
               <h3>${topic.title || 'Topic Title'}</h3>
-              <span class="topic-duration">${topic.duration_minutes || 0} min</span>
+              <!--<span class="topic-duration">${topic.duration_minutes || 0} min</span>-->
             </div>
             <p class="topic-desc">${topic.description || 'No description available.'}</p>
             <div class="topic-actions">
   ${topic.video_url ? `<a href="${topic.video_url}" target="_blank" class="topic-btn">Watch Video</a>` : ''}
 
-  <button class="topic-btn join-btn" onclick="joinCourse(${topic.id})">
+ <!-- <button class="topic-btn join-btn" onclick="joinCourse(${topic.id})">
     Join Now
-  </button>
+  </button>-->S
 
   <button class="topic-btn ${topic.completed ? 'completed' : ''}" onclick="markTopicComplete(${topic.id})">
     ${topic.completed ? 'Completed' : 'Mark Complete'}
