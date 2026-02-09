@@ -3057,22 +3057,38 @@ Thanku Hardil sir"</p>
     const loginForm = document.getElementById('login-form');
 
     function openLoginModal() {
-      loginModal.classList.add('active');
-      loginModal.setAttribute('aria-hidden', 'false');
-      loginForm.reset();
-      document.getElementById('login-email').focus();
-      // close dropdown if open
-      dropdown.classList.remove('open');
-      menuButton.setAttribute('aria-expanded', false);
-    }
+  loginModal.classList.add('active');
+  loginModal.setAttribute('aria-hidden', 'false');
+
+  // ✅ Always reset to normal login view
+  loginFormSection.style.display = 'block';
+  forgotPasswordSection.style.display = 'none';
+
+  // Reset all forgot-password steps
+  resetForgotPasswordFlow();
+
+  loginForm.reset();
+  document.getElementById('login-email').focus();
+
+  // close dropdown if open
+  dropdown.classList.remove('open');
+  menuButton.setAttribute('aria-expanded', false);
+}
+
 
     if (loginBtn) loginBtn.onclick = openLoginModal;
     if (loginBtnDropdown) loginBtnDropdown.onclick = openLoginModal;
 
     closeLoginBtn.addEventListener('click', () => {
-      loginModal.classList.remove('active');
-      loginModal.setAttribute('aria-hidden', 'true');
-    });
+  loginModal.classList.remove('active');
+  loginModal.setAttribute('aria-hidden', 'true');
+
+  // ✅ Reset forgot password state when closing
+  resetForgotPasswordFlow();
+  loginFormSection.style.display = 'block';
+  forgotPasswordSection.style.display = 'none';
+});
+
 
     loginModal.addEventListener('click', (e) => {
       if (e.target === loginModal) {
