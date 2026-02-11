@@ -1,97 +1,1086 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Admin Dashboard</title>
-<style>
-body { font-family: Arial; padding: 30px; }
-input, textarea, button { display:block; margin:10px 0; padding:8px; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alphaprime Admin Panel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+
+    .admin-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background: linear-gradient(135deg, #0a585b, #0f766e);
+      color: white;
+      padding: 20px 0;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .sidebar-header {
+      padding: 0 20px 30px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+    }
+
+    .sidebar-header h2 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+    }
+
+    .sidebar-menu li {
+      margin: 5px 0;
+    }
+
+    .sidebar-menu a {
+      display: block;
+      padding: 15px 20px;
+      color: white;
+      text-decoration: none;
+      transition: all 0.3s;
+      border-left: 3px solid transparent;
+    }
+
+    .sidebar-menu a:hover,
+    .sidebar-menu a.active {
+      background-color: rgba(255,255,255,0.1);
+      border-left-color: #ffffff;
+    }
+
+    .sidebar-menu i {
+      margin-right: 10px;
+      width: 20px;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: 250px;
+      padding: 20px;
+    }
+
+    .header {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header h1 {
+      color: #0a585b;
+    }
+
+    .logout-btn {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .logout-btn:hover {
+      background: #c82333;
+    }
+
+    /* Stats Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .stat-card h3 {
+      color: #0a585b;
+      margin-bottom: 10px;
+    }
+
+    .stat-card .number {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #0f766e;
+    }
+
+    /* Content Sections */
+    .content-section {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .section-header {
+      background: #0a585b;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .section-header h2 {
+      margin: 0;
+    }
+
+    .add-btn {
+      background: #28a745;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .add-btn:hover {
+      background: #218838;
+    }
+
+    .section-content {
+      padding: 20px;
+    }
+
+    /* Tables */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .data-table th,
+    .data-table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    .data-table th {
+      background: #f8f9fa;
+      font-weight: 600;
+      color: #0a585b;
+    }
+
+    .data-table tr:hover {
+      background: #f8f9fa;
+    }
+
+    .action-btn {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-right: 5px;
+      font-size: 0.8rem;
+    }
+
+    .edit-btn {
+      background: #007bff;
+      color: white;
+    }
+
+    .delete-btn {
+      background: #dc3545;
+      color: white;
+    }
+
+    /* Modals */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-header h3 {
+      margin: 0;
+      color: #0a585b;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #666;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-family: inherit;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .cancel-btn {
+      background: #6c757d;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .save-btn {
+      background: #28a745;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* Loading */
+    .loading {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+
+      .header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+      }
+
+      .modal-content {
+        width: 95%;
+        padding: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="admin-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>Alphaprime</h2>
+        <p>Admin Panel</p>
+      </div>
+      <ul class="sidebar-menu">
+        <li><a href="#dashboard" class="active" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+        <li><a href="#courses" data-section="courses"><i class="fas fa-book"></i> Courses</a></li>
+        <li><a href="#users" data-section="users"><i class="fas fa-users"></i> Users</a></li>
+        <li><a href="#enrollments" data-section="enrollments"><i class="fas fa-user-check"></i> Enrollments</a></li>
+        <li><a href="#payments" data-section="payments"><i class="fas fa-credit-card"></i> Payments</a></li>
+        <li><a href="#blogs" data-section="blogs"><i class="fas fa-blog"></i> Blogs</a></li>
+      </ul>
+    </aside>
 
-<h1>Admin Panel – Alphaprime</h1>
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="header">
+        <h1>Admin Dashboard</h1>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </div>
 
-<h2>Add Course</h2>
-<input id="courseTitle" placeholder="Course title">
-<input id="courseSlug" placeholder="Course slug">
-<textarea id="courseDesc" placeholder="Course description"></textarea>
-<input id="courseImage" placeholder="Image URL">
-<button onclick="addCourse()">Add Course</button>
+      <!-- Dashboard Section -->
+      <div id="dashboard-section" class="content-section">
+        <div class="section-header">
+          <h2>Dashboard Overview</h2>
+        </div>
+        <div class="section-content">
+          <div class="stats-grid" id="stats-grid">
+            <div class="loading">Loading statistics...</div>
+          </div>
+        </div>
+      </div>
 
-<hr>
+      <!-- Courses Section -->
+      <div id="courses-section" class="content-section" style="display: none;">
+        <div class="section-header">
+          <h2>Course Management</h2>
+          <button class="add-btn" onclick="openCourseModal()">Add Course</button>
+        </div>
+        <div class="section-content">
+          <div id="courses-list" class="loading">Loading courses...</div>
+        </div>
+      </div>
 
-<h2>Add Topic</h2>
-<input id="topicCourseId" placeholder="Course ID">
-<input id="topicTitle" placeholder="Topic title">
-<textarea id="topicDesc" placeholder="Topic description"></textarea>
-<input id="topicVideo" placeholder="Video URL">
-<input id="topicDuration" placeholder="Duration (minutes)">
-<input id="topicOrder" placeholder="Order number">
+      <!-- Users Section -->
+      <div id="users-section" class="content-section" style="display: none;">
+        <div class="section-header">
+          <h2>User Management</h2>
+        </div>
+        <div class="section-content">
+          <div id="users-list" class="loading">Loading users...</div>
+        </div>
+      </div>
 
-<button onclick="addTopic()">Add Topic</button>
+      <!-- Enrollments Section -->
+      <div id="enrollments-section" class="content-section" style="display: none;">
+        <div class="section-header">
+          <h2>Enrollment Management</h2>
+        </div>
+        <div class="section-content">
+          <div id="enrollments-list" class="loading">Loading enrollments...</div>
+        </div>
+      </div>
 
-<script>
-const API_BASE = "http://localhost:3000"; // backend URL
+      <!-- Payments Section -->
+      <div id="payments-section" class="content-section" style="display: none;">
+        <div class="section-header">
+          <h2>Payment Management</h2>
+        </div>
+        <div class="section-content">
+          <div id="payments-list" class="loading">Loading payments...</div>
+        </div>
+      </div>
 
-async function addCourse() {
-  const payload = {
-    title: document.getElementById("courseTitle").value,
-    slug: document.getElementById("courseSlug").value,
-    description: document.getElementById("courseDesc").value,
-    image: document.getElementById("courseImage").value
-  };
+      <!-- Blogs Section -->
+      <div id="blogs-section" class="content-section" style="display: none;">
+        <div class="section-header">
+          <h2>Blog Management</h2>
+          <button class="add-btn" onclick="openBlogModal()">Add Blog</button>
+        </div>
+        <div class="section-content">
+          <div id="blogs-list" class="loading">Loading blogs...</div>
+        </div>
+      </div>
+    </main>
+  </div>
 
-  try {
-    const res = await fetch(`${API_BASE}/api/admin/course`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
+  <!-- Course Modal -->
+  <div id="course-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="course-modal-title">Add Course</h3>
+        <button class="close-btn" onclick="closeModal('course-modal')">&times;</button>
+      </div>
+      <form id="course-form">
+        <div class="form-group">
+          <label for="course-title">Title</label>
+          <input type="text" id="course-title" required>
+        </div>
+        <div class="form-group">
+          <label for="course-slug">Slug</label>
+          <input type="text" id="course-slug" required>
+        </div>
+        <div class="form-group">
+          <label for="course-description">Description</label>
+          <textarea id="course-description"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="course-image">Image URL</label>
+          <input type="url" id="course-image">
+        </div>
+        <div class="form-group">
+          <label for="course-price">Price (INR)</label>
+          <input type="number" id="course-price" min="0" step="0.01">
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="cancel-btn" onclick="closeModal('course-modal')">Cancel</button>
+          <button type="submit" class="save-btn">Save Course</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Blog Modal -->
+  <div id="blog-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="blog-modal-title">Add Blog Post</h3>
+        <button class="close-btn" onclick="closeModal('blog-modal')">&times;</button>
+      </div>
+      <form id="blog-form">
+        <div class="form-group">
+          <label for="blog-title">Title</label>
+          <input type="text" id="blog-title" required>
+        </div>
+        <div class="form-group">
+          <label for="blog-slug">Slug</label>
+          <input type="text" id="blog-slug" required>
+        </div>
+        <div class="form-group">
+          <label for="blog-summary">Summary</label>
+          <textarea id="blog-summary"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="blog-content">Content</label>
+          <textarea id="blog-content" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="blog-image">Image URL</label>
+          <input type="url" id="blog-image">
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="cancel-btn" onclick="closeModal('blog-modal')">Cancel</button>
+          <button type="submit" class="save-btn">Save Blog</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Global variables
+    let currentEditingId = null;
+    let currentSection = 'dashboard';
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      setupNavigation();
+      loadDashboard();
     });
 
-    const data = await res.json();
-
-    if (!res.ok || !data.success) {
-      throw new Error(data.message || "Failed to add course");
+    // Navigation
+    function setupNavigation() {
+      const navLinks = document.querySelectorAll('.sidebar-menu a');
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const section = this.getAttribute('data-section');
+          switchSection(section);
+        });
+      });
     }
 
-    alert("✅ Course added successfully");
-  } catch (err) {
-    alert("❌ Error: " + err.message);
-    console.error(err);
-  }
-}
+    function switchSection(section) {
+      // Hide all sections
+      document.querySelectorAll('.content-section').forEach(sec => {
+        sec.style.display = 'none';
+      });
 
-async function addTopic() {
-  const payload = {
-    course_id: document.getElementById("topicCourseId").value,
-    title: document.getElementById("topicTitle").value,
-    description: document.getElementById("topicDesc").value,
-    video_url: document.getElementById("topicVideo").value,
-    duration_minutes: document.getElementById("topicDuration").value,
-    order_no: document.getElementById("topicOrder").value
-  };
+      // Remove active class from nav
+      document.querySelectorAll('.sidebar-menu a').forEach(link => {
+        link.classList.remove('active');
+      });
 
-  try {
-    const res = await fetch(`${API_BASE}/api/admin/topic`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
+      // Show selected section
+      document.getElementById(section + '-section').style.display = 'block';
+      document.querySelector(`[data-section="${section}"]`).classList.add('active');
+
+      currentSection = section;
+
+      // Load data for section
+      switch(section) {
+        case 'dashboard':
+          loadDashboard();
+          break;
+        case 'courses':
+          loadCourses();
+          break;
+        case 'users':
+          loadUsers();
+          break;
+        case 'enrollments':
+          loadEnrollments();
+          break;
+        case 'payments':
+          loadPayments();
+          break;
+        case 'blogs':
+          loadBlogs();
+          break;
+      }
+    }
+
+    // Dashboard
+    async function loadDashboard() {
+      try {
+        const response = await fetch('https://hardil-backend.vercel.app/api/admin/stats');
+        const data = await response.json();
+
+        if (data.success) {
+          const stats = data.stats;
+          document.getElementById('stats-grid').innerHTML = `
+            <div class="stat-card">
+              <h3>Users</h3>
+              <div class="number">${stats.users}</div>
+            </div>
+            <div class="stat-card">
+              <h3>Courses</h3>
+              <div class="number">${stats.courses}</div>
+            </div>
+            <div class="stat-card">
+              <h3>Topics</h3>
+              <div class="number">${stats.topics}</div>
+            </div>
+            <div class="stat-card">
+              <h3>Enrollments</h3>
+              <div class="number">${stats.enrollments}</div>
+            </div>
+            <div class="stat-card">
+              <h3>Completed Payments</h3>
+              <div class="number">${stats.completed_payments}</div>
+            </div>
+            <div class="stat-card">
+              <h3>Blogs</h3>
+              <div class="number">${stats.blogs}</div>
+            </div>
+            <div class="stat-card">
+              <h3>Total Revenue</h3>
+              <div class="number">₹${stats.total_revenue.toFixed(2)}</div>
+            </div>
+          `;
+        }
+      } catch (error) {
+        console.error('Error loading dashboard:', error);
+        document.getElementById('stats-grid').innerHTML = '<div class="loading">Error loading statistics</div>';
+      }
+    }
+
+    // Courses
+    async function loadCourses() {
+      try {
+        const response = await fetch('https://hardil-backend.vercel.app/api/admin/courses');
+        const data = await response.json();
+
+        if (data.success) {
+          const courses = data.courses;
+          let html = `
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Slug</th>
+                  <th>Price</th>
+                  <th>Topics</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+          `;
+
+          courses.forEach(course => {
+            html += `
+              <tr>
+                <td>${course.title}</td>
+                <td>${course.slug}</td>
+                <td>₹${course.price || 0}</td>
+                <td>${course.topic_count || 0}</td>
+                <td>
+                  <button class="action-btn edit-btn" onclick="editCourse(${course.id})">Edit</button>
+                  <button class="action-btn delete-btn" onclick="deleteCourse(${course.id})">Delete</button>
+                </td>
+              </tr>
+            `;
+          });
+
+          html += '</tbody></table>';
+          document.getElementById('courses-list').innerHTML = html;
+        }
+      } catch (error) {
+        console.error('Error loading courses:', error);
+        document.getElementById('courses-list').innerHTML = '<div class="loading">Error loading courses</div>';
+      }
+    }
+
+    function openCourseModal(courseId = null) {
+      currentEditingId = courseId;
+      const modal = document.getElementById('course-modal');
+      const form = document.getElementById('course-form');
+      const title = document.getElementById('course-modal-title');
+
+      if (courseId) {
+        title.textContent = 'Edit Course';
+        // Load course data
+        loadCourseForEdit(courseId);
+      } else {
+        title.textContent = 'Add Course';
+        form.reset();
+      }
+
+      modal.classList.add('active');
+    }
+
+    async function loadCourseForEdit(courseId) {
+      try {
+        const response = await fetch(`https://hardil-backend.vercel.app/api/course/${courseId}`);
+        const data = await response.json();
+
+        if (data.success) {
+          const course = data.course;
+          document.getElementById('course-title').value = course.title;
+          document.getElementById('course-slug').value = course.slug;
+          document.getElementById('course-description').value = course.description || '';
+          document.getElementById('course-image').value = course.image_url || '';
+          document.getElementById('course-price').value = course.price || 0;
+        }
+      } catch (error) {
+        console.error('Error loading course:', error);
+      }
+    }
+
+    document.getElementById('course-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const courseData = {
+        title: document.getElementById('course-title').value,
+        slug: document.getElementById('course-slug').value,
+        description: document.getElementById('course-description').value,
+        image: document.getElementById('course-image').value,
+        price: parseFloat(document.getElementById('course-price').value) || 0
+      };
+
+      try {
+        let response;
+        if (currentEditingId) {
+          response = await fetch(`https://hardil-backend.vercel.app/api/admin/course/${currentEditingId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(courseData)
+          });
+        } else {
+          response = await fetch('https://hardil-backend.vercel.app/api/admin/course', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(courseData)
+          });
+        }
+
+        const data = await response.json();
+
+        if (data.success) {
+          closeModal('course-modal');
+          loadCourses();
+          loadDashboard(); // Refresh stats
+        } else {
+          alert(data.message || 'Error saving course');
+        }
+      } catch (error) {
+        console.error('Error saving course:', error);
+        alert('Error saving course');
+      }
     });
 
-    const data = await res.json();
+    async function deleteCourse(courseId) {
+      if (!confirm('Are you sure you want to delete this course?')) return;
 
-    if (!res.ok || !data.success) {
-      throw new Error(data.message || "Failed to add topic");
+      try {
+        const response = await fetch(`https://hardil-backend.vercel.app/api/admin/course/${courseId}`, {
+          method: 'DELETE'
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          loadCourses();
+          loadDashboard();
+        } else {
+          alert(data.message || 'Error deleting course');
+        }
+      } catch (error) {
+        console.error('Error deleting course:', error);
+        alert('Error deleting course');
+      }
     }
 
-    alert("✅ Topic added successfully");
-  } catch (err) {
-    alert("❌ Error: " + err.message);
-    console.error(err);
-  }
-}
-</script>
+    function editCourse(courseId) {
+      openCourseModal(courseId);
+    }
 
+    // Users
+    async function loadUsers() {
+      try {
+        const response = await fetch('https://hardil-backend.vercel.app/api/admin/users');
+        const data = await response.json();
 
+        if (data.success) {
+          const users = data.users;
+          let html = `
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Verified</th>
+                  <th>Enrolled Courses</th>
+                  <th>Joined</th>
+                </tr>
+              </thead>
+              <tbody>
+          `;
+
+          users.forEach(user => {
+            html += `
+              <tr>
+                <td>${user.full_name}</td>
+                <td>${user.email}</td>
+                <td>${user.phone}</td>
+                <td>${user.is_verified ? 'Yes' : 'No'}</td>
+                <td>${user.enrolled_courses || 0}</td>
+                <td>${new Date(user.created_at).toLocaleDateString()}</td>
+              </tr>
+            `;
+          });
+
+          html += '</tbody></table>';
+          document.getElementById('users-list').innerHTML = html;
+        }
+      } catch (error) {
+        console.error('Error loading users:', error);
+        document.getElementById('users-list').innerHTML = '<div class="loading">Error loading users</div>';
+      }
+    }
+
+    // Enrollments
+    async function loadEnrollments() {
+      try {
+        const response = await fetch('https://hardil-backend.vercel.app/api/admin/enrollments');
+        const data = await response.json();
+
+        if (data.success) {
+          const enrollments = data.enrollments;
+          let html = `
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Email</th>
+                  <th>Course</th>
+                  <th>Enrolled Date</th>
+                </tr>
+              </thead>
+              <tbody>
+          `;
+
+          enrollments.forEach(enrollment => {
+            html += `
+              <tr>
+                <td>${enrollment.full_name}</td>
+                <td>${enrollment.email}</td>
+                <td>${enrollment.course_title}</td>
+                <td>${new Date(enrollment.created_at).toLocaleDateString()}</td>
+              </tr>
+            `;
+          });
+
+          html += '</tbody></table>';
+          document.getElementById('enrollments-list').innerHTML = html;
+        }
+      } catch (error) {
+        console.error('Error loading enrollments:', error);
+        document.getElementById('enrollments-list').innerHTML = '<div class="loading">Error loading enrollments</div>';
+      }
+    }
+
+    // Payments
+    async function loadPayments() {
+      try {
+        const response = await fetch('https://hardil-backend.vercel.app/api/admin/payments');
+        const data = await response.json();
+
+        if (data.success) {
+          const payments = data.payments;
+          let html = `
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Email</th>
+                  <th>Course</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+          `;
+
+          payments.forEach(payment => {
+            html += `
+              <tr>
+                <td>${payment.full_name}</td>
+                <td>${payment.email}</td>
+                <td>${payment.course_title}</td>
+                <td>₹${(payment.amount / 100).toFixed(2)}</td>
+                <td>${payment.status}</td>
+                <td>${new Date(payment.created_at).toLocaleDateString()}</td>
+              </tr>
+            `;
+          });
+
+          html += '</tbody></table>';
+          document.getElementById('payments-list').innerHTML = html;
+        }
+      } catch (error) {
+        console.error('Error loading payments:', error);
+        document.getElementById('payments-list').innerHTML = '<div class="loading">Error loading payments</div>';
+      }
+    }
+
+    // Blogs
+    async function loadBlogs() {
+      try {
+        const response = await fetch('https://hardil-backend.vercel.app/api/admin/blogs');
+        const data = await response.json();
+
+        if (data.success) {
+          const blogs = data.blogs;
+          let html = `
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Slug</th>
+                  <th>Created</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+          `;
+
+          blogs.forEach(blog => {
+            html += `
+              <tr>
+                <td>${blog.title}</td>
+                <td>${blog.slug}</td>
+                <td>${new Date(blog.created_at).toLocaleDateString()}</td>
+                <td>
+                  <button class="action-btn edit-btn" onclick="editBlog(${blog.id})">Edit</button>
+                  <button class="action-btn delete-btn" onclick="deleteBlog(${blog.id})">Delete</button>
+                </td>
+              </tr>
+            `;
+          });
+
+          html += '</tbody></table>';
+          document.getElementById('blogs-list').innerHTML = html;
+        }
+      } catch (error) {
+        console.error('Error loading blogs:', error);
+        document.getElementById('blogs-list').innerHTML = '<div class="loading">Error loading blogs</div>';
+      }
+    }
+
+    function openBlogModal(blogId = null) {
+      currentEditingId = blogId;
+      const modal = document.getElementById('blog-modal');
+      const form = document.getElementById('blog-form');
+      const title = document.getElementById('blog-modal-title');
+
+      if (blogId) {
+        title.textContent = 'Edit Blog Post';
+        loadBlogForEdit(blogId);
+      } else {
+        title.textContent = 'Add Blog Post';
+        form.reset();
+      }
+
+      modal.classList.add('active');
+    }
+
+    async function loadBlogForEdit(blogId) {
+      try {
+        const response = await fetch(`https://hardil-backend.vercel.app/api/blog/${blogId}`);
+        const data = await response.json();
+
+        if (data.success) {
+          const blog = data.blog;
+          document.getElementById('blog-title').value = blog.title;
+          document.getElementById('blog-slug').value = blog.slug;
+          document.getElementById('blog-summary').value = blog.summary || '';
+          document.getElementById('blog-content').value = blog.content;
+          document.getElementById('blog-image').value = blog.image_url || '';
+        }
+      } catch (error) {
+        console.error('Error loading blog:', error);
+      }
+    }
+
+    document.getElementById('blog-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const blogData = {
+        title: document.getElementById('blog-title').value,
+        slug: document.getElementById('blog-slug').value,
+        summary: document.getElementById('blog-summary').value,
+        content: document.getElementById('blog-content').value,
+        image_url: document.getElementById('blog-image').value
+      };
+
+      try {
+        let response;
+        if (currentEditingId) {
+          response = await fetch(`https://hardil-backend.vercel.app/api/admin/blog/${currentEditingId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(blogData)
+          });
+        } else {
+          response = await fetch('https://hardil-backend.vercel.app/api/admin/blog', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(blogData)
+          });
+        }
+
+        const data = await response.json();
+
+        if (data.success) {
+          closeModal('blog-modal');
+          loadBlogs();
+          loadDashboard();
+        } else {
+          alert(data.message || 'Error saving blog');
+        }
+      } catch (error) {
+        console.error('Error saving blog:', error);
+        alert('Error saving blog');
+      }
+    });
+
+    async function deleteBlog(blogId) {
+      if (!confirm('Are you sure you want to delete this blog post?')) return;
+
+      try {
+        const response = await fetch(`https://hardil-backend.vercel.app/api/admin/blog/${blogId}`, {
+          method: 'DELETE'
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          loadBlogs();
+          loadDashboard();
+        } else {
+          alert(data.message || 'Error deleting blog');
+        }
+      } catch (error) {
+        console.error('Error deleting blog:', error);
+        alert('Error deleting blog');
+      }
+    }
+
+    function editBlog(blogId) {
+      openBlogModal(blogId);
+    }
+
+    // Modal functions
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('active');
+      currentEditingId = null;
+    }
+
+    // Logout
+    function logout() {
+      if (confirm('Are you sure you want to logout?')) {
+        window.location.href = 'index_aaiyana.html';
+      }
+    }
+
+    // Auto-generate slug from title
+    document.getElementById('course-title').addEventListener('input', function() {
+      const slug = this.value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      document.getElementById('course-slug').value = slug;
+    });
+
+    document.getElementById('blog-title').addEventListener('input', function() {
+      const slug = this.value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      document.getElementById('blog-slug').value = slug;
+    });
+  </script>
 </body>
 </html>
