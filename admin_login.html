@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login - Alphaprime</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Poppins',sans-serif;background:#f3f4f6;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}
+    .login-card{background:white;padding:28px;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.08);width:360px}
+    h2{color:#0a585b;margin-bottom:12px}
+    .form-group{margin-bottom:12px}
+    label{display:block;margin-bottom:6px;font-weight:500}
+    input{width:100%;padding:10px;border:1px solid #ddd;border-radius:6px}
+    .btn{background:#0a585b;color:white;border:none;padding:10px 14px;border-radius:6px;cursor:pointer;width:100%}
+    .note{margin-top:12px;color:#666;font-size:0.9rem;text-align:center}
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <h2>Admin Login</h2>
+    <form id="login-form">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" type="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input id="password" type="password" required>
+      </div>
+      <button type="submit" class="btn">Sign In</button>
+    </form>
+    <div class="note">If your backend supports admin login, credentials will be validated against it. Otherwise use demo: <strong>admin / admin123</strong></div>
+  </div>
+
+  <script>
+    document.getElementById('login-form').addEventListener('submit', async function(e){
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      // Try backend login first
+      try {
+        const res = await fetch('https://hardil-backend.vercel.app/api/admin/login', {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({email, password})
+        });
+        const data = await res.json();
+        if (data.success) {
+          localStorage.setItem('adminAuthenticated','true');
+          if (data.token) localStorage.setItem('adminToken', data.token);
+          window.location.href = 'admin.html';
+          return;
+        }
+      } catch (err) {
+        console.warn('Backend login failed or not available', err);
+      }
+
+      // Fallback demo credentials
+      if ((email === 'admin' || email === 'admin@local') && password === 'admin123') {
+        localStorage.setItem('adminAuthenticated','true');
+        window.location.href = 'admin.html';
+      } else {
+        alert('Login failed. Check credentials.');
+      }
+    });
+  </script>
+</body>
+</html>
