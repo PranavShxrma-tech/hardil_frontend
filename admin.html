@@ -1169,7 +1169,7 @@
               const t = data.topic;
               document.getElementById('topic-title').value = t.title;
               document.getElementById('topic-content').value = t.content || '';
-              document.getElementById('topic-order').value = t.order || 0;
+              document.getElementById('topic-order').value = t.order_no || 0;
             }
           } catch (err) { console.error(err); }
         })();
