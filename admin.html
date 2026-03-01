@@ -816,7 +816,7 @@
 
         async function loadCourseForEdit(courseId) {
           try {
-            const response = await fetchWithAuth(`https://hardil-backend.vercel.app/api/admin/course/${courseId}`);
+            const response = await fetchWithAuth(`https://hardil-backend.vercel.app/api/course/${courseId}`);
             const data = await response.json();
 
             if (data.success) {
