@@ -1378,7 +1378,8 @@ function openGlobalTopicModal(topic = null) {
   modal.classList.add('active');
 
   if (topic) {
-    document.getElementById('global-topic-course').value = topic.course_id;
+    loadCoursesDropdown(topic.course_id);
+
     document.getElementById('global-topic-title').value = topic.title;
     document.getElementById('global-topic-description').value =
       topic.description || '';
@@ -1390,9 +1391,9 @@ function openGlobalTopicModal(topic = null) {
       topic.order_no || 0;
   } else {
     document.getElementById('global-topic-form').reset();
+    loadCoursesDropdown(); // Load fresh courses when adding
   }
 }
-
 
 /* ==============================
    EDIT
@@ -1557,7 +1558,39 @@ document.getElementById('global-topic-form')
           document.getElementById('blog-slug').value = slug;
         });*/
 
+/* ==============================
+   LOAD COURSES INTO DROPDOWN
+================================ */
+async function loadCoursesDropdown(selectedCourseId = null) {
+  try {
+    const res = await fetchWithAuth(
+      'https://hardil-backend.vercel.app/api/admin/courses'
+    );
 
+    const data = await res.json();
+
+    const select = document.getElementById('global-topic-course');
+
+    if (data.success) {
+
+      let options = '<option value="">Select Course</option>';
+
+      data.courses.forEach(course => {
+        options += `
+          <option value="${course.id}"
+            ${selectedCourseId == course.id ? 'selected' : ''}>
+            ${course.title}
+          </option>
+        `;
+      });
+
+      select.innerHTML = options;
+    }
+
+  } catch (err) {
+    console.error('Error loading courses for dropdown:', err);
+  }
+}
 
 
       </script>
