@@ -1325,6 +1325,7 @@ async function loadGlobalTopics() {
             <tr>
               <th>Course</th>
               <th>Title</th>
+              <th>Video URL</th>
               <th>Duration</th>
               <th>Order</th>
               <th>Actions</th>
@@ -1338,6 +1339,11 @@ async function loadGlobalTopics() {
           <tr>
             <td>${t.course_title}</td>
             <td>${t.title}</td>
+            <td>
+  ${t.video_url 
+      ? `<a href="${t.video_url}" target="_blank">View</a>` 
+      : '—'}
+</td>
             <td>${t.duration_minutes || 0}</td>
             <td>${t.order_no}</td>
             <td>
