@@ -176,12 +176,19 @@
 
     .section-content {
       padding: 20px;
+      overflow-x: auto;
     }
 
     /* Tables */
+    .table-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
     .data-table {
       width: 100%;
       border-collapse: collapse;
+      min-width: 400px;
     }
 
     .data-table th,
@@ -189,6 +196,7 @@
       padding: 12px;
       text-align: left;
       border-bottom: 1px solid #eee;
+      white-space: nowrap;
     }
 
     .data-table th {
@@ -327,35 +335,285 @@
 
     /* Responsive */
     @media (max-width: 768px) {
+      .admin-container {
+        flex-direction: column;
+      }
+
       .sidebar {
         width: 100%;
         height: auto;
         position: relative;
+        overflow-y: unset;
+        padding: 15px 0;
+      }
+
+      .sidebar-header {
+        padding: 0 15px 20px;
+      }
+
+      .sidebar-header h2 {
+        font-size: 1.2rem;
+      }
+
+      .sidebar-menu a {
+        padding: 12px 15px;
+        font-size: 0.95rem;
+      }
+
+      .sidebar-menu i {
+        margin-right: 8px;
       }
 
       .main-content {
         margin-left: 0;
+        padding: 15px;
       }
 
       .header {
         flex-direction: column;
         gap: 10px;
         text-align: center;
+        padding: 15px;
+      }
+
+      .header h1 {
+        font-size: 1.5rem;
+      }
+
+      .logout-btn {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+        width: 100%;
       }
 
       .stats-grid {
         grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .stat-card {
+        padding: 15px;
+      }
+
+      .stat-card h3 {
+        font-size: 0.95rem;
+      }
+
+      .stat-card .number {
+        font-size: 1.8rem;
+      }
+
+      .content-section {
+        margin-bottom: 15px;
+        border-radius: 8px;
       }
 
       .section-header {
         flex-direction: column;
         gap: 10px;
         text-align: center;
+        padding: 12px 15px;
+      }
+
+      .section-header h2 {
+        font-size: 1.2rem;
+      }
+
+      .add-btn {
+        width: 100%;
+        padding: 10px;
+      }
+
+      .section-content {
+        padding: 15px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      /* Table responsiveness */
+      .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .data-table {
+        font-size: 0.85rem;
+        min-width: 500px;
+      }
+
+      .data-table th,
+      .data-table td {
+        padding: 8px;
+        white-space: nowrap;
+      }
+
+      /* Hide less important columns on tablet */
+      .data-table th:nth-child(n+3),
+      .data-table td:nth-child(n+3) {
+        font-size: 0.8rem;
+      }
+
+      .action-btn {
+        padding: 4px 8px;
+        font-size: 0.75rem;
+        margin-right: 3px;
+        margin-bottom: 3px;
+        white-space: nowrap;
+      }
+
+      /* Modal responsiveness */
+      .modal-content {
+        width: 95%;
+        max-width: 95%;
+        padding: 15px;
+        max-height: 95vh;
+      }
+
+      .modal-header {
+        margin-bottom: 15px;
+      }
+
+      .modal-header h3 {
+        font-size: 1.1rem;
+      }
+
+      .close-btn {
+        font-size: 1.3rem;
+      }
+
+      .form-group {
+        margin-bottom: 12px;
+      }
+
+      .form-group label {
+        font-size: 0.9rem;
+      }
+
+      .form-group input,
+      .form-group textarea,
+      .form-group select {
+        padding: 8px;
+        font-size: 0.9rem;
+      }
+
+      .form-group textarea {
+        min-height: 80px;
+      }
+
+      .modal-actions {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .cancel-btn,
+      .save-btn {
+        width: 100%;
+        padding: 10px;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .admin-container {
+        flex-direction: column;
+      }
+
+      .main-content {
+        padding: 10px;
+      }
+
+      .header {
+        padding: 10px;
+        gap: 8px;
+      }
+
+      .header h1 {
+        font-size: 1.2rem;
+      }
+
+      .logout-btn {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+      }
+
+      .stats-grid {
+        gap: 10px;
+      }
+
+      .stat-card {
+        padding: 12px;
+      }
+
+      .stat-card h3 {
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+      }
+
+      .stat-card .number {
+        font-size: 1.5rem;
+      }
+
+      .section-header {
+        padding: 10px 12px;
+        gap: 8px;
+      }
+
+      .section-header h2 {
+        font-size: 1.1rem;
+      }
+
+      .section-content {
+        padding: 12px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      /* Mobile table handling - show minimal columns */
+      .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .data-table {
+        font-size: 0.75rem;
+        min-width: 100%;
+      }
+
+      .data-table th,
+      .data-table td {
+        padding: 6px;
+        white-space: nowrap;
+      }
+
+      /* Hide less important columns on mobile */
+      .data-table th:nth-child(n+4),
+      .data-table td:nth-child(n+4) {
+        display: none;
+      }
+
+      /* Show action buttons */
+      .data-table th:last-child,
+      .data-table td:last-child {
+        display: table-cell;
+      }
+
+      .action-btn {
+        padding: 3px 6px;
+        font-size: 0.7rem;
+        white-space: nowrap;
+        display: inline-block;
       }
 
       .modal-content {
-        width: 95%;
-        padding: 20px;
+        width: 96%;
+        padding: 12px;
+      }
+
+      .form-group input,
+      .form-group textarea,
+      .form-group select {
+        padding: 6px;
+        font-size: 0.85rem;
       }
     }
   </style>
@@ -617,20 +875,42 @@
       </div>
 
       <script>
+// 🔐 AUTH CHECK (MUST BE FIRST THING INSIDE SCRIPT)
+        const token = localStorage.getItem('adminToken');
+
+        if (!token) {
+          window.location.replace('admin_login.html');
+        } else {
+          fetch('https://hardil-backend.vercel.app/api/admin/verify', {
+            headers: { Authorization: 'Bearer ' + token }
+          })
+            .then(res => res.json())
+            .then(data => {
+              if (!data.success) {
+                localStorage.removeItem('adminToken');
+                window.location.replace('admin_login.html');
+              }
+            })
+            .catch(() => {
+              localStorage.removeItem('adminToken');
+              window.location.replace('admin_login.html');
+            });
+        }
+
         // Global variables
         let currentEditingId = null;
         let currentSection = 'dashboard';
         let currentTopicCourseId = null;
         let currentEditingTopicId = null;
-       
 
-        
+
+
 
 
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function () {
-          checkAuth();
+          // checkAuth();
           setupNavigation();
           loadDashboard();
         });
@@ -643,12 +923,12 @@
           return fetch(url, options);
         }
 
-        function checkAuth() {
+        /*function checkAuth() {
           const authed = localStorage.getItem('adminAuthenticated');
           if (!authed || authed !== 'true') {
             window.location.href = 'admin_login.html';
           }
-        }
+        }*/
 
         // Navigation
         function setupNavigation() {
@@ -758,6 +1038,7 @@
             if (data.success) {
               const courses = data.courses;
               let html = `
+            <div class="table-wrapper">
             <table class="data-table">
               <thead>
                 <tr>
@@ -787,7 +1068,7 @@
             `;
               });
 
-              html += '</tbody></table>';
+              html += '</tbody></table></div>';
               document.getElementById('courses-list').innerHTML = html;
             }
           } catch (error) {
@@ -909,6 +1190,7 @@
             if (data.success) {
               const users = data.users;
               let html = `
+            <div class="table-wrapper">
             <table class="data-table">
               <thead>
                 <tr>
@@ -936,7 +1218,7 @@
             `;
               });
 
-              html += '</tbody></table>';
+              html += '</tbody></table></div>';
               document.getElementById('users-list').innerHTML = html;
             }
           } catch (error) {
@@ -954,6 +1236,7 @@
             if (data.success) {
               const enrollments = data.enrollments;
               let html = `
+            <div class="table-wrapper">
             <table class="data-table">
               <thead>
                 <tr>
@@ -977,7 +1260,7 @@
             `;
               });
 
-              html += '</tbody></table>';
+              html += '</tbody></table></div>';
               document.getElementById('enrollments-list').innerHTML = html;
             }
           } catch (error) {
@@ -995,6 +1278,7 @@
             if (data.success) {
               const payments = data.payments;
               let html = `
+            <div class="table-wrapper">
             <table class="data-table">
               <thead>
                 <tr>
@@ -1022,7 +1306,7 @@
             `;
               });
 
-              html += '</tbody></table>';
+              html += '</tbody></table></div>';
               document.getElementById('payments-list').innerHTML = html;
             }
           } catch (error) {
@@ -1032,151 +1316,151 @@
         }
 
         // Blogs
-       /* async function loadBlogs() {
-          try {
-            const response = await fetchWithAuth('https://hardil-backend.vercel.app/api/admin/blogs');
-            const data = await response.json();
-
-            if (data.success) {
-              const blogs = data.blogs;
-              let html = `
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>Title</th>
-                  <th>Slug</th>
-                  <th>Created</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-          `;
-
-              blogs.forEach(blog => {
-                html += `
-              <tr>
-                <td>${blog.title}</td>
-                <td>${blog.slug}</td>
-                <td>${new Date(blog.created_at).toLocaleDateString()}</td>
-                <td>
-                  <button class="action-btn edit-btn" onclick="editBlog(${blog.id})">Edit</button>
-                  <button class="action-btn delete-btn" onclick="deleteBlog(${blog.id})">Delete</button>
-                </td>
-              </tr>
-            `;
-              });
-
-              html += '</tbody></table>';
-              document.getElementById('blogs-list').innerHTML = html;
-            }
-          } catch (error) {
-            console.error('Error loading blogs:', error);
-            document.getElementById('blogs-list').innerHTML = '<div class="loading">Error loading blogs</div>';
-          }
-        }
-
-        function openBlogModal(blogId = null) {
-          currentEditingId = blogId;
-          const modal = document.getElementById('blog-modal');
-          const form = document.getElementById('blog-form');
-          const title = document.getElementById('blog-modal-title');
-
-          if (blogId) {
-            title.textContent = 'Edit Blog Post';
-            loadBlogForEdit(blogId);
-          } else {
-            title.textContent = 'Add Blog Post';
-            form.reset();
-          }
-
-          modal.classList.add('active');
-        }
-
-        async function loadBlogForEdit(blogId) {
-          try {
-            const response = await fetchWithAuth(`https://hardil-backend.vercel.app/api/blog/${blogId}`);
-            const data = await response.json();
-
-            if (data.success) {
-              const blog = data.blog;
-              document.getElementById('blog-title').value = blog.title;
-              document.getElementById('blog-slug').value = blog.slug;
-              document.getElementById('blog-summary').value = blog.summary || '';
-              document.getElementById('blog-content').value = blog.content;
-              document.getElementById('blog-image').value = blog.image_url || '';
-            }
-          } catch (error) {
-            console.error('Error loading blog:', error);
-          }
-        }
-
-        document.getElementById('blog-form').addEventListener('submit', async function (e) {
-          e.preventDefault();
-
-          const blogData = {
-            title: document.getElementById('blog-title').value,
-            slug: document.getElementById('blog-slug').value,
-            summary: document.getElementById('blog-summary').value,
-            content: document.getElementById('blog-content').value,
-            image_url: document.getElementById('blog-image').value
-          };
-
-          try {
-            let response;
-            if (currentEditingId) {
-              response = await fetchWithAuth(`https://hardil-backend.vercel.app/api/admin/blog/${currentEditingId}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(blogData)
-              });
-            } else {
-              response = await fetchWithAuth('https://hardil-backend.vercel.app/api/admin/blog', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(blogData)
-              });
-            }
-
-            const data = await response.json();
-
-            if (data.success) {
-              closeModal('blog-modal');
-              loadBlogs();
-              loadDashboard();
-            } else {
-              alert(data.message || 'Error saving blog');
-            }
-          } catch (error) {
-            console.error('Error saving blog:', error);
-            alert('Error saving blog');
-          }
-        });
-
-        async function deleteBlog(blogId) {
-          if (!confirm('Are you sure you want to delete this blog post?')) return;
-
-          try {
-            const response = await fetchWithAuth(`https://hardil-backend.vercel.app/api/admin/blog/${blogId}`, {
-              method: 'DELETE'
-            });
-
-            const data = await response.json();
-
-            if (data.success) {
-              loadBlogs();
-              loadDashboard();
-            } else {
-              alert(data.message || 'Error deleting blog');
-            }
-          } catch (error) {
-            console.error('Error deleting blog:', error);
-            alert('Error deleting blog');
-          }
-        }
-
-        function editBlog(blogId) {
-          openBlogModal(blogId);
-        }*/
+        /* async function loadBlogs() {
+           try {
+             const response = await fetchWithAuth('https://hardil-backend.vercel.app/api/admin/blogs');
+             const data = await response.json();
+ 
+             if (data.success) {
+               const blogs = data.blogs;
+               let html = `
+             <table class="data-table">
+               <thead>
+                 <tr>
+                   <th>Title</th>
+                   <th>Slug</th>
+                   <th>Created</th>
+                   <th>Actions</th>
+                 </tr>
+               </thead>
+               <tbody>
+           `;
+ 
+               blogs.forEach(blog => {
+                 html += `
+               <tr>
+                 <td>${blog.title}</td>
+                 <td>${blog.slug}</td>
+                 <td>${new Date(blog.created_at).toLocaleDateString()}</td>
+                 <td>
+                   <button class="action-btn edit-btn" onclick="editBlog(${blog.id})">Edit</button>
+                   <button class="action-btn delete-btn" onclick="deleteBlog(${blog.id})">Delete</button>
+                 </td>
+               </tr>
+             `;
+               });
+ 
+               html += '</tbody></table>';
+               document.getElementById('blogs-list').innerHTML = html;
+             }
+           } catch (error) {
+             console.error('Error loading blogs:', error);
+             document.getElementById('blogs-list').innerHTML = '<div class="loading">Error loading blogs</div>';
+           }
+         }
+ 
+         function openBlogModal(blogId = null) {
+           currentEditingId = blogId;
+           const modal = document.getElementById('blog-modal');
+           const form = document.getElementById('blog-form');
+           const title = document.getElementById('blog-modal-title');
+ 
+           if (blogId) {
+             title.textContent = 'Edit Blog Post';
+             loadBlogForEdit(blogId);
+           } else {
+             title.textContent = 'Add Blog Post';
+             form.reset();
+           }
+ 
+           modal.classList.add('active');
+         }
+ 
+         async function loadBlogForEdit(blogId) {
+           try {
+             const response = await fetchWithAuth(`https://hardil-backend.vercel.app/api/blog/${blogId}`);
+             const data = await response.json();
+ 
+             if (data.success) {
+               const blog = data.blog;
+               document.getElementById('blog-title').value = blog.title;
+               document.getElementById('blog-slug').value = blog.slug;
+               document.getElementById('blog-summary').value = blog.summary || '';
+               document.getElementById('blog-content').value = blog.content;
+               document.getElementById('blog-image').value = blog.image_url || '';
+             }
+           } catch (error) {
+             console.error('Error loading blog:', error);
+           }
+         }
+ 
+         document.getElementById('blog-form').addEventListener('submit', async function (e) {
+           e.preventDefault();
+ 
+           const blogData = {
+             title: document.getElementById('blog-title').value,
+             slug: document.getElementById('blog-slug').value,
+             summary: document.getElementById('blog-summary').value,
+             content: document.getElementById('blog-content').value,
+             image_url: document.getElementById('blog-image').value
+           };
+ 
+           try {
+             let response;
+             if (currentEditingId) {
+               response = await fetchWithAuth(`https://hardil-backend.vercel.app/api/admin/blog/${currentEditingId}`, {
+                 method: 'PUT',
+                 headers: { 'Content-Type': 'application/json' },
+                 body: JSON.stringify(blogData)
+               });
+             } else {
+               response = await fetchWithAuth('https://hardil-backend.vercel.app/api/admin/blog', {
+                 method: 'POST',
+                 headers: { 'Content-Type': 'application/json' },
+                 body: JSON.stringify(blogData)
+               });
+             }
+ 
+             const data = await response.json();
+ 
+             if (data.success) {
+               closeModal('blog-modal');
+               loadBlogs();
+               loadDashboard();
+             } else {
+               alert(data.message || 'Error saving blog');
+             }
+           } catch (error) {
+             console.error('Error saving blog:', error);
+             alert('Error saving blog');
+           }
+         });
+ 
+         async function deleteBlog(blogId) {
+           if (!confirm('Are you sure you want to delete this blog post?')) return;
+ 
+           try {
+             const response = await fetchWithAuth(`https://hardil-backend.vercel.app/api/admin/blog/${blogId}`, {
+               method: 'DELETE'
+             });
+ 
+             const data = await response.json();
+ 
+             if (data.success) {
+               loadBlogs();
+               loadDashboard();
+             } else {
+               alert(data.message || 'Error deleting blog');
+             }
+           } catch (error) {
+             console.error('Error deleting blog:', error);
+             alert('Error deleting blog');
+           }
+         }
+ 
+         function editBlog(blogId) {
+           openBlogModal(blogId);
+         }*/
 
         // Modal functions
         function closeModal(modalId) {
@@ -1211,11 +1495,11 @@
             const data = await res.json();
             if (data.success) {
               const topics = data.topics || [];
-              let html = `<table class="data-table"><thead><tr><th>Title</th><th>Order</th><th>Actions</th></tr></thead><tbody>`;
+              let html = `<div class="table-wrapper"><table class="data-table"><thead><tr><th>Title</th><th>Order</th><th>Actions</th></tr></thead><tbody>`;
               topics.forEach(t => {
                 html += `<tr><td>${t.title}</td><td>${t.order || 0}</td><td><button class="action-btn edit-btn" onclick="editTopic(${t.id})">Edit</button><button class="action-btn delete-btn" onclick="deleteTopic(${t.id})">Delete</button></td></tr>`;
               });
-              html += '</tbody></table>';
+              html += '</tbody></table></div>';
               container.innerHTML = html;
             } else {
               container.innerHTML = '<div class="loading">No topics found</div>';
@@ -1296,30 +1580,31 @@
           currentEditingTopicId = null;
         }
 
-/* ==============================
-   GLOBAL TOPIC MANAGEMENT
-================================ */
+        /* ==============================
+           GLOBAL TOPIC MANAGEMENT
+        ================================ */
 
-let globalEditingTopicId = null;
+        let globalEditingTopicId = null;
 
 
-/* ==============================
-   LOAD GLOBAL TOPICS
-================================ */
-async function loadGlobalTopics() {
-  try {
-    const res = await fetchWithAuth(
-      'https://hardil-backend.vercel.app/api/admin/topics'
-    );
+        /* ==============================
+           LOAD GLOBAL TOPICS
+        ================================ */
+        async function loadGlobalTopics() {
+          try {
+            const res = await fetchWithAuth(
+              'https://hardil-backend.vercel.app/api/admin/topics'
+            );
 
-    const data = await res.json();
+            const data = await res.json();
 
-    if (data.success) {
+            if (data.success) {
 
-      // ✅ store topics globally (important for edit)
-      window.globalTopicsData = data.topics;
+              // ✅ store topics globally (important for edit)
+              window.globalTopicsData = data.topics;
 
-      let html = `
+              let html = `
+        <div class="table-wrapper">
         <table class="data-table">
           <thead>
             <tr>
@@ -1334,8 +1619,8 @@ async function loadGlobalTopics() {
           <tbody>
       `;
 
-      data.topics.forEach(t => {
-        html += `
+              data.topics.forEach(t => {
+                html += `
           <tr>
             <td>${t.course_title}</td>
             <td>${t.title}</td>
@@ -1350,249 +1635,249 @@ async function loadGlobalTopics() {
             </td>
           </tr>
         `;
-      });
-
-      html += '</tbody></table>';
-
-      document.getElementById('global-topics-list').innerHTML = html;
-
-    } else {
-      document.getElementById('global-topics-list').innerHTML =
-        '<div class="loading">No topics found</div>';
-    }
-
-  } catch (err) {
-    console.error(err);
-    document.getElementById('global-topics-list').innerHTML =
-      '<div class="loading">Error loading topics</div>';
-  }
-}
-
-
-/* ==============================
-   OPEN MODAL (ADD / EDIT)
-================================ */
-function openGlobalTopicModal(topic = null) {
-
-  globalEditingTopicId = topic ? topic.id : null;
-
-  const modal = document.getElementById('global-topic-modal');
-  modal.classList.add('active');
-
-  if (topic) {
-    loadCoursesDropdown(topic.course_id);
-
-    document.getElementById('global-topic-title').value = topic.title;
-    document.getElementById('global-topic-description').value =
-      topic.description || '';
-    document.getElementById('global-topic-video').value =
-      topic.video_url || '';
-    document.getElementById('global-topic-duration').value =
-      topic.duration_minutes || 0;
-    document.getElementById('global-topic-order').value =
-      topic.order_no || 0;
-  } else {
-    document.getElementById('global-topic-form').reset();
-    loadCoursesDropdown(); // Load fresh courses when adding
-  }
-}
-
-/* ==============================
-   EDIT
-================================ */
-function editGlobalTopic(id) {
-  const topic = window.globalTopicsData?.find(t => t.id === id);
-  if (topic) openGlobalTopicModal(topic);
-}
-
-
-/* ==============================
-   DELETE
-================================ */
-async function deleteGlobalTopic(id) {
-
-  if (!confirm('Delete this topic?')) return;
-
-  try {
-    const res = await fetchWithAuth(
-      `https://hardil-backend.vercel.app/api/admin/topics/${id}`,
-      { method: 'DELETE' }
-    );
-
-    const data = await res.json();
-
-    if (data.success) {
-      loadGlobalTopics();
-      loadDashboard();
-    } else {
-      alert('Error deleting topic');
-    }
-
-  } catch (err) {
-    console.error(err);
-    alert('Error deleting topic');
-  }
-}
-
-
-/* ==============================
-   SAVE (ADD / UPDATE)
-================================ */
-document.getElementById('global-topic-form')
-  .addEventListener('submit', async function (e) {
-
-  e.preventDefault();
-
-  const payload = {
-    course_id: document.getElementById('global-topic-course').value,
-    title: document.getElementById('global-topic-title').value,
-    description: document.getElementById('global-topic-description').value,
-    video_url: document.getElementById('global-topic-video').value,
-    duration_minutes:
-      parseInt(document.getElementById('global-topic-duration').value) || 0,
-    order_no:
-      parseInt(document.getElementById('global-topic-order').value) || 0
-  };
-
-  try {
-
-    let res;
-
-    if (globalEditingTopicId) {
-
-      res = await fetchWithAuth(
-        `https://hardil-backend.vercel.app/api/admin/topics/${globalEditingTopicId}`,
-        {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        }
-      );
-
-    } else {
-
-      res = await fetchWithAuth(
-        'https://hardil-backend.vercel.app/api/admin/topics',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        }
-      );
-
-    }
-
-    const data = await res.json();
-
-    if (data.success) {
-      closeModal('global-topic-modal');
-      loadGlobalTopics();
-      loadDashboard();
-    } else {
-      alert('Error saving topic');
-    }
-
-  } catch (err) {
-    console.error(err);
-    alert('Error saving topic');
-  }
-});
-
-
-
-/* ==============================
-   GLOBAL TOPIC MANAGEMENT
-================================ */
-
-   /*     let globalEditingTopicId = null;
-
-        async function loadGlobalTopics() {
-          try {
-            const res = await fetchWithAuth('https://hardil-backend.vercel.app/api/admin/topics');
-            const data = await res.json();
-
-            if (data.success) {
-              let html = `
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Course</th>
-              <th>Title</th>
-              <th>Duration</th>
-              <th>Order</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-      `;
-
-              data.topics.forEach(t => {
-                html += `
-          <tr>
-            <td>${t.course_title}</td>
-            <td>${t.title}</td>
-            <td>${t.duration_minutes || 0}</td>
-            <td>${t.order_no}</td>
-            <td>
-              <button class="action-btn edit-btn" onclick="editGlobalTopic(${t.id})">Edit</button>
-              <button class="action-btn delete-btn" onclick="deleteGlobalTopic(${t.id})">Delete</button>
-            </td>
-          </tr>
-        `;
               });
 
-              html += '</tbody></table>';
+              html += '</tbody></table></div>';
+
               document.getElementById('global-topics-list').innerHTML = html;
+
+            } else {
+              document.getElementById('global-topics-list').innerHTML =
+                '<div class="loading">No topics found</div>';
             }
+
           } catch (err) {
             console.error(err);
+            document.getElementById('global-topics-list').innerHTML =
+              '<div class="loading">Error loading topics</div>';
           }
         }
 
-        // Auto-generate slug from title
-        document.getElementById('course-title').addEventListener('input', function () {
-          const slug = this.value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-          document.getElementById('course-slug').value = slug;
-        });*/
 
-       /* document.getElementById('blog-title').addEventListener('input', function () {
-          const slug = this.value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-          document.getElementById('blog-slug').value = slug;
-        });*/
+        /* ==============================
+           OPEN MODAL (ADD / EDIT)
+        ================================ */
+        function openGlobalTopicModal(topic = null) {
 
-/* ==============================
-   LOAD COURSES INTO DROPDOWN
-================================ */
-async function loadCoursesDropdown(selectedCourseId = null) {
-  try {
-    const res = await fetchWithAuth(
-      'https://hardil-backend.vercel.app/api/admin/courses'
-    );
+          globalEditingTopicId = topic ? topic.id : null;
 
-    const data = await res.json();
+          const modal = document.getElementById('global-topic-modal');
+          modal.classList.add('active');
 
-    const select = document.getElementById('global-topic-course');
+          if (topic) {
+            loadCoursesDropdown(topic.course_id);
 
-    if (data.success) {
+            document.getElementById('global-topic-title').value = topic.title;
+            document.getElementById('global-topic-description').value =
+              topic.description || '';
+            document.getElementById('global-topic-video').value =
+              topic.video_url || '';
+            document.getElementById('global-topic-duration').value =
+              topic.duration_minutes || 0;
+            document.getElementById('global-topic-order').value =
+              topic.order_no || 0;
+          } else {
+            document.getElementById('global-topic-form').reset();
+            loadCoursesDropdown(); // Load fresh courses when adding
+          }
+        }
 
-      let options = '<option value="">Select Course</option>';
+        /* ==============================
+           EDIT
+        ================================ */
+        function editGlobalTopic(id) {
+          const topic = window.globalTopicsData?.find(t => t.id === id);
+          if (topic) openGlobalTopicModal(topic);
+        }
 
-      data.courses.forEach(course => {
-        options += `
+
+        /* ==============================
+           DELETE
+        ================================ */
+        async function deleteGlobalTopic(id) {
+
+          if (!confirm('Delete this topic?')) return;
+
+          try {
+            const res = await fetchWithAuth(
+              `https://hardil-backend.vercel.app/api/admin/topics/${id}`,
+              { method: 'DELETE' }
+            );
+
+            const data = await res.json();
+
+            if (data.success) {
+              loadGlobalTopics();
+              loadDashboard();
+            } else {
+              alert('Error deleting topic');
+            }
+
+          } catch (err) {
+            console.error(err);
+            alert('Error deleting topic');
+          }
+        }
+
+
+        /* ==============================
+           SAVE (ADD / UPDATE)
+        ================================ */
+        document.getElementById('global-topic-form')
+          .addEventListener('submit', async function (e) {
+
+            e.preventDefault();
+
+            const payload = {
+              course_id: document.getElementById('global-topic-course').value,
+              title: document.getElementById('global-topic-title').value,
+              description: document.getElementById('global-topic-description').value,
+              video_url: document.getElementById('global-topic-video').value,
+              duration_minutes:
+                parseInt(document.getElementById('global-topic-duration').value) || 0,
+              order_no:
+                parseInt(document.getElementById('global-topic-order').value) || 0
+            };
+
+            try {
+
+              let res;
+
+              if (globalEditingTopicId) {
+
+                res = await fetchWithAuth(
+                  `https://hardil-backend.vercel.app/api/admin/topics/${globalEditingTopicId}`,
+                  {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                  }
+                );
+
+              } else {
+
+                res = await fetchWithAuth(
+                  'https://hardil-backend.vercel.app/api/admin/topics',
+                  {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                  }
+                );
+
+              }
+
+              const data = await res.json();
+
+              if (data.success) {
+                closeModal('global-topic-modal');
+                loadGlobalTopics();
+                loadDashboard();
+              } else {
+                alert('Error saving topic');
+              }
+
+            } catch (err) {
+              console.error(err);
+              alert('Error saving topic');
+            }
+          });
+
+
+
+        /* ==============================
+           GLOBAL TOPIC MANAGEMENT
+        ================================ */
+
+        /*     let globalEditingTopicId = null;
+     
+             async function loadGlobalTopics() {
+               try {
+                 const res = await fetchWithAuth('https://hardil-backend.vercel.app/api/admin/topics');
+                 const data = await res.json();
+     
+                 if (data.success) {
+                   let html = `
+             <table class="data-table">
+               <thead>
+                 <tr>
+                   <th>Course</th>
+                   <th>Title</th>
+                   <th>Duration</th>
+                   <th>Order</th>
+                   <th>Actions</th>
+                 </tr>
+               </thead>
+               <tbody>
+           `;
+     
+                   data.topics.forEach(t => {
+                     html += `
+               <tr>
+                 <td>${t.course_title}</td>
+                 <td>${t.title}</td>
+                 <td>${t.duration_minutes || 0}</td>
+                 <td>${t.order_no}</td>
+                 <td>
+                   <button class="action-btn edit-btn" onclick="editGlobalTopic(${t.id})">Edit</button>
+                   <button class="action-btn delete-btn" onclick="deleteGlobalTopic(${t.id})">Delete</button>
+                 </td>
+               </tr>
+             `;
+                   });
+     
+                   html += '</tbody></table>';
+                   document.getElementById('global-topics-list').innerHTML = html;
+                 }
+               } catch (err) {
+                 console.error(err);
+               }
+             }
+     
+             // Auto-generate slug from title
+             document.getElementById('course-title').addEventListener('input', function () {
+               const slug = this.value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+               document.getElementById('course-slug').value = slug;
+             });*/
+
+        /* document.getElementById('blog-title').addEventListener('input', function () {
+           const slug = this.value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+           document.getElementById('blog-slug').value = slug;
+         });*/
+
+        /* ==============================
+           LOAD COURSES INTO DROPDOWN
+        ================================ */
+        async function loadCoursesDropdown(selectedCourseId = null) {
+          try {
+            const res = await fetchWithAuth(
+              'https://hardil-backend.vercel.app/api/admin/courses'
+            );
+
+            const data = await res.json();
+
+            const select = document.getElementById('global-topic-course');
+
+            if (data.success) {
+
+              let options = '<option value="">Select Course</option>';
+
+              data.courses.forEach(course => {
+                options += `
           <option value="${course.id}"
             ${selectedCourseId == course.id ? 'selected' : ''}>
             ${course.title}
           </option>
         `;
-      });
+              });
 
-      select.innerHTML = options;
-    }
+              select.innerHTML = options;
+            }
 
-  } catch (err) {
-    console.error('Error loading courses for dropdown:', err);
-  }
-}
+          } catch (err) {
+            console.error('Error loading courses for dropdown:', err);
+          }
+        }
 
 
       </script>

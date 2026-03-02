@@ -34,37 +34,41 @@
   </div>
 
   <script>
-    document.getElementById('login-form').addEventListener('submit', async function(e){
-      e.preventDefault();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
 
-      // Try backend login first
-      try {
-        const res = await fetch('https://hardil-backend.vercel.app/api/admin/login', {
-          method: 'POST',
-          headers: {'Content-Type':'application/json'},
-          body: JSON.stringify({email, password})
-        });
-        const data = await res.json();
-        if (data.success) {
-          localStorage.setItem('adminAuthenticated','true');
-          if (data.token) localStorage.setItem('adminToken', data.token);
-          window.location.href = 'admin.html';
-          return;
-        }
-      } catch (err) {
-        console.warn('Backend login failed or not available', err);
-      }
 
-      // Fallback demo credentials
-      if ((email === 'admin' || email === 'admin@local') && password === 'admin123') {
-        localStorage.setItem('adminAuthenticated','true');
-        window.location.href = 'admin.html';
-      } else {
-        alert('Login failed. Check credentials.');
-      }
+// ✅ Redirect only if token exists
+const existingToken = localStorage.getItem('adminToken');
+if (existingToken) {
+  window.location.replace('admin.html');
+}
+
+document.getElementById('login-form').addEventListener('submit', async function(e){
+  e.preventDefault();
+
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+
+  try {
+    const res = await fetch('https://hardil-backend.vercel.app/api/admin/login', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({email, password})
     });
-  </script>
+
+    const data = await res.json();
+
+    if (data.success && data.token) {
+      localStorage.setItem('adminToken', data.token);
+      window.location.replace('admin.html');
+    } else {
+      alert('Login failed. Check credentials.');
+    }
+
+  } catch (err) {
+    console.error(err);
+    alert('Server error. Try again.');
+  }
+});
+</script>
 </body>
 </html>
